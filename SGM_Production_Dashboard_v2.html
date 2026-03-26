@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGM – Operations Dashboard · April 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --cream:#FAF7F2; --warm:#F2EDE4; --border:#E2D9CC; --muted:#9C8F82;
+  --ink:#2A2118; --sub:#6B5F52; --green:#2D7D4E; --green-lt:#E6F4EC;
+  --red:#C0392B; --red-lt:#FDECEA; --amber:#B8620A; --amber-lt:#FEF3E2;
+  --blue:#1A5C96; --blue-lt:#E8F1FB; --teal:#0F7B7B; --teal-lt:#E3F5F5;
+  --accent:#8B4513; --gold:#C9963A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);padding:0 0 60px}
+
+/* HERO */
+.hero{background:var(--ink);color:var(--cream);padding:28px 44px 24px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;border-bottom:4px solid var(--gold);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 40px,rgba(201,150,58,.04) 40px,rgba(201,150,58,.04) 41px)}
+.hero-left{position:relative}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(20px,3vw,32px);line-height:1.15;color:#fff}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-sub{font-size:12px;color:rgba(250,247,242,.5);margin-top:5px;font-weight:300}
+.hero-right{position:relative;text-align:right}
+.hero-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(250,247,242,.45);letter-spacing:.08em}
+.hero-period{font-family:'DM Serif Display',serif;font-size:17px;color:var(--gold);margin-top:2px}
+.status-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,150,58,.18);border:1px solid rgba(201,150,58,.35);border-radius:20px;padding:3px 11px;font-size:10px;color:var(--gold);margin-top:7px;font-family:'JetBrains Mono',monospace}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* TABS */
+.tabs-wrap{background:var(--warm);border-bottom:1px solid var(--border);padding:0 44px;display:flex;overflow-x:auto}
+.tab-btn{background:none;border:none;padding:13px 20px 11px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--sub);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+
+/* LAYOUT */
+.content{padding:32px 44px;display:none}
+.content.active{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION HEAD */
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px}
+.section-title{font-family:'DM Serif Display',serif;font-size:21px;color:var(--ink)}
+.section-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--warm);border:1px solid var(--border);border-radius:4px;padding:2px 7px}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px}
+.kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;transition:box-shadow .2s}
+.kpi-card:hover{box-shadow:0 4px 18px rgba(42,33,24,.08)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-card.green::before{background:var(--green)}
+.kpi-card.red::before{background:var(--red)}
+.kpi-card.amber::before{background:var(--amber)}
+.kpi-card.blue::before{background:var(--blue)}
+.kpi-card.teal::before{background:var(--teal)}
+.kpi-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px}
+.kpi-value{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);line-height:1}
+.kpi-sub{font-size:11px;color:var(--sub);margin-top:5px}
+.kpi-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;border-radius:6px;padding:2px 7px;margin-top:7px;font-family:'JetBrains Mono',monospace}
+.badge-red{background:var(--red-lt);color:var(--red)}
+.badge-green{background:var(--green-lt);color:var(--green)}
+.badge-amber{background:var(--amber-lt);color:var(--amber)}
+
+/* CHARTS */
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:18px;margin-bottom:24px}
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;transition:box-shadow .2s}
+.chart-card:hover{box-shadow:0 4px 18px rgba(42,33,24,.07)}
+.chart-card.full{grid-column:1/-1}
+.chart-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.chart-sub{font-size:11px;color:var(--muted);margin-bottom:14px}
+
+/* TABLES */
+.table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:22px}
+.table-header{background:var(--warm);padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.table-title{font-size:13px;font-weight:600;color:var(--ink)}
+.table-note{font-size:11px;color:var(--muted)}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--warm);font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--sub);padding:9px 14px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--warm)}
+tbody td{font-size:12px;padding:10px 14px;color:var(--ink);text-align:right;font-family:'JetBrains Mono',monospace}
+tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500}
+.val-neg{color:var(--red)}
+.val-pos{color:var(--green)}
+.pct-pill{display:inline-flex;align-items:center;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:600}
+.pill-red{background:var(--red-lt);color:var(--red)}
+.pill-green{background:var(--green-lt);color:var(--green)}
+.pill-amber{background:var(--amber-lt);color:var(--amber)}
+
+/* PLANT BARS */
+.plant-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.plant-bar-label{font-size:12px;font-weight:700;color:var(--sub);width:50px;flex-shrink:0}
+.plant-bar-track{flex:1;height:11px;background:var(--warm);border-radius:20px;overflow:hidden}
+.plant-bar-fill{height:100%;border-radius:20px;transition:width .7s ease}
+.plant-bar-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sub);width:44px;text-align:right}
+
+/* DAY-WISE TABLE */
+.day-filter{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.day-btn{background:#fff;border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--sub);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.day-btn.active,.day-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* TOOLTIP POPUP */
+.remark-cell{position:relative;cursor:help}
+.remark-short{display:inline-block;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;background:var(--amber-lt);color:var(--amber);border:1px solid rgba(184,98,10,.25);border-radius:4px;padding:2px 7px;font-family:'JetBrains Mono',monospace;vertical-align:middle}
+.remark-popup{display:none;position:absolute;z-index:999;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 30px rgba(42,33,24,.15);padding:12px 14px;min-width:260px;max-width:380px;font-size:12px;color:var(--ink);line-height:1.6;right:0;top:calc(100% + 6px);font-family:'DM Sans',sans-serif;font-weight:400}
+.remark-cell:hover .remark-popup{display:block}
+
+/* INDIVIDUAL PLANT SELECT */
+.plant-select-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.plant-pill{background:#fff;border:2px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--sub)}
+.plant-pill.active{color:#fff}
+
+/* COMPARE CARD */
+.compare-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:22px}
+.compare-head{padding:14px 20px 12px;background:linear-gradient(135deg,var(--ink) 0%,#3d3028 100%);color:#fff}
+.compare-head h3{font-family:'DM Serif Display',serif;font-size:15px;margin-bottom:2px}
+.compare-head p{font-size:11px;opacity:.5}
+
+/* FOOTER */
+.footer{background:var(--warm);border-top:1px solid var(--border);padding:12px 44px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:14px}
+.footer strong{color:var(--sub)}
+
+@media(max-width:860px){.chart-grid{grid-template-columns:1fr}.content{padding:24px 20px}.hero{padding:20px}.tabs-wrap{padding:0 16px}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Operations · Management Report</div>
+    <div class="hero-title">Shri Govindaraja Mills<br><em>Production Dashboard</em></div>
+    <div class="hero-sub">Aruppukottai · Plant-wise Target vs. Actual Analysis</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-date">REPORTING PERIOD</div>
+    <div class="hero-period">April 2026</div>
+    <div class="status-badge"><span class="status-dot"></span> Days Reported: 21 – 23</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="switchTab('overview',this)">📊 Overview</button>
+  <button class="tab-btn" onclick="switchTab('daywise',this)">📅 Day-wise</button>
+  <button class="tab-btn" onclick="switchTab('production',this)">🏭 Production Kgs</button>
+  <button class="tab-btn" onclick="switchTab('manpower',this)">👥 Man Power</button>
+  <button class="tab-btn" onclick="switchTab('upc',this)">⚡ Unit per Count</button>
+  <button class="tab-btn" onclick="switchTab('comparative',this)">🔍 Comparative</button>
+</div>
+
+<!-- ==================== OVERVIEW ==================== -->
+<div id="tab-overview" class="content active">
+  <div class="section-head"><div class="section-title">Executive Summary</div><div class="section-tag">3-Day Actuals · Apr 21–23</div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card red"><div class="kpi-label">Spinning Prod (Avg/Day)</div><div class="kpi-value">44,371</div><div class="kpi-sub">Target: 47,440 kgs/day</div><div class="kpi-badge badge-red">▼ 6.5% below target</div></div>
+    <div class="kpi-card red"><div class="kpi-label">Packing Prod (Avg/Day)</div><div class="kpi-value">43,840</div><div class="kpi-sub">Target: 47,440 kgs/day</div><div class="kpi-badge badge-red">▼ 7.6% below target</div></div>
+    <div class="kpi-card red"><div class="kpi-label">Manpower – Production (Avg)</div><div class="kpi-value">1,434</div><div class="kpi-sub">Target: 1,426 workers/day</div><div class="kpi-badge badge-red">▲ +0.6% surplus (over-utilised)</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Manpower – Maintenance (Avg)</div><div class="kpi-value">321</div><div class="kpi-sub">Target: 397 workers/day</div><div class="kpi-badge badge-green">▼ 19.3% below target (under-utilised)</div></div>
+    <div class="kpi-card teal"><div class="kpi-label">Avg Unit per Count</div><div class="kpi-value">0.1035</div><div class="kpi-sub">Target: 0.1036</div><div class="kpi-badge badge-green">≈ On Target</div></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card"><div class="chart-title">Spinning Production — Plant-wise</div><div class="chart-sub">3-day average actual vs daily target (kgs)</div><canvas id="chSpinBar" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title">Packing Production — Plant-wise</div><div class="chart-sub">3-day average actual vs daily target (kgs)</div><canvas id="chPackBar" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title">Daily Overall Production Trend</div><div class="chart-sub">Spinning & Packing totals vs target</div><canvas id="chTrend" height="200"></canvas></div>
+    <div class="chart-card"><div class="chart-title">Manpower Distribution</div><div class="chart-sub">Production headcount actual — plant split</div><canvas id="chMPDonut" height="230"></canvas></div>
+  </div>
+  <!-- Plant attainment bars – distinct colours per plant -->
+  <div class="table-wrap">
+    <div class="table-header"><div class="table-title">Plant-wise Spinning Attainment %</div><div class="table-note">3-day average vs daily target</div></div>
+    <div style="padding:18px 22px" id="plantBars"></div>
+  </div>
+</div>
+
+<!-- ==================== DAY-WISE ==================== -->
+<div id="tab-daywise" class="content">
+  <div class="section-head"><div class="section-title">Day-wise Performance</div><div class="section-tag">Apr 21 · 22 · 23</div></div>
+
+  <!-- Day selector -->
+  <div class="day-filter">
+    <button class="day-btn active" onclick="showDay(21,this)">Apr 21</button>
+    <button class="day-btn" onclick="showDay(22,this)">Apr 22</button>
+    <button class="day-btn" onclick="showDay(23,this)">Apr 23</button>
+    <button class="day-btn" onclick="showDay('all',this)">All Days</button>
+  </div>
+
+  <!-- KPIs for selected day -->
+  <div id="dayKPIs" class="kpi-grid"></div>
+
+  <div class="chart-grid">
+    <div class="chart-card"><div class="chart-title" id="titleDaySpinning">Spinning Production — Apr 21</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDaySpinning" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title" id="titleDayPacking">Packing Production — Apr 21</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDayPacking" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title" id="titleDayMPProd">Manpower Production — Apr 21</div><div class="chart-sub">Plant-wise target vs actual (green = under, red = over)</div><canvas id="chDayMPProd" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title" id="titleDayMPMaint">Manpower Maintenance — Apr 21</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDayMPMaint" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title" id="titleDayUPC">Unit per Count — Apr 21</div><div class="chart-sub">Target vs Actual — lower is better</div><canvas id="chDayUPC" height="230"></canvas></div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header"><div class="table-title" id="dayTableTitle">Day-wise Summary Table</div><div class="table-note">All values; production in kgs</div></div>
+    <div style="overflow-x:auto"><table id="dayTable">
+      <thead><tr>
+        <th>Date</th><th>Plant</th>
+        <th>Spin Target</th><th>Spin Actual</th><th>Spin %</th>
+        <th>Pack Target</th><th>Pack Actual</th><th>Pack %</th>
+        <th>MP Prod T</th><th>MP Prod A</th>
+        <th>MP Maint T</th><th>MP Maint A</th>
+        <th>UPC Target</th><th>UPC Actual</th>
+      </tr></thead>
+      <tbody id="dayTableBody"></tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ==================== PRODUCTION KGS ==================== -->
+<div id="tab-production" class="content">
+  <div class="section-head"><div class="section-title">Production — Kgs Analysis</div><div class="section-tag">Spinning & Packing</div></div>
+
+  <!-- 4.1 Individual plant trend line chart -->
+  <div class="chart-card full" style="margin-bottom:20px">
+    <div class="chart-title">Individual Plant — Daily Trend (Target vs Actual)</div>
+    <div class="chart-sub">Select a plant to view its spinning production trend line</div>
+    <div class="plant-select-bar" id="plantPills"></div>
+    <canvas id="chPlantTrend" height="180"></canvas>
+  </div>
+
+  <!-- 4.2 Date-wise + plant-wise grouped bar -->
+  <div class="chart-card full" style="margin-bottom:20px">
+    <div class="chart-title">All Plants — Day-wise Spinning Production</div>
+    <div class="chart-sub">Apr 21 · 22 · 23 grouped by day — plant-coded bars</div>
+    <canvas id="chDailySpinning" height="200"></canvas>
+  </div>
+
+  <!-- 4.2 Date + Plant wise table -->
+  <div class="table-wrap" style="margin-bottom:22px">
+    <div class="table-header"><div class="table-title">Date-wise & Plant-wise Spinning Production</div><div class="table-note">kgs · Target | Actual | Variance</div></div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Date</th><th>P-4 Tgt</th><th>P-4 Act</th><th>P-5 Tgt</th><th>P-5 Act</th><th>P-6 Tgt</th><th>P-6 Act</th><th>P-7 Tgt</th><th>P-7 Act</th><th>P-9 Tgt</th><th>P-9 Act</th><th>P-10 Tgt</th><th>P-10 Act</th><th>P-11 Tgt</th><th>P-11 Act</th><th>Overall Tgt</th><th>Overall Act</th></tr></thead>
+      <tbody>
+        <tr><td>Apr 21</td><td>4,792.6</td><td class="val-neg">3,895</td><td>3,517.0</td><td class="val-neg">3,358</td><td>6,561.1</td><td class="val-neg">6,338</td><td>11,993.5</td><td class="val-neg">11,209</td><td>10,671.3</td><td class="val-neg">10,057</td><td>4,731.4</td><td class="val-neg">4,379</td><td>5,173.2</td><td class="val-neg">5,015</td><td>47,440.2</td><td class="val-neg">44,251</td></tr>
+        <tr><td>Apr 22</td><td>4,792.6</td><td class="val-neg">3,811</td><td>3,517.0</td><td class="val-neg">3,315</td><td>6,561.1</td><td class="val-neg">6,395</td><td>11,993.5</td><td class="val-neg">11,428</td><td>10,671.3</td><td class="val-neg">10,230</td><td>4,731.4</td><td class="val-neg">4,413</td><td>5,173.2</td><td class="val-neg">5,142</td><td>47,440.2</td><td class="val-neg">44,509</td></tr>
+        <tr><td>Apr 23</td><td>4,792.6</td><td class="val-neg">3,586</td><td>3,517.0</td><td class="val-neg">3,308</td><td>6,561.1</td><td class="val-neg">6,350</td><td>11,993.5</td><td class="val-neg">11,434</td><td>10,671.3</td><td class="val-neg">10,148</td><td>4,731.4</td><td class="val-neg">4,445</td><td>5,173.2</td><td class="val-neg">5,082</td><td>47,440.2</td><td class="val-neg">44,353</td></tr>
+        <tr style="background:var(--warm);font-weight:600"><td>3-Day Total</td><td>9,585.3</td><td class="val-neg">11,292</td><td>7,034.0</td><td class="val-neg">9,981</td><td>13,122.2</td><td class="val-neg">19,083</td><td>23,987.0</td><td class="val-neg">34,071</td><td>21,342.7</td><td class="val-neg">30,435</td><td>9,462.8</td><td class="val-neg">13,237</td><td>10,346.4</td><td class="val-neg">15,239</td><td>94,880.4</td><td class="val-neg">133,113</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Packing date-wise table -->
+  <div class="table-wrap" style="margin-bottom:22px">
+    <div class="table-header"><div class="table-title">Date-wise & Plant-wise Packing Production</div><div class="table-note">kgs · Target | Actual</div></div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Date</th><th>P-4 Tgt</th><th>P-4 Act</th><th>P-5 Tgt</th><th>P-5 Act</th><th>P-6 Tgt</th><th>P-6 Act</th><th>P-7 Tgt</th><th>P-7 Act</th><th>P-9 Tgt</th><th>P-9 Act</th><th>P-10 Tgt</th><th>P-10 Act</th><th>P-11 Tgt</th><th>P-11 Act</th><th>Overall Tgt</th><th>Overall Act</th></tr></thead>
+      <tbody>
+        <tr><td>Apr 21</td><td>4,792.6</td><td class="val-neg">3,888</td><td>3,517.0</td><td class="val-neg">3,008</td><td>6,561.1</td><td class="val-neg">6,329</td><td>11,993.5</td><td class="val-neg">10,456</td><td>10,671.3</td><td class="val-neg">10,025</td><td>4,731.4</td><td class="val-neg">4,631</td><td>5,173.2</td><td class="val-neg">4,990</td><td>47,440.2</td><td class="val-neg">43,327</td></tr>
+        <tr><td>Apr 22</td><td>4,792.6</td><td class="val-neg">3,136</td><td>3,517.0</td><td class="val-neg">3,152</td><td>6,561.1</td><td class="val-neg">6,329</td><td>11,993.5</td><td class="val-neg">11,264</td><td>10,671.3</td><td class="val-neg">10,130</td><td>4,731.4</td><td class="val-neg">4,596</td><td>5,173.2</td><td class="val-neg">5,126</td><td>47,440.2</td><td class="val-neg">43,734</td></tr>
+        <tr><td>Apr 23</td><td>4,792.6</td><td class="val-neg">3,840</td><td>3,517.0</td><td class="val-neg">3,152</td><td>6,561.1</td><td class="val-neg">6,395</td><td>11,993.5</td><td class="val-neg">11,584</td><td>10,671.3</td><td class="val-neg">10,069</td><td>4,731.4</td><td class="val-neg">4,475</td><td>5,173.2</td><td class="val-neg">4,944</td><td>47,440.2</td><td class="val-neg">44,461</td></tr>
+        <tr style="background:var(--warm);font-weight:600"><td>3-Day Total</td><td>9,585.3</td><td class="val-neg">10,864</td><td>7,034.0</td><td class="val-neg">9,312</td><td>13,122.2</td><td class="val-neg">19,053</td><td>23,987.0</td><td class="val-neg">33,304</td><td>21,342.7</td><td class="val-neg">30,224</td><td>9,462.8</td><td class="val-neg">13,702</td><td>10,346.4</td><td class="val-neg">15,060</td><td>94,880.4</td><td class="val-neg">131,522</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- 4.3 Summary table with full popup remarks -->
+  <div class="table-wrap">
+    <div class="table-header"><div class="table-title">Spinning Summary — with Key Remarks</div><div class="table-note">Hover remark tag to see full reason</div></div>
+    <table>
+      <thead><tr><th>Plant</th><th>Target (kgs)</th><th>Actual (kgs)</th><th>Loss/Gain</th><th>Loss %</th><th>Key Remark</th></tr></thead>
+      <tbody>
+        <tr><td>Plant 4</td><td>4,792.64</td><td>3,840</td><td class="val-neg">−952.64</td><td><span class="pct-pill pill-red">−19.9%</span></td>
+          <td><span class="remark-cell"><span class="remark-short">Plan 6 Mcs, running 5 Mcs</span><div class="remark-popup">🔧 <strong>Plant 4 — Production Gap</strong><br><br>Plan: 6 machines, but only 5 running.<br>• OE-1: Target speed 85,000 → Actual 80,000<br>• OE-6: Target speed 80,000 → Actual 78,000<br><br><em>Action: Restore 6th machine & increase OE speeds.</em></div></span></td></tr>
+        <tr><td>Plant 5</td><td>3,517.02</td><td>3,152</td><td class="val-neg">−365.02</td><td><span class="pct-pill pill-red">−10.4%</span></td>
+          <td><span class="remark-cell"><span class="remark-short">OE speed gap (1,2,3)</span><div class="remark-popup">🔧 <strong>Plant 5 — OE Speed Gaps</strong><br><br>• OE-1: Target 85,000 → Actual 83,000<br>• OE-2: Target 85,000 → Actual 83,000<br>• OE-3: Target 85,000 → Actual 80,000<br><br><em>Action: Calibrate OE-1,2,3 to target RPM.</em></div></span></td></tr>
+        <tr><td>Plant 6</td><td>6,561.10</td><td>6,395</td><td class="val-neg">−166.10</td><td><span class="pct-pill pill-red">−2.5%</span></td>
+          <td><span class="remark-cell"><span class="remark-short">TM changes pending</span><div class="remark-popup">🔧 <strong>Plant 6 — Speed & TM Issues</strong><br><br>• 60sC G5/1: Target speed 20,500 → Actual 20,000<br>• 60sC G5/1: 7 Mcs, 60sC 6/S 9 Mcs — TM 4.54 → 4.44 change pending<br>• 68sCC 24-37, 39-49: TM 4.02 → 3.94 change pending<br><br><em>Action: Implement TM changes at earliest.</em></div></span></td></tr>
+        <tr><td>Plant 7</td><td>11,993.47</td><td>11,584</td><td class="val-neg">−409.47</td><td><span class="pct-pill pill-red">−3.4%</span></td>
+          <td><span class="remark-cell"><span class="remark-short">TM & count change pending</span><div class="remark-popup">🔧 <strong>Plant 7 — TM & Count Changes</strong><br><br>• 20sK: TM 7.30 → 7.20 change pending<br>• OE 1 Mc: Count change from 20sK → 16sK pending<br><br><em>Action: Execute TM and count changes urgently.</em></div></span></td></tr>
+        <tr><td>Plant 9</td><td>10,671.34</td><td>10,069.92</td><td class="val-neg">−601.42</td><td><span class="pct-pill pill-red">−5.6%</span></td>
+          <td><span class="remark-cell"><span class="remark-short">Plan 46 Mcs, Actual 45</span><div class="remark-popup">🔧 <strong>Plant 9 — Machine Count & TM</strong><br><br>• Planned 46 machines, actual 45 machines running<br>• 60sC & 61sC: TM 4.40 → 4.30 change pending<br><br><em>Action: Restore machine count to 46; implement TM change.</em></div></span></td></tr>
+        <tr><td>Plant 10</td><td>4,731.40</td><td>4,475.52</td><td class="val-neg">−255.88</td><td><span class="pct-pill pill-red">−5.4%</span></td>
+          <td><span class="remark-cell"><span class="remark-short">Speed gaps Spg-14,15,21</span><div class="remark-popup">🔧 <strong>Plant 10 — Speed Gaps</strong><br><br>• 60sC TM 4.54 → 4.44 change pending<br>• Spg-14 (61sCC): Target 23,000 → Actual 22,000<br>• Spg-15,21: Target 22,500 → Actual 22,000<br><br><em>Action: Adjust spindle speeds and TM as specified.</em></div></span></td></tr>
+        <tr><td>Plant 11</td><td>5,173.20</td><td>4,944.24</td><td class="val-neg">−228.96</td><td><span class="pct-pill pill-red">−4.4%</span></td>
+          <td><span class="remark-cell"><span class="remark-short">TM change + speed gaps</span><div class="remark-popup">🔧 <strong>Plant 11 — TM & Speed Issues</strong><br><br>• 61sC: TM 4.41 → 4.31 change pending<br>• Spg-19: Target 22,500 → Actual 19,000<br>• Spg-20: Target 23,000 → Actual 22,500<br><br><em>Action: Prioritise TM change and increase spindle speeds.</em></div></span></td></tr>
+        <tr style="background:var(--warm);font-weight:600"><td>TOTAL</td><td>47,440.18</td><td>44,460.68</td><td class="val-neg">−2,979.50</td><td><span class="pct-pill pill-red">−6.3%</span></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== MANPOWER ==================== -->
+<div id="tab-manpower" class="content">
+  <div class="section-head"><div class="section-title">Man Power Analysis</div><div class="section-tag">Production & Maintenance</div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card green"><div class="kpi-label">Production Headcount (Avg)</div><div class="kpi-value">1,434</div><div class="kpi-sub">Target: 1,426</div><div class="kpi-badge badge-green">▲ +8 surplus</div></div>
+    <div class="kpi-card red"><div class="kpi-label">Maintenance Headcount (Avg)</div><div class="kpi-value">321</div><div class="kpi-sub">Target: 397</div><div class="kpi-badge badge-red">▼ −76 deficit</div></div>
+    <div class="kpi-card amber"><div class="kpi-label">Maintenance Gap %</div><div class="kpi-value">19.3%</div><div class="kpi-sub">Critical shortfall</div><div class="kpi-badge badge-amber">⚠ Monitor closely</div></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card"><div class="chart-title">Production Manpower — Plant-wise</div><div class="chart-sub">Green = under target (efficient) · Red = over target</div><canvas id="chMPProd" height="240"></canvas></div>
+    <div class="chart-card"><div class="chart-title">Maintenance Manpower — Plant-wise</div><div class="chart-sub">Green = under target · Red = over target</div><canvas id="chMPMaint" height="240"></canvas></div>
+    <div class="chart-card full"><div class="chart-title">Daily Overall Manpower Trend</div><div class="chart-sub">Production + Maintenance actuals per day</div><canvas id="chMPTrend" height="180"></canvas></div>
+  </div>
+  <div class="table-wrap">
+    <div class="table-header"><div class="table-title">Manpower Summary by Plant</div><div class="table-note">Production + Maintenance · Green = under, Red = over</div></div>
+    <table>
+      <thead><tr><th>Plant</th><th>Prod Target</th><th>Prod Actual</th><th>Prod Gap</th><th>Maint Target</th><th>Maint Actual</th><th>Maint Gap</th><th>Notes</th></tr></thead>
+      <tbody id="mpSummaryBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== UNIT PER COUNT ==================== -->
+<div id="tab-upc" class="content">
+  <div class="section-head"><div class="section-title">Unit per Count (Power Efficiency)</div><div class="section-tag">Lower Actual = Better</div></div>
+  <div class="chart-grid">
+    <div class="chart-card"><div class="chart-title">UPC by Plant — Target vs Actual</div><div class="chart-sub">3-day average — lower actual = better power efficiency</div><canvas id="chUPC" height="240"></canvas></div>
+    <div class="chart-card"><div class="chart-title">UPC Deviation (Actual − Target)</div><div class="chart-sub">Positive bar = higher consumption than plan</div><canvas id="chUPCDev" height="240"></canvas></div>
+    <div class="chart-card full"><div class="chart-title">Daily UPC Trend — All Plants</div><div class="chart-sub">Apr 21–23 actual unit per count per plant</div><canvas id="chUPCTrend" height="180"></canvas></div>
+  </div>
+  <div class="table-wrap">
+    <div class="table-header"><div class="table-title">Unit per Count Summary</div><div class="table-note">3-day average · Lower is better</div></div>
+    <table>
+      <thead><tr><th>Plant</th><th>Target</th><th>Actual (avg)</th><th>Diff</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Plant 4</td><td>0.1200</td><td>0.1285</td><td class="val-neg">+0.0085</td><td><span class="pct-pill pill-red">Over</span></td><td><span class="remark-cell"><span class="remark-short">5 Mcs; OE speed gaps</span><div class="remark-popup">Plan 6 Mcs running 5. OE-1 Target 85,000 → Actual 80,000; OE-6 Target 80,000 → Actual 78,000</div></span></td></tr>
+        <tr><td>Plant 5</td><td>0.1159</td><td>0.1262</td><td class="val-neg">+0.0103</td><td><span class="pct-pill pill-red">Over</span></td><td><span class="remark-cell"><span class="remark-short">OE-1,2,3 speed gaps</span><div class="remark-popup">OE-1,2: Target 85,000 → Actual 83,000; OE-3: Target 85,000 → Actual 80,000</div></span></td></tr>
+        <tr><td>Plant 6</td><td>0.1064</td><td>0.1055</td><td class="val-pos">−0.0008</td><td><span class="pct-pill pill-green">Under ✓</span></td><td>—</td></tr>
+        <tr><td>Plant 7</td><td>0.1070</td><td>0.1067</td><td class="val-pos">−0.0003</td><td><span class="pct-pill pill-green">Under ✓</span></td><td><span class="remark-cell"><span class="remark-short">TM change pending</span><div class="remark-popup">20sK TM 7.30 → 7.20 change pending. OE 1 Mc count change 20sK → 16sK pending.</div></span></td></tr>
+        <tr><td>Plant 9</td><td>0.1194</td><td>0.1203</td><td class="val-neg">+0.0009</td><td><span class="pct-pill pill-red">Slight Over</span></td><td><span class="remark-cell"><span class="remark-short">45 Mcs; TM 4.40→4.30</span><div class="remark-popup">Plan 46 Mcs, actual 45 Mcs. 60sC & 61sC TM 4.40 → 4.30 change pending.</div></span></td></tr>
+        <tr><td>Plant 10</td><td>0.1155</td><td>0.1145</td><td class="val-pos">−0.0010</td><td><span class="pct-pill pill-green">Under ✓</span></td><td>—</td></tr>
+        <tr><td>Plant 11</td><td>0.1036</td><td>0.1035</td><td class="val-pos">−0.0001</td><td><span class="pct-pill pill-green">On Target ✓</span></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== COMPARATIVE ==================== -->
+<div id="tab-comparative" class="content">
+  <div class="section-head"><div class="section-title">Comparative Analysis</div><div class="section-tag">All Categories · Top Management View</div></div>
+  <div class="compare-card">
+    <div class="compare-head"><h3>Plant Performance Scorecard</h3><p>Composite view — Production, Manpower & Power Efficiency</p></div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Plant</th><th>Spin Actual</th><th>Spin Tgt</th><th>Spin %</th><th>Pack Actual</th><th>Pack Tgt</th><th>Pack %</th><th>Prod MP Gap</th><th>Maint MP Gap</th><th>UPC Status</th></tr></thead>
+      <tbody>
+        <tr><td>Plant 4</td><td>3,840</td><td>4,792.6</td><td><span class="pct-pill pill-red">80.1%</span></td><td>7,024</td><td>9,585.3</td><td><span class="pct-pill pill-red">73.3%</span></td><td class="val-neg">−7</td><td class="val-neg">−2</td><td><span class="pct-pill pill-red">Over</span></td></tr>
+        <tr><td>Plant 5</td><td>3,152</td><td>3,517.0</td><td><span class="pct-pill pill-red">89.6%</span></td><td>6,160</td><td>7,034.1</td><td><span class="pct-pill pill-red">87.6%</span></td><td class="val-neg">−1</td><td class="val-neg">−1</td><td><span class="pct-pill pill-red">Over</span></td></tr>
+        <tr><td>Plant 6</td><td>6,395</td><td>6,561.1</td><td><span class="pct-pill pill-amber">97.5%</span></td><td>12,658</td><td>13,122.2</td><td><span class="pct-pill pill-amber">96.5%</span></td><td class="val-neg">−4</td><td class="val-neg">−15</td><td><span class="pct-pill pill-green">Under ✓</span></td></tr>
+        <tr><td>Plant 7</td><td>11,584</td><td>11,993.5</td><td><span class="pct-pill pill-amber">96.6%</span></td><td>21,720</td><td>23,986.9</td><td><span class="pct-pill pill-red">90.5%</span></td><td class="val-neg">−5</td><td class="val-pos">+1</td><td><span class="pct-pill pill-green">Under ✓</span></td></tr>
+        <tr><td>Plant 9</td><td>10,069.9</td><td>10,671.3</td><td><span class="pct-pill pill-amber">94.4%</span></td><td>20,155.4</td><td>21,342.7</td><td><span class="pct-pill pill-amber">94.4%</span></td><td class="val-neg">−1</td><td class="val-neg">−5</td><td><span class="pct-pill pill-red">Slight Over</span></td></tr>
+        <tr><td>Plant 10</td><td>4,475.5</td><td>4,731.4</td><td><span class="pct-pill pill-amber">94.6%</span></td><td>9,227.5</td><td>9,462.8</td><td><span class="pct-pill pill-amber">97.5%</span></td><td class="val-pos">+10</td><td class="val-pos">+8</td><td><span class="pct-pill pill-green">Under ✓</span></td></tr>
+        <tr><td>Plant 11</td><td>4,944.2</td><td>5,173.2</td><td><span class="pct-pill pill-amber">95.6%</span></td><td>10,115.7</td><td>10,346.4</td><td><span class="pct-pill pill-amber">97.8%</span></td><td class="val-pos">+7</td><td class="val-pos">+7</td><td><span class="pct-pill pill-green">On Target ✓</span></td></tr>
+        <tr style="background:var(--warm);font-weight:600"><td>TOTAL</td><td>44,460.7</td><td>47,440.2</td><td><span class="pct-pill pill-red">93.7%</span></td><td>87,060.6</td><td>94,880.4</td><td><span class="pct-pill pill-red">91.8%</span></td><td class="val-neg">−1</td><td class="val-neg">−7</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card"><div class="chart-title">Production Attainment % by Plant</div><div class="chart-sub">Spinning vs Packing side by side</div><canvas id="chCompare" height="240"></canvas></div>
+    <div class="chart-card"><div class="chart-title">Category-wise Achievement Radar</div><div class="chart-sub">Overall % achieved across all 4 categories</div><canvas id="chRadar" height="240"></canvas></div>
+    <div class="chart-card full"><div class="chart-title">Loss Analysis — Spinning Kgs by Plant</div><div class="chart-sub">Larger bar = more attention needed</div><canvas id="chLoss" height="160"></canvas></div>
+  </div>
+  <div class="table-wrap">
+    <div class="table-header"><div class="table-title">⚠ Key Action Items for Management</div><div class="table-note">Prioritised from current actuals</div></div>
+    <table>
+      <thead><tr><th>Priority</th><th>Category</th><th>Plant(s)</th><th>Issue</th><th>Recommended Action</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pct-pill pill-red">HIGH</span></td><td>Production</td><td>Plant 4</td><td>Only 5 of 6 machines running; OE speeds below target</td><td>Restore 6th machine; increase OE-1 to 85,000 RPM</td></tr>
+        <tr><td><span class="pct-pill pill-red">HIGH</span></td><td>Manpower</td><td>Plant 6</td><td>Maintenance: 76 vs target 91 (−15 deficit)</td><td>Deploy additional maintenance technicians urgently</td></tr>
+        <tr><td><span class="pct-pill pill-red">HIGH</span></td><td>Packing</td><td>Plant 4</td><td>Packing attainment only 73.3%</td><td>Investigate packing line bottleneck</td></tr>
+        <tr><td><span class="pct-pill pill-red">HIGH</span></td><td>UPC</td><td>Plant 4,5</td><td>Power consumption above plan</td><td>Review TM and OE speed settings</td></tr>
+        <tr><td><span class="pct-pill pill-amber">MED</span></td><td>Production</td><td>Plant 9</td><td>45 machines vs planned 46; TM change pending</td><td>Implement TM 4.40→4.30 and restore machine</td></tr>
+        <tr><td><span class="pct-pill pill-amber">MED</span></td><td>Production</td><td>Plant 5</td><td>OE-1,2,3 below target speed</td><td>Calibrate OE speeds to 85,000 RPM</td></tr>
+        <tr><td><span class="pct-pill pill-green">INFO</span></td><td>Manpower</td><td>Plant 10,11</td><td>Training ongoing (19+11 persons)</td><td>Monitor and ensure trained staff deployed on floor</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <div>Shri Govindaraja Mills Pvt. Ltd. · Aruppukottai · <strong>Operations Management Report — April 2026</strong></div>
+  <div>Data covers Apr 21–23, 2026 · Prepared for Top Management</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════
+const plants=['P-4','P-5','P-6','P-7','P-9','P-10','P-11'];
+const days=['Apr 21','Apr 22','Apr 23'];
+
+const spinTarget=[4792.64,3517.02,6561.10,11993.47,10671.34,4731.40,5173.20];
+// daily spinning actual [plant][day]
+const spinDA=[[3895,3811,3586],[3358,3315,3308],[6338,6395,6350],[11209,11428,11434],[10057,10230,10148],[4379,4413,4445],[5015,5142,5082]];
+const spinActual=spinDA.map(r=>+(r.reduce((a,b)=>a+b,0)/3).toFixed(2)); // avg
+
+const packTarget=[4792.64,3517.02,6561.10,11993.47,10671.34,4731.40,5173.20];
+const packDA=[[3888,3136,3840],[3008,3152,3152],[6329,6329,6395],[10456,11264,11584],[10025,10130,10069],[4631,4596,4475],[4990,5126,4944]];
+const packActual=packDA.map(r=>+(r.reduce((a,b)=>a+b,0)/3).toFixed(2));
+
+const spinDailyTotal=[44251,44509,44353];
+const packDailyTotal=[43327,43733.56,44460.68];
+const overallTarget=47440.18;
+
+// manpower
+const mpProdT=[54,59,287,130,456,223,217];
+const mpProdA=[[49,45,47],[62,56,58],[285,282,283],[129,126,125],[450,454,455],[241,245,233],[231.5,223,224]];
+const mpMaintT=[3,11,91,24,145,60,63];
+const mpMaintA=[[1,0,1],[12,2,10],[80,20,76],[25,5,25],[144,68,140],[77.5,33,68],[80,24,70]];
+const mpProdAvg=mpProdA.map(r=>+(r.reduce((a,b)=>a+b,0)/3).toFixed(1));
+const mpMaintAvg=mpMaintA.map(r=>+(r.reduce((a,b)=>a+b,0)/3).toFixed(1));
+const mpDailyProd=[1447.5,1431,1425];
+const mpDailyMaint=[419.5,152,390];
+
+// UPC
+const upcT=[0.12,0.1159,0.1064,0.1070,0.1194,0.1155,0.1036];
+const upcDA=[[0.124769,0.127466,0.13332],[0.124992,0.129498,0.124109],[0.104587,0.106395,0.105637],[0.106871,0.107064,0.106236],[0.120828,0.119505,0.120457],[0.113494,0.115152,0.114898],[0.105857,0.102005,0.102661]];
+const upcActual=upcDA.map(r=>+(r.reduce((a,b)=>a+b,0)/3).toFixed(6));
+
+// ══════════════════════════════════════════════════════
+// DISTINCT PLANT COLOURS (7 clearly different)
+// ══════════════════════════════════════════════════════
+const pColors=['#1A5C96','#D44000','#2D7D4E','#7B2FBE','#0F7B7B','#C9963A','#C0392B'];
+// lighter fill versions for bars
+const pColorsFill=['rgba(26,92,150,0.82)','rgba(212,64,0,0.82)','rgba(45,125,78,0.82)','rgba(123,47,190,0.82)','rgba(15,123,123,0.82)','rgba(201,150,58,0.82)','rgba(192,57,43,0.82)'];
+
+const C={tgt:'rgba(107,95,82,0.55)',gridLine:'rgba(226,217,204,0.6)',gridTick:'#9C8F82'};
+
+const baseOpts={
+  responsive:true,
+  plugins:{legend:{labels:{font:{family:"'DM Sans',sans-serif",size:11},color:'#6B5F52',boxWidth:11,boxHeight:11}}},
+  scales:{
+    x:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11}}},
+    y:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11}}}
+  }
+};
+
+const chartInstances={};
+function mk(id,type,data,opts={}){
+  const el=document.getElementById(id); if(!el)return;
+  if(chartInstances[id]){chartInstances[id].destroy();}
+  chartInstances[id]=new Chart(el,{type,data,options:{...baseOpts,...opts}});
+}
+
+// ══════════════════════════════════════════════════════
+// OVERVIEW TAB
+// ══════════════════════════════════════════════════════
+mk('chSpinBar','bar',{labels:plants,datasets:[
+  {label:'Target',data:spinTarget,backgroundColor:C.tgt,borderRadius:4},
+  {label:'Actual',data:spinActual,backgroundColor:pColorsFill,borderRadius:4}
+]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
+mk('chPackBar','bar',{labels:plants,datasets:[
+  {label:'Target',data:packTarget,backgroundColor:C.tgt,borderRadius:4},
+  {label:'Actual',data:packActual,backgroundColor:pColorsFill,borderRadius:4}
+]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
+mk('chTrend','line',{labels:days,datasets:[
+  {label:'Target',data:[overallTarget,overallTarget,overallTarget],borderColor:'#9C8F82',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
+  {label:'Spinning Actual',data:spinDailyTotal,borderColor:'#1A5C96',backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',borderWidth:2.5,tension:.35,fill:true},
+  {label:'Packing Actual',data:packDailyTotal,borderColor:'#D44000',backgroundColor:'rgba(212,64,0,.08)',pointBackgroundColor:'#D44000',borderWidth:2.5,tension:.35,fill:true}
+]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
+mk('chMPDonut','doughnut',{labels:plants,datasets:[{data:mpProdAvg,backgroundColor:pColors,borderWidth:2,borderColor:'#fff',hoverOffset:6}]},
+{plugins:{legend:{position:'right',labels:{font:{family:"'DM Sans',sans-serif",size:11},color:'#6B5F52',boxWidth:10,boxHeight:10}}},scales:{}});
+
+// Plant attainment bars — distinct colours
+const pct=spinActual.map((a,i)=>+(a/spinTarget[i]*100).toFixed(1));
+const bc=document.getElementById('plantBars');
+plants.forEach((p,i)=>{
+  bc.innerHTML+=`<div class="plant-bar-row">
+    <div class="plant-bar-label" style="color:${pColors[i]}">${p}</div>
+    <div class="plant-bar-track">
+      <div class="plant-bar-fill" style="width:${pct[i]}%;background:${pColors[i]}"></div>
+    </div>
+    <div class="plant-bar-pct" style="color:${pColors[i]}">${pct[i]}%</div>
+  </div>`;
+});
+
+// ══════════════════════════════════════════════════════
+// DAY-WISE TAB
+// ══════════════════════════════════════════════════════
+let currentDay=21;
+let dwSpinChart,dwPackChart,dwMPPChart,dwMPMChart,dwUPCChart;
+
+function showDay(day,btn){
+  currentDay=day;
+  document.querySelectorAll('.day-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDayCharts();
+  renderDayTable();
+}
+
+function getIdx(day){return [21,22,23].indexOf(day)}
+
+function renderDayCharts(){
+  const d=currentDay;
+  const di=getIdx(d);
+  const isAll=(d==='all');
+  const dayLabel=isAll?'All Days (Avg)':'Apr '+d;
+  ['Spinning Production','Packing Production','Manpower Production','Manpower Maintenance','Unit per Count'].forEach((name,i)=>{
+    const ids=['titleDaySpinning','titleDayPacking','titleDayMPProd','titleDayMPMaint','titleDayUPC'];
+    const el=document.getElementById(ids[i]); if(el) el.textContent=name+' — '+dayLabel;
+  });
+
+  // KPIs
+  const spinT=spinTarget.reduce((a,b)=>a+b,0);
+  const packT=packTarget.reduce((a,b)=>a+b,0);
+  const kpiDiv=document.getElementById('dayKPIs');
+  if(isAll){
+    const sA=spinDailyTotal.reduce((a,b)=>a+b,0)/3;
+    const pA=packDailyTotal.reduce((a,b)=>a+b,0)/3;
+    const mpP=+(mpDailyProd.reduce((a,b)=>a+b,0)/3).toFixed(0);
+    const mpM=+(mpDailyMaint.reduce((a,b)=>a+b,0)/3).toFixed(0);
+    const mpPOver=mpP>1426; const mpMOver=mpM>397;
+    kpiDiv.innerHTML=`
+    <div class="kpi-card red"><div class="kpi-label">Spinning Avg/Day</div><div class="kpi-value">${Math.round(sA).toLocaleString()}</div><div class="kpi-sub">Target: ${Math.round(overallTarget).toLocaleString()}</div><div class="kpi-badge badge-red">▼ ${(100-sA/overallTarget*100).toFixed(1)}% below</div></div>
+    <div class="kpi-card red"><div class="kpi-label">Packing Avg/Day</div><div class="kpi-value">${Math.round(pA).toLocaleString()}</div><div class="kpi-sub">Target: ${Math.round(overallTarget).toLocaleString()}</div><div class="kpi-badge badge-red">▼ ${(100-pA/overallTarget*100).toFixed(1)}% below</div></div>
+    <div class="kpi-card ${mpPOver?'red':'green'}"><div class="kpi-label">MP Prod Avg</div><div class="kpi-value">${mpP.toLocaleString()}</div><div class="kpi-sub">Target: 1,426</div><div class="kpi-badge ${mpPOver?'badge-red':'badge-green'}">${mpPOver?'▲ Surplus (over-utilised)':'▼ Under-utilised'}</div></div>
+    <div class="kpi-card ${mpMOver?'red':'green'}"><div class="kpi-label">MP Maint Avg</div><div class="kpi-value">${mpM.toLocaleString()}</div><div class="kpi-sub">Target: 397</div><div class="kpi-badge ${mpMOver?'badge-red':'badge-green'}">${mpMOver?'▲ Surplus (over-utilised)':'▼ Under-utilised'}</div></div>`;
+  } else {
+    const sA=spinDA.map(r=>r[di]).reduce((a,b)=>a+b,0);
+    const pA=packDA.map(r=>r[di]).reduce((a,b)=>a+b,0);
+    const mpP=mpDailyProd[di]; const mpM=mpDailyMaint[di];
+    const mpPOver=mpP>1426; const mpMOver=mpM>397;
+    kpiDiv.innerHTML=`
+    <div class="kpi-card red"><div class="kpi-label">Spinning Total — Apr ${d}</div><div class="kpi-value">${Math.round(sA).toLocaleString()}</div><div class="kpi-sub">Target: ${Math.round(overallTarget).toLocaleString()}</div><div class="kpi-badge badge-red">▼ ${(100-sA/overallTarget*100).toFixed(1)}% below</div></div>
+    <div class="kpi-card red"><div class="kpi-label">Packing Total — Apr ${d}</div><div class="kpi-value">${Math.round(pA).toLocaleString()}</div><div class="kpi-sub">Target: ${Math.round(overallTarget).toLocaleString()}</div><div class="kpi-badge badge-red">▼ ${(100-pA/overallTarget*100).toFixed(1)}% below</div></div>
+    <div class="kpi-card ${mpPOver?'red':'green'}"><div class="kpi-label">MP Production — Apr ${d}</div><div class="kpi-value">${mpP.toLocaleString()}</div><div class="kpi-sub">Target: 1,426</div><div class="kpi-badge ${mpPOver?'badge-red':'badge-green'}">${mpPOver?'▲ Surplus (over-utilised)':'▼ Under-utilised'}</div></div>
+    <div class="kpi-card ${mpMOver?'red':'green'}"><div class="kpi-label">MP Maintenance — Apr ${d}</div><div class="kpi-value">${mpM.toLocaleString()}</div><div class="kpi-sub">Target: 397</div><div class="kpi-badge ${mpMOver?'badge-red':'badge-green'}">${mpMOver?'▲ Surplus (over-utilised)':'▼ Under-utilised'}</div></div>`;
+  }
+
+  // Spinning chart
+  const sAct=isAll?spinActual:spinDA.map(r=>r[di]);
+  mk('chDaySpinning','bar',{labels:plants,datasets:[
+    {label:'Target',data:spinTarget,backgroundColor:C.tgt,borderRadius:4},
+    {label:'Actual',data:sAct,backgroundColor:pColorsFill,borderRadius:4}
+  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
+  // Packing chart
+  const pAct=isAll?packActual:packDA.map(r=>r[di]);
+  mk('chDayPacking','bar',{labels:plants,datasets:[
+    {label:'Target',data:packTarget,backgroundColor:C.tgt,borderRadius:4},
+    {label:'Actual',data:pAct,backgroundColor:pColorsFill,borderRadius:4}
+  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
+  // MP Prod chart — green=under(efficient), red=over
+  const mpPA=isAll?mpProdAvg:mpProdA.map(r=>r[di]);
+  const mpPColors=mpPA.map((a,i)=>a<=mpProdT[i]?'rgba(45,125,78,0.82)':'rgba(192,57,43,0.82)');
+  mk('chDayMPProd','bar',{labels:plants,datasets:[
+    {label:'Target',data:mpProdT,backgroundColor:C.tgt,borderRadius:4},
+    {label:'Actual',data:mpPA,backgroundColor:mpPColors,borderRadius:4}
+  ]});
+
+  // MP Maint chart — green=under, red=over
+  const mpMA=isAll?mpMaintAvg:mpMaintA.map(r=>r[di]);
+  const mpMColors=mpMA.map((a,i)=>a<=mpMaintT[i]?'rgba(45,125,78,0.82)':'rgba(192,57,43,0.82)');
+  mk('chDayMPMaint','bar',{labels:plants,datasets:[
+    {label:'Target',data:mpMaintT,backgroundColor:C.tgt,borderRadius:4},
+    {label:'Actual',data:mpMA,backgroundColor:mpMColors,borderRadius:4}
+  ]});
+
+  // UPC chart
+  const upcA=isAll?upcActual:upcDA.map(r=>r[di]);
+  mk('chDayUPC','bar',{labels:plants,datasets:[
+    {label:'Target',data:upcT,backgroundColor:C.tgt,borderRadius:4},
+    {label:'Actual',data:upcA,backgroundColor:upcA.map((a,i)=>a>upcT[i]?'rgba(192,57,43,0.82)':'rgba(45,125,78,0.82)'),borderRadius:4}
+  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(3)}}}});
+}
+
+function renderDayTable(){
+  const d=currentDay;
+  const di=getIdx(d);
+  const isAll=(d==='all');
+  const tbody=document.getElementById('dayTableBody');
+  const title=document.getElementById('dayTableTitle');
+  let rows='';
+  const daysToShow=isAll?[0,1,2]:[di];
+  const dayLabels=['Apr 21','Apr 22','Apr 23'];
+  daysToShow.forEach(i=>{
+    plants.forEach((p,pi)=>{
+      const sT=spinTarget[pi].toFixed(0);const sA=spinDA[pi][i];
+      const sPct=(sA/spinTarget[pi]*100).toFixed(1);
+      const ptT=packTarget[pi].toFixed(0);const pA=packDA[pi][i];
+      const ppPct=(pA/packTarget[pi]*100).toFixed(1);
+      const mpPT=mpProdT[pi];const mpPA=mpProdA[pi][i];
+      const mpMT=mpMaintT[pi];const mpMA=mpMaintA[pi][i];
+      const uTA=upcT[pi].toFixed(4);const uA=upcDA[pi][i].toFixed(4);
+      const sBad=parseFloat(sPct)<100;const pBad=parseFloat(ppPct)<100;
+      rows+=`<tr>
+        <td>${dayLabels[i]}</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
+        <td>${sT}</td><td class="${sBad?'val-neg':''}">${sA.toLocaleString()}</td><td><span class="pct-pill ${sBad?'pill-red':'pill-green'}">${sPct}%</span></td>
+        <td>${ptT}</td><td class="${pBad?'val-neg':''}">${pA.toLocaleString()}</td><td><span class="pct-pill ${pBad?'pill-red':'pill-green'}">${ppPct}%</span></td>
+        <td>${mpPT}</td><td class="${mpPA<mpPT?'val-pos':'val-neg'}">${mpPA}</td>
+        <td>${mpMT}</td><td class="${mpMA<mpMT?'val-pos':'val-neg'}">${mpMA}</td>
+        <td>${uTA}</td><td class="${parseFloat(uA)>parseFloat(uTA)?'val-neg':'val-pos'}">${uA}</td>
+      </tr>`;
+    });
+    if(daysToShow.length>1) rows+=`<tr style="background:var(--border);height:3px"><td colspan="14"></td></tr>`;
+  });
+  tbody.innerHTML=rows;
+  title.textContent=isAll?'All Days — Plant-wise Summary':`Apr ${d} — Plant-wise Summary`;
+}
+
+renderDayCharts();
+renderDayTable();
+
+// ══════════════════════════════════════════════════════
+// PRODUCTION TAB — individual plant trend
+// ══════════════════════════════════════════════════════
+let activePlantIdx=0;
+const pillBar=document.getElementById('plantPills');
+plants.forEach((p,i)=>{
+  const btn=document.createElement('button');
+  btn.className='plant-pill'+(i===0?' active':'');
+  btn.textContent=p;
+  btn.style.borderColor=pColors[i];
+  if(i===0){btn.style.background=pColors[i];btn.style.color='#fff';}
+  btn.onclick=()=>{
+    activePlantIdx=i;
+    document.querySelectorAll('.plant-pill').forEach((b,bi)=>{
+      b.classList.toggle('active',bi===i);
+      b.style.background=bi===i?pColors[bi]:'#fff';
+      b.style.color=bi===i?'#fff':pColors[bi];
+      b.style.borderColor=pColors[bi];
+    });
+    drawPlantTrend();
+  };
+  pillBar.appendChild(btn);
+});
+
+function drawPlantTrend(){
+  const i=activePlantIdx;
+  const tgtLine=[spinTarget[i],spinTarget[i],spinTarget[i]];
+  mk('chPlantTrend','line',{labels:days,datasets:[
+    {label:'Target',data:tgtLine,borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
+    {label:`${plants[i]} Actual`,data:spinDA[i],borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:5,borderWidth:2.5,tension:.3,fill:true}
+  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+}
+drawPlantTrend();
+
+// Grouped day bar
+mk('chDailySpinning','bar',{
+  labels:days,
+  datasets:plants.map((p,i)=>({label:p,data:spinDA[i],backgroundColor:pColorsFill[i],borderRadius:3}))
+},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
+// ══════════════════════════════════════════════════════
+// MANPOWER TAB
+// ══════════════════════════════════════════════════════
+// Green = actual <= target (efficient/under), Red = actual > target (over)
+const mpPColors_avg=mpProdAvg.map((a,i)=>a<=mpProdT[i]?'rgba(45,125,78,0.82)':'rgba(192,57,43,0.82)');
+const mpMColors_avg=mpMaintAvg.map((a,i)=>a<=mpMaintT[i]?'rgba(45,125,78,0.82)':'rgba(192,57,43,0.82)');
+
+mk('chMPProd','bar',{labels:plants,datasets:[
+  {label:'Target',data:mpProdT,backgroundColor:C.tgt,borderRadius:4},
+  {label:'Actual',data:mpProdAvg,backgroundColor:mpPColors_avg,borderRadius:4}
+]});
+
+mk('chMPMaint','bar',{labels:plants,datasets:[
+  {label:'Target',data:mpMaintT,backgroundColor:C.tgt,borderRadius:4},
+  {label:'Actual',data:mpMaintAvg,backgroundColor:mpMColors_avg,borderRadius:4}
+]});
+
+mk('chMPTrend','line',{labels:days,datasets:[
+  {label:'Prod Target',data:[1426,1426,1426],borderColor:'#9C8F82',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
+  {label:'Prod Actual',data:mpDailyProd,borderColor:'#1A5C96',backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',borderWidth:2.5,tension:.3,fill:true},
+  {label:'Maint Target',data:[397,397,397],borderColor:'#C0392B',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
+  {label:'Maint Actual',data:mpDailyMaint,borderColor:'#D44000',backgroundColor:'rgba(212,64,0,.08)',pointBackgroundColor:'#D44000',borderWidth:2.5,tension:.3,fill:true}
+]});
+
+// MP summary table with color-coded gaps
+const mpTbody=document.getElementById('mpSummaryBody');
+const mpNotes=['—','—','—','—','—','Training 19 persons','Training 11 persons'];
+plants.forEach((p,i)=>{
+  const pGap=mpProdAvg[i]-mpProdT[i];
+  const mGap=mpMaintAvg[i]-mpMaintT[i];
+  const pCls=pGap<=0?'val-pos':'val-neg';
+  const mCls=mGap<=0?'val-pos':'val-neg';
+  mpTbody.innerHTML+=`<tr>
+    <td style="color:${pColors[i]};font-weight:700">${p}</td>
+    <td>${mpProdT[i]}</td><td>${mpProdAvg[i]}</td><td class="${pCls}">${pGap>0?'+':''}${pGap.toFixed(1)}</td>
+    <td>${mpMaintT[i]}</td><td>${mpMaintAvg[i]}</td><td class="${mCls}">${mGap>0?'+':''}${mGap.toFixed(1)}</td>
+    <td style="font-family:'DM Sans',sans-serif;font-size:12px">${mpNotes[i]}</td>
+  </tr>`;
+});
+
+// ══════════════════════════════════════════════════════
+// UPC TAB
+// ══════════════════════════════════════════════════════
+mk('chUPC','bar',{labels:plants,datasets:[
+  {label:'Target',data:upcT,backgroundColor:C.tgt,borderRadius:4},
+  {label:'Actual',data:upcActual,backgroundColor:upcActual.map((a,i)=>a>upcT[i]?'rgba(192,57,43,0.82)':'rgba(45,125,78,0.82)'),borderRadius:4}
+]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(3)}}}});
+
+const upcDiff=upcActual.map((a,i)=>+(a-upcT[i]).toFixed(5));
+mk('chUPCDev','bar',{labels:plants,datasets:[{
+  label:'UPC Deviation',data:upcDiff,
+  backgroundColor:upcDiff.map(v=>v>0?'rgba(192,57,43,0.82)':'rgba(45,125,78,0.82)'),borderRadius:4
+}]},{plugins:{legend:{display:false}},scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(4)}}}});
+
+mk('chUPCTrend','line',{labels:days,datasets:plants.map((p,i)=>({
+  label:p,data:upcDA[i],borderColor:pColors[i],borderWidth:2,tension:.3,pointRadius:4,pointBackgroundColor:pColors[i]
+}))},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(3)}}}});
+
+// ══════════════════════════════════════════════════════
+// COMPARATIVE TAB
+// ══════════════════════════════════════════════════════
+const spinPct=spinActual.map((a,i)=>+(a/spinTarget[i]*100).toFixed(1));
+const packPct=packActual.map((a,i)=>+(a/packTarget[i]*100).toFixed(1));
+mk('chCompare','bar',{labels:plants,datasets:[
+  {label:'Spinning %',data:spinPct,backgroundColor:pColorsFill,borderRadius:4},
+  {label:'Packing %',data:packPct,backgroundColor:pColors.map(c=>c+'88'),borderRadius:4}
+]},{scales:{...baseOpts.scales,y:{min:60,max:105,grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11},callback:v=>v+'%'}}}});
+
+new Chart(document.getElementById('chRadar'),{
+  type:'radar',
+  data:{labels:['Spinning\nProduction','Packing\nProduction','Manpower\n(Production)','UPC\nEfficiency'],datasets:[
+    {label:'Achieved %',data:[93.7,91.8,99.9,96.5],backgroundColor:'rgba(26,92,150,0.15)',borderColor:'#1A5C96',pointBackgroundColor:'#1A5C96',borderWidth:2,pointRadius:4},
+    {label:'Target (100%)',data:[100,100,100,100],backgroundColor:'rgba(107,95,82,0.06)',borderColor:'rgba(107,95,82,0.4)',borderDash:[4,3],pointRadius:0,borderWidth:1.5}
+  ]},
+  options:{responsive:true,plugins:{legend:{labels:{font:{family:"'DM Sans',sans-serif",size:11},color:'#6B5F52',boxWidth:11,boxHeight:11}}},
+  scales:{r:{min:80,max:105,grid:{color:'rgba(226,217,204,0.6)'},ticks:{color:'#9C8F82',font:{size:10},backdropColor:'transparent',stepSize:5},pointLabels:{font:{family:"'DM Sans',sans-serif",size:11},color:'#6B5F52'}}}}
+});
+
+const lossKgs=[952.64,365.02,166.10,409.47,601.42,255.88,228.96];
+mk('chLoss','bar',{labels:plants,datasets:[{
+  label:'Loss (kgs)',data:lossKgs,
+  backgroundColor:lossKgs.map((v,i)=>pColorsFill[i]),borderRadius:5
+}]},{indexAxis:'y',plugins:{legend:{display:false}},scales:{y:{grid:{display:false},ticks:{color:C.gridTick,font:{size:11}}},x:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11}}}}});
+
+// ══════════════════════════════════════════════════════
+// TAB SWITCHER
+// ══════════════════════════════════════════════════════
+function switchTab(id,el){
+  document.querySelectorAll('.content').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  el.classList.add('active');
+  // re-draw charts that may have been in hidden state
+  if(id==='production'){drawPlantTrend();}
+}
+</script>
+</body>
+</html>
