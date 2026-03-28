@@ -397,25 +397,39 @@ let G={}; // global data store
 let currentDay='all';
 
 function buildDashboard(daily,remarks){
-  // Extract unique plants and dates in order
+  // Extract unique plants
   const plants=[...new Set(daily.map(r=>r.plant))];
-  const dates=[...new Set(daily.map(r=>r.date))].sort((a,b)=>Number(a)-Number(b));
-  const month=inferMonth(daily);
+
+  // Dates are stored as "DD MMM YY" — sort chronologically
+  const monthOrder=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function dateToNum(d){
+    // d = "21 Apr 26"
+    const parts=d.trim().split(' ');
+    const day=parseInt(parts[0]);
+    const mon=monthOrder.indexOf(parts[1]);
+    const yr=parseInt(parts[2]);
+    return yr*10000+mon*100+day;
+  }
+  const dates=[...new Set(daily.map(r=>r.date.trim()))].sort((a,b)=>dateToNum(a)-dateToNum(b));
+
+  // Infer reporting month/year label from first date e.g. "Apr 2026"
+  const firstParts=dates[0].trim().split(' ');
+  const monthLabel=firstParts[1]+' 20'+firstParts[2]; // "Apr 2026"
 
   // Build lookup: data[plant][date] = row
   const data={};
   plants.forEach(p=>{data[p]={};});
-  daily.forEach(r=>{data[r.plant][r.date]=r;});
+  daily.forEach(r=>{data[r.plant][r.date.trim()]=r;});
 
-  // Store globally
-  G={plants,dates,data,remarks,month};
+  // Store globally — no separate 'month', dates are self-contained
+  G={plants,dates,data,remarks,monthLabel};
 
   // Update header
-  document.getElementById('heroPeriod').textContent=month;
-  document.getElementById('heroRange').textContent=`Days Reported: ${dates[0]} – ${dates[dates.length-1]}`;
-  document.getElementById('ovTag').textContent=`${dates.length}-Day Actuals · ${month}`;
-  document.getElementById('dwTag').textContent=dates.map(d=>d).join(' · ');
-  document.getElementById('footerRange').textContent=`Data covers ${month} ${dates[0]}–${dates[dates.length-1]} · Prepared for Top Management`;
+  document.getElementById('heroPeriod').textContent=monthLabel;
+  document.getElementById('heroRange').textContent=`Days: ${dates[0]} – ${dates[dates.length-1]}`;
+  document.getElementById('ovTag').textContent=`${dates.length}-Day Actuals · ${monthLabel}`;
+  document.getElementById('dwTag').textContent=dates.join(' · ');
+  document.getElementById('footerRange').textContent=`Data covers ${dates[0]} – ${dates[dates.length-1]} · Prepared for Top Management`;
   document.getElementById('dataBadge').innerHTML=`<span class="data-badge">✓ Live from data.csv</span>`;
 
   // Build day filter buttons
@@ -424,7 +438,7 @@ function buildDashboard(daily,remarks){
   dates.forEach((d,i)=>{
     const b=document.createElement('button');
     b.className='day-btn'+(i===0?' active':'');
-    b.textContent=`${month} ${d}`;
+    b.textContent=d; // already "21 Apr 26"
     b.onclick=()=>{currentDay=d;document.querySelectorAll('.day-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderDayTab();};
     btnDiv.appendChild(b);
   });
@@ -440,13 +454,6 @@ function buildDashboard(daily,remarks){
   buildManpower();
   buildUPC();
   buildComparative();
-}
-
-function inferMonth(daily){
-  // Try to infer month from data — default fallback
-  const now=new Date();
-  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return months[now.getMonth()]+' '+now.getFullYear();
 }
 
 // Helper: get value for a plant+date, field
@@ -513,7 +520,7 @@ function buildOverview(){
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   // Trend
-  const dayLabels=dates.map(d=>`${G.month} ${d}`);
+  const dayLabels=dates.map(d=>d);
   mk('chTrend','line',{labels:dayLabels,datasets:[
     {label:'Target',data:dates.map(()=>spinTgtDay),borderColor:'#9C8F82',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
     {label:'Spinning Actual',data:spinAvgAct,borderColor:'#1A5C96',backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',borderWidth:2.5,tension:.35,fill:true},
@@ -541,17 +548,17 @@ function buildOverview(){
 // DAY-WISE TAB
 // ══════════════════════════════════════════════════════
 function renderDayTab(){
-  const {plants,dates,month}=G;
+  const {plants,dates}=G;
   const isAll=currentDay==='all';
   const selDates=isAll?dates:[currentDay];
-  const label=isAll?'All Days (Avg)':`${month} ${currentDay}`;
+  const label=isAll?'All Days (Avg)':currentDay;
 
   ['Spinning Production','Packing Production','Manpower Production','Manpower Maintenance','Unit per Count']
   .forEach((n,i)=>{
     const ids=['titleDaySpinning','titleDayPacking','titleDayMPProd','titleDayMPMaint','titleDayUPC'];
     const el=document.getElementById(ids[i]);if(el)el.textContent=`${n} — ${label}`;
   });
-  document.getElementById('dayTableTitle').textContent=isAll?'All Days — Plant-wise Summary':`${month} ${currentDay} — Plant-wise Summary`;
+  document.getElementById('dayTableTitle').textContent=isAll?'All Days — Plant-wise Summary':`${currentDay} — Plant-wise Summary`;
 
   // Aggregate values for selected day(s)
   const getV=(p,field)=>isAll?avg(p,field):val(p,currentDay,field);
@@ -602,7 +609,7 @@ function renderDayTab(){
       const sPct=(sT?sA/sT*100:0).toFixed(1);
       const ppPct=(ptT?pA/ptT*100:0).toFixed(1);
       tbody.innerHTML+=`<tr>
-        <td>${G.month} ${d}</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
+        <td>${d}</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
         <td>${fmt(sT)}</td><td class="val-neg">${fmt(sA)}</td><td>${pill(sPct+'%',parseFloat(sPct)<100?'pill-red':'pill-green')}</td>
         <td>${fmt(ptT)}</td><td class="val-neg">${fmt(pA)}</td><td>${pill(ppPct+'%',parseFloat(ppPct)<100?'pill-red':'pill-green')}</td>
         <td>${fmt(mpPTv)}</td><td class="${mpPAv<=mpPTv?'val-pos':'val-neg'}">${fmt(mpPAv,1)}</td>
@@ -619,8 +626,8 @@ function renderDayTab(){
 // ══════════════════════════════════════════════════════
 let activePlantIdx=0;
 function buildProduction(){
-  const {plants,dates,month}=G;
-  const dayLabels=dates.map(d=>`${month} ${d}`);
+  const {plants,dates}=G;
+  const dayLabels=dates.map(d=>d);
 
   // Plant pills
   const pillBar=document.getElementById('plantPills');pillBar.innerHTML='';
@@ -655,7 +662,7 @@ function buildProduction(){
   dates.forEach(d=>{
     const overTgt=plants.reduce((a,p)=>a+val(p,d,'spin_target'),0);
     const overAct=plants.reduce((a,p)=>a+val(p,d,'spin_actual'),0);
-    spinBody.innerHTML+=`<tr><td>${month} ${d}</td>${plants.map(p=>`<td>${fmt(val(p,d,'spin_target'),1)}</td><td class="val-neg">${fmt(val(p,d,'spin_actual'))}</td>`).join('')}<td>${fmt(overTgt,1)}</td><td class="val-neg">${fmt(overAct)}</td></tr>`;
+    spinBody.innerHTML+=`<tr><td>${d}</td>${plants.map(p=>`<td>${fmt(val(p,d,'spin_target'),1)}</td><td class="val-neg">${fmt(val(p,d,'spin_actual'))}</td>`).join('')}<td>${fmt(overTgt,1)}</td><td class="val-neg">${fmt(overAct)}</td></tr>`;
   });
 
   // Packing date+plant table
@@ -665,7 +672,7 @@ function buildProduction(){
   dates.forEach(d=>{
     const overTgt=plants.reduce((a,p)=>a+val(p,d,'pack_target'),0);
     const overAct=plants.reduce((a,p)=>a+val(p,d,'pack_actual'),0);
-    packBody.innerHTML+=`<tr><td>${month} ${d}</td>${plants.map(p=>`<td>${fmt(val(p,d,'pack_target'),1)}</td><td class="val-neg">${fmt(val(p,d,'pack_actual'))}</td>`).join('')}<td>${fmt(overTgt,1)}</td><td class="val-neg">${fmt(overAct)}</td></tr>`;
+    packBody.innerHTML+=`<tr><td>${d}</td>${plants.map(p=>`<td>${fmt(val(p,d,'pack_target'),1)}</td><td class="val-neg">${fmt(val(p,d,'pack_actual'))}</td>`).join('')}<td>${fmt(overTgt,1)}</td><td class="val-neg">${fmt(overAct)}</td></tr>`;
   });
 
   // Summary with remarks
@@ -686,9 +693,9 @@ function buildProduction(){
 }
 
 function drawPlantTrend(){
-  const {plants,dates,month}=G;
+  const {plants,dates}=G;
   const i=activePlantIdx;const p=plants[i];
-  const dayLabels=dates.map(d=>`${month} ${d}`);
+  const dayLabels=dates.map(d=>d);
   const tgt=val(p,dates[0],'spin_target');
   mk('chPlantTrend','line',{labels:dayLabels,datasets:[
     {label:'Target',data:dates.map(()=>tgt),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
@@ -705,7 +712,7 @@ function buildManpower(){
   const mpProdA=plants.map(p=>avg(p,'mp_prod_actual'));
   const mpMaintT=plants.map(p=>val(p,dates[0],'mp_maint_target'));
   const mpMaintA=plants.map(p=>avg(p,'mp_maint_actual'));
-  const dayLabels=dates.map(d=>`${G.month} ${d}`);
+  const dayLabels=dates.map(d=>d);
   const dailyProd=dates.map(d=>sumPlants(d,'mp_prod_actual'));
   const dailyMaint=dates.map(d=>sumPlants(d,'mp_maint_actual'));
   const totalProdT=mpProdT.reduce((a,b)=>a+b,0);
@@ -743,11 +750,11 @@ function buildManpower(){
 // UPC TAB
 // ══════════════════════════════════════════════════════
 function buildUPC(){
-  const {plants,dates,month}=G;
+  const {plants,dates}=G;
   const upcT=plants.map(p=>val(p,dates[0],'upc_target'));
   const upcA=plants.map(p=>avg(p,'upc_actual'));
   const upcDiff=upcA.map((a,i)=>+(a-upcT[i]).toFixed(5));
-  const dayLabels=dates.map(d=>`${month} ${d}`);
+  const dayLabels=dates.map(d=>d);
 
   mk('chUPC','bar',{labels:plants,datasets:[{label:'Target',data:upcT,backgroundColor:C.tgt,borderRadius:4},{label:'Actual',data:upcA,backgroundColor:upcA.map((a,i)=>a>upcT[i]?C.red:C.green),borderRadius:4}]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(3)}}}});
   mk('chUPCDev','bar',{labels:plants,datasets:[{label:'UPC Deviation',data:upcDiff,backgroundColor:upcDiff.map(v=>v>0?C.red:C.green),borderRadius:4}]},{plugins:{legend:{display:false}},scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(4)}}}});
