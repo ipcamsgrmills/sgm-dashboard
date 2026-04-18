@@ -208,13 +208,13 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
   </div>
   <div class="kpi-grid" id="kpiOverview"></div>
   <div class="chart-grid">
-    <div class="chart-card"><div class="chart-title">Spinning Production — Plant-wise</div><div class="chart-sub">Period average actual vs daily target (kgs)</div><canvas id="chSpinBar" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title">AutoConer Production — Plant-wise</div><div class="chart-sub">Period average actual vs daily target (kgs)</div><canvas id="chSpinBar" height="230"></canvas></div>
     <div class="chart-card"><div class="chart-title">Packing Production — Plant-wise</div><div class="chart-sub">Period average actual vs daily target (kgs)</div><canvas id="chPackBar" height="230"></canvas></div>
-    <div class="chart-card"><div class="chart-title">Daily Overall Production Trend</div><div class="chart-sub">Spinning &amp; Packing daily totals vs target</div><canvas id="chTrend" height="200"></canvas></div>
+    <div class="chart-card"><div class="chart-title">Daily Overall Production Trend</div><div class="chart-sub">AutoConer &amp; Packing daily totals vs target</div><canvas id="chTrend" height="200"></canvas></div>
     <div class="chart-card"><div class="chart-title">Manpower Distribution</div><div class="chart-sub">Production headcount actual — plant split</div><canvas id="chMPDonut" height="230"></canvas></div>
   </div>
   <div class="table-wrap">
-    <div class="table-header"><div class="table-title">Plant-wise Spinning Attainment %</div><div class="table-note">Period average vs daily target</div></div>
+    <div class="table-header"><div class="table-title">Plant-wise AutoConer Attainment %</div><div class="table-note">Period average vs daily target</div></div>
     <div style="padding:18px 22px" id="plantBars"></div>
   </div>
 </div>
@@ -238,7 +238,7 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
   </div>
   <div class="kpi-grid" id="dayKPIs"></div>
   <div class="chart-grid">
-    <div class="chart-card"><div class="chart-title" id="titleDaySpinning">Spinning Production</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDaySpinning" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title" id="titleDayAutoConer">AutoConer Production</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDayAutoConer" height="230"></canvas></div>
     <div class="chart-card"><div class="chart-title" id="titleDayPacking">Packing Production</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDayPacking" height="230"></canvas></div>
     <div class="chart-card"><div class="chart-title" id="titleDaySales">Sales</div><div class="chart-sub">Plant-wise target vs actual (kgs)</div><canvas id="chDaySales" height="230"></canvas></div>
     <div class="chart-card"><div class="chart-title" id="titleDayTurn">Turnover</div><div class="chart-sub">Plant-wise target vs actual (₹ Lakhs)</div><canvas id="chDayTurn" height="230"></canvas></div>
@@ -250,7 +250,7 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
     <div style="overflow-x:auto"><table id="dayTable">
       <thead><tr>
         <th>Date</th><th>Plant</th>
-        <th>Spin Tgt</th><th>Spin Act</th><th>Spin %</th>
+        <th>ACP Tgt</th><th>ACP Act</th><th>ACP %</th>
         <th>Pack Tgt</th><th>Pack Act</th><th>Pack %</th>
         <th>Sales Tgt</th><th>Sales Act</th><th>Sales %</th>
         <th>Turn Tgt(₹L)</th><th>Turn Act(₹L)</th>
@@ -265,20 +265,20 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 
 <!-- ===== PRODUCTION KGS ===== -->
 <div id="tab-production" class="content">
-  <div class="section-head"><div class="section-title">Production — Kgs Analysis</div><div class="section-tag">Spinning &amp; Packing</div></div>
+  <div class="section-head"><div class="section-title">Production — Kgs Analysis</div><div class="section-tag">AutoConer &amp; Packing</div></div>
   <div class="chart-card full" style="margin-bottom:20px">
     <div class="chart-title">Individual Plant — Daily Trend (Target vs Actual)</div>
-    <div class="chart-sub">Select a plant to view its spinning production trend</div>
+    <div class="chart-sub">Select a plant to view its AutoConer production trend</div>
     <div class="plant-select-bar" id="plantPills"></div>
     <canvas id="chPlantTrend" height="220"></canvas>
   </div>
   <div class="chart-card full" style="margin-bottom:20px">
-    <div class="chart-title">All Plants — Day-wise Spinning Production</div>
+    <div class="chart-title">All Plants — Day-wise AutoConer Production</div>
     <div class="chart-sub">Grouped by day — plant-coded bars</div>
-    <canvas id="chDailySpinning" height="220"></canvas>
+    <canvas id="chDailyAutoConer" height="220"></canvas>
   </div>
   <div class="table-wrap" style="margin-bottom:22px">
-    <div class="table-header"><div class="table-title">Date-wise &amp; Plant-wise Spinning Production</div><div class="table-note">kgs · Target | Actual</div></div>
+    <div class="table-header"><div class="table-title">Date-wise &amp; Plant-wise AutoConer Production</div><div class="table-note">kgs · Target | Actual</div></div>
     <div style="overflow-x:auto"><table><thead id="prodSpinHead"></thead><tbody id="prodSpinBody"></tbody></table></div>
   </div>
   <div class="table-wrap" style="margin-bottom:22px">
@@ -286,7 +286,7 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
     <div style="overflow-x:auto"><table><thead id="prodPackHead"></thead><tbody id="prodPackBody"></tbody></table></div>
   </div>
   <div class="table-wrap">
-    <div class="table-header"><div class="table-title">Spinning Summary — with Key Remarks</div><div class="table-note">Hover remark tag to see full reason</div></div>
+    <div class="table-header"><div class="table-title">AutoConer Summary — with Key Remarks</div><div class="table-note">Hover remark tag to see full reason</div></div>
     <table>
       <thead><tr><th>Plant</th><th>Avg Target (kgs)</th><th>Avg Actual (kgs)</th><th>Avg Loss/Gain</th><th>Avg Loss %</th><th>Key Remark</th></tr></thead>
       <tbody id="prodRemarksBody"></tbody>
@@ -416,14 +416,14 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
   <div class="compare-card">
     <div class="compare-head"><h3>Plant Performance Scorecard</h3><p>Composite view — Production, Sales, Turnover, Manpower &amp; Power Efficiency</p></div>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th>Plant</th><th>Spin Avg</th><th>Spin %</th><th>Pack Avg</th><th>Pack %</th><th>Sales Total</th><th>Sales %</th><th>Turnover(₹L)</th><th>Turn %</th><th>Prod MP Gap</th><th>Maint MP Gap</th><th>UPC Status</th></tr></thead>
+      <thead><tr><th>Plant</th><th>ACP Avg</th><th>ACP %</th><th>Pack Avg</th><th>Pack %</th><th>Sales Total</th><th>Sales %</th><th>Turnover(₹L)</th><th>Turn %</th><th>Prod MP Gap</th><th>Maint MP Gap</th><th>UPC Status</th></tr></thead>
       <tbody id="comparativeBody"></tbody>
     </table></div>
   </div>
   <div class="chart-grid">
-    <div class="chart-card"><div class="chart-title">Production Attainment % by Plant</div><div class="chart-sub">Spinning vs Packing side by side</div><canvas id="chCompare" height="240"></canvas></div>
+    <div class="chart-card"><div class="chart-title">Production Attainment % by Plant</div><div class="chart-sub">AutoConer vs Packing side by side</div><canvas id="chCompare" height="240"></canvas></div>
     <div class="chart-card"><div class="chart-title">Sales &amp; Turnover Achievement %</div><div class="chart-sub">Plant-wise cumulative achievement</div><canvas id="chSalesTurnComp" height="240"></canvas></div>
-    <div class="chart-card full"><div class="chart-title">Loss Analysis — Spinning Kgs by Plant</div><div class="chart-sub">Larger bar = more attention needed (avg daily loss)</div><canvas id="chLoss" height="220"></canvas></div>
+    <div class="chart-card full"><div class="chart-title">Loss Analysis — AutoConer Kgs by Plant</div><div class="chart-sub">Larger bar = more attention needed (avg daily loss)</div><canvas id="chLoss" height="220"></canvas></div>
   </div>
 </div>
 
@@ -544,7 +544,7 @@ function processData(rows){
   const dateLabels=dates.map(dateLabel);
 
   // Build lookup[plant][date][field]
-  const fields=['spin_target','spin_actual','pack_target','pack_actual',
+  const fields=['acp_target','acp_actual','pack_target','pack_actual',
     'sales_target','sales_actual','turnover_target','turnover_actual',
     'mp_prod_target','mp_prod_actual','mp_maint_target','mp_maint_actual',
     'upc_target','upc_actual'];
@@ -557,9 +557,9 @@ function processData(rows){
   });
 
   // Plant constant targets (avg across dates)
-  const spinT={},packT={},mpProdT={},mpMaintT={},upcT={};
+  const acpT={},packT={},mpProdT={},mpMaintT={},upcT={};
   plants.forEach(p=>{
-    spinT[p]=avg(dates.map(d=>lk[p][d]['spin_target']));
+    acpT[p]=avg(dates.map(d=>lk[p][d]['acp_target']));
     packT[p]=avg(dates.map(d=>lk[p][d]['pack_target']));
     mpProdT[p]=avg(dates.map(d=>lk[p][d]['mp_prod_target']));
     mpMaintT[p]=avg(dates.map(d=>lk[p][d]['mp_maint_target']));
@@ -577,7 +577,7 @@ function processData(rows){
   const periodStr=fm===lm&&fy===ly?MONTHS[fm-1]+' '+fy:MONTHS[fm-1]+'–'+MONTHS[lm-1]+' '+ly;
   const daysStr=fday+'–'+lday;
 
-  return{plants,dates,dateLabels,lk,spinT,packT,mpProdT,mpMaintT,upcT,
+  return{plants,dates,dateLabels,lk,acpT,packT,mpProdT,mpMaintT,upcT,
          remarks,salesRemarks,allRemarkSections,periodStr,daysStr,numDays:dates.length};
 }
 
@@ -606,21 +606,21 @@ function updateHeader(){
 // OVERVIEW TAB
 // ══════════════════════════════════════════════════════
 function renderOverview(){
-  const{plants,dates,lk,spinT,packT}=G;
+  const{plants,dates,lk,acpT,packT}=G;
   document.getElementById('ovTag').textContent=G.numDays+'-Day Actuals · '+G.daysStr;
 
   // Compute averages
-  const spinAvg={},packAvg={},mpProdAvg={},mpMaintAvg={},upcAvg={};
+  const acpAvg={},packAvg={},mpProdAvg={},mpMaintAvg={},upcAvg={};
   plants.forEach(p=>{
-    spinAvg[p]=avg(dates.map(d=>lk[p][d]['spin_actual']));
+    acpAvg[p]=avg(dates.map(d=>lk[p][d]['acp_actual']));
     packAvg[p]=avg(dates.map(d=>lk[p][d]['pack_actual']));
     mpProdAvg[p]=avg(dates.map(d=>lk[p][d]['mp_prod_actual']));
     mpMaintAvg[p]=avg(dates.map(d=>lk[p][d]['mp_maint_actual']));
     upcAvg[p]=avg(dates.map(d=>lk[p][d]['upc_actual']));
   });
 
-  const totSpinT=sum(plants.map(p=>spinT[p]));
-  const totSpinA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['spin_actual']))));
+  const totAcpT=sum(plants.map(p=>acpT[p]));
+  const totAcpA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_actual']))));
   const totPackT=sum(plants.map(p=>packT[p]));
   const totPackA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['pack_actual']))));
   const totSalesT=sum(plants.map(p=>sum(dates.map(d=>lk[p][d]['sales_target']))));
@@ -632,23 +632,23 @@ function renderOverview(){
   const totMPMaintT=sum(plants.map(p=>G.mpMaintT[p]));
   const totMPMaintA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual']))));
 
-  const spinP=pct(totSpinA,totSpinT);
+  const acpP=pct(totAcpA,totAcpT);
   const packP=pct(totPackA,totPackT);
   const salesP=pct(totSalesA,totSalesT);
   const turnP=pct(totTurnA,totTurnT);
 
   document.getElementById('kpiOverview').innerHTML=
-    kpiCard(spinP>=100?'green':'red','Spinning Prod (Avg/Day)',fmt(totSpinA),'Target: '+fmt(totSpinT)+' kgs/day',arrow(spinP)+' '+Math.abs(spinP-100).toFixed(1)+'% '+(spinP>=100?'above':'below')+' target',badgeCls(spinP))+
+    kpiCard(acpP>=100?'green':'red','AutoConer Prod (Avg/Day)',fmt(totAcpA),'Target: '+fmt(totAcpT)+' kgs/day',arrow(acpP)+' '+Math.abs(acpP-100).toFixed(1)+'% '+(acpP>=100?'above':'below')+' target',badgeCls(acpP))+
     kpiCard(packP>=100?'green':'red','Packing Prod (Avg/Day)',fmt(totPackA),'Target: '+fmt(totPackT)+' kgs/day',arrow(packP)+' '+Math.abs(packP-100).toFixed(1)+'% '+(packP>=100?'above':'below')+' target',badgeCls(packP))+
     kpiCard(salesP>=100?'green':'amber','Sales — Period Total',fmt(totSalesA)+' kgs','Target: '+fmt(totSalesT)+' kgs',salesP.toFixed(1)+'% achieved','badge-'+( salesP>=100?'green':salesP>=90?'amber':'red'))+
     kpiCard(turnP>=100?'green':'amber','Turnover — Period Total','₹'+fmt(totTurnA,2)+'L','Target: ₹'+fmt(totTurnT,2)+'L',turnP.toFixed(1)+'% achieved','badge-'+(turnP>=100?'green':turnP>=90?'amber':'red'))+
     kpiCard(totMPProdA>totMPProdT?'red':'green','Manpower – Production (Avg)',fmt(totMPProdA,0),'Target: '+fmt(totMPProdT,0)+' workers/day',(totMPProdA>totMPProdT?'▲':'▼')+' '+(Math.abs(totMPProdA-totMPProdT)).toFixed(0)+' workers',totMPProdA>totMPProdT?'badge-red':'badge-green')+
     kpiCard(totMPMaintA>totMPMaintT?'red':'amber','Manpower – Maintenance (Avg)',fmt(totMPMaintA,0),'Target: '+fmt(totMPMaintT,0)+' workers/day',(totMPMaintA>totMPMaintT?'▲ surplus':'▼ deficit')+' '+Math.abs(totMPMaintA-totMPMaintT).toFixed(0)+' workers',totMPMaintA>totMPMaintT?'badge-red':'badge-amber');
 
-  // Spinning bar chart
+  // AutoConer bar chart
   mk('chSpinBar','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>spinT[p]),backgroundColor:C.tgt,borderRadius:4},
-    {label:'Actual (Avg)',data:plants.map(p=>spinAvg[p]),backgroundColor:pColorsFill,borderRadius:4}
+    {label:'Target',data:plants.map(p=>acpT[p]),backgroundColor:C.tgt,borderRadius:4},
+    {label:'Actual (Avg)',data:plants.map(p=>acpAvg[p]),backgroundColor:pColorsFill,borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   // Packing bar chart
@@ -658,11 +658,11 @@ function renderOverview(){
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   // Daily trend
-  const dailySpinTotals=dates.map(d=>sum(plants.map(p=>lk[p][d]['spin_actual'])));
+  const dailySpinTotals=dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_actual'])));
   const dailyPackTotals=dates.map(d=>sum(plants.map(p=>lk[p][d]['pack_actual'])));
   mk('chTrend','line',{labels:G.dateLabels,datasets:[
-    {label:'Target',data:dates.map(()=>totSpinT),borderColor:'#9C8F82',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
-    {label:'Spinning',data:dailySpinTotals,borderColor:'#1A5C96',backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',borderWidth:2.5,tension:.35,fill:true},
+    {label:'Target',data:dates.map(()=>totAcpT),borderColor:'#9C8F82',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
+    {label:'AutoConer',data:dailySpinTotals,borderColor:'#1A5C96',backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',borderWidth:2.5,tension:.35,fill:true},
     {label:'Packing',data:dailyPackTotals,borderColor:'#D44000',backgroundColor:'rgba(212,64,0,.08)',pointBackgroundColor:'#D44000',borderWidth:2.5,tension:.35,fill:true}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
@@ -673,7 +673,7 @@ function renderOverview(){
   // Plant attainment bars
   const bc=document.getElementById('plantBars');bc.innerHTML='';
   plants.forEach((p,i)=>{
-    const p_=pct(spinAvg[p],spinT[p]);
+    const p_=pct(acpAvg[p],acpT[p]);
     bc.innerHTML+=`<div class="plant-bar-row">
       <div class="plant-bar-label" style="color:${pColors[i]}">${p}</div>
       <div class="plant-bar-track"><div class="plant-bar-fill" style="width:${Math.min(p_,100)}%;background:${pColors[i]}"></div></div>
@@ -805,7 +805,7 @@ function getDayVals(field,isAll){
 }
 
 function renderDaywise(){
-  const{plants,dates,lk,spinT,packT,mpProdT,mpMaintT,upcT}=G;
+  const{plants,dates,lk,acpT,packT,mpProdT,mpMaintT,upcT}=G;
   const isRange=['all','month','15days'].includes(currentDay)||currentDay.startsWith('week');
   const isAll=isRange; // treat all range modes as "avg" mode
   const rangeDates=isRange?getRangeDates():null;
@@ -818,18 +818,18 @@ function renderDaywise(){
   else if(currentDay.startsWith('week')) lbl=currentDay.replace('week','Week ');
   else lbl=dateLabel(currentDay);
 
-  ['Spinning Production','Packing Production','Sales (kgs)','Turnover (₹L)','Manpower Production','Manpower Maintenance'].forEach((n,i)=>{
-    const ids=['titleDaySpinning','titleDayPacking','titleDaySales','titleDayTurn','titleDayMPProd','titleDayMPMaint'];
+  ['AutoConer Production','Packing Production','Sales (kgs)','Turnover (₹L)','Manpower Production','Manpower Maintenance'].forEach((n,i)=>{
+    const ids=['titleDayAutoConer','titleDayPacking','titleDaySales','titleDayTurn','titleDayMPProd','titleDayMPMaint'];
     const el=document.getElementById(ids[i]);if(el)el.textContent=n+' — '+lbl;
   });
   document.getElementById('dwTag').textContent=lbl;
 
   // KPIs
-  const spinA=getDayVals('spin_actual',isAll);
+  const spinA=getDayVals('acp_actual',isAll);
   const packA=getDayVals('pack_actual',isAll);
   const salesA=getDayVals('sales_actual',isAll);
   const turnA=getDayVals('turnover_actual',isAll);
-  const tsT=sum(plants.map(p=>spinT[p]));const tpT=sum(plants.map(p=>packT[p]));
+  const tsT=sum(plants.map(p=>acpT[p]));const tpT=sum(plants.map(p=>packT[p]));
   const tsA=sum(spinA);const tpA=sum(packA);const tSA=sum(salesA);const tTA=sum(turnA);
   const spP=pct(tsA,tsT),pkP=pct(tpA,tpT);
 
@@ -840,14 +840,14 @@ function renderDaywise(){
   const saP=pct(tSA,tST),taP=pct(tTA,tTT);
 
   document.getElementById('dayKPIs').innerHTML=
-    kpiCard(spP>=100?'green':'red','Spinning Total',fmt(tsA,0),'Target: '+fmt(tsT,0)+' kgs',spP.toFixed(1)+'% achieved',badgeCls(spP))+
+    kpiCard(spP>=100?'green':'red','AutoConer Total',fmt(tsA,0),'Target: '+fmt(tsT,0)+' kgs',spP.toFixed(1)+'% achieved',badgeCls(spP))+
     kpiCard(pkP>=100?'green':'red','Packing Total',fmt(tpA,0),'Target: '+fmt(tpT,0)+' kgs',pkP.toFixed(1)+'% achieved',badgeCls(pkP))+
     kpiCard(saP>=100?'green':'amber','Sales Total',fmt(tSA,0)+' kgs','Target: '+fmt(tST,0)+' kgs',saP.toFixed(1)+'% achieved','badge-'+(saP>=100?'green':saP>=90?'amber':'red'))+
     kpiCard(taP>=100?'green':'amber','Turnover Total','₹'+fmt(tTA,2)+'L','Target: ₹'+fmt(tTT,2)+'L',taP.toFixed(1)+'% achieved','badge-'+(taP>=100?'green':taP>=90?'amber':'red'));
 
   // Charts
-  mk('chDaySpinning','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>spinT[p]),backgroundColor:C.tgt,borderRadius:4},
+  mk('chDayAutoConer','bar',{labels:plants,datasets:[
+    {label:'Target',data:plants.map(p=>acpT[p]),backgroundColor:C.tgt,borderRadius:4},
     {label:'Actual',data:spinA,backgroundColor:pColorsFill,borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
@@ -887,7 +887,7 @@ function renderDaywise(){
         </td></tr>`;
       useDates.forEach((d)=>{
         const v=f=>lk[p][d][f]||0;
-        const sT=spinT[p],sA=v('spin_actual'),sPct=pct(sA,sT);
+        const sT=acpT[p],sA=v('acp_actual'),sPct=pct(sA,sT);
         const ptT=packT[p],pA=v('pack_actual'),ppPct=pct(pA,ptT);
         const slT=v('sales_target'),slA=v('sales_actual'),slPct=pct(slA,slT);
         const tnT=v('turnover_target'),tnA=v('turnover_actual');
@@ -906,7 +906,7 @@ function renderDaywise(){
         </tr>`;
       });
       // Plant avg row
-      const avgSA=avg(useDates.map(d=>lk[p][d]['spin_actual']));
+      const avgSA=avg(useDates.map(d=>lk[p][d]['acp_actual']));
       const avgPA=avg(useDates.map(d=>lk[p][d]['pack_actual']));
       const totSlA=sum(useDates.map(d=>lk[p][d]['sales_actual']));
       const totSlT=sum(useDates.map(d=>lk[p][d]['sales_target']));
@@ -917,7 +917,7 @@ function renderDaywise(){
       const avgUpc=avg(useDates.map(d=>lk[p][d]['upc_actual']));
       rows+=`<tr style="background:var(--warm);font-weight:600;border-top:2px solid var(--border)">
         <td>Avg/Total</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
-        <td>${fmt(spinT[p],0)}</td><td class="${avgSA<spinT[p]?'val-neg':''}">${fmt(avgSA,0)}</td><td><span class="pct-pill ${pillCls(pct(avgSA,spinT[p]))}">${pct(avgSA,spinT[p])}%</span></td>
+        <td>${fmt(acpT[p],0)}</td><td class="${avgSA<acpT[p]?'val-neg':''}">${fmt(avgSA,0)}</td><td><span class="pct-pill ${pillCls(pct(avgSA,acpT[p]))}">${pct(avgSA,acpT[p])}%</span></td>
         <td>${fmt(packT[p],0)}</td><td class="${avgPA<packT[p]?'val-neg':''}">${fmt(avgPA,0)}</td><td><span class="pct-pill ${pillCls(pct(avgPA,packT[p]))}">${pct(avgPA,packT[p])}%</span></td>
         <td>${fmt(totSlT,0)}</td><td class="${totSlA<totSlT&&totSlT>0?'val-neg':''}">${fmt(totSlA,0)}</td><td>${totSlT>0?`<span class="pct-pill ${pillCls(pct(totSlA,totSlT))}">${pct(totSlA,totSlT)}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
         <td>${fmt(totTnT,2)}</td><td class="${totTnA<totTnT&&totTnT>0?'val-neg':''}">${fmt(totTnA,2)}</td>
@@ -930,7 +930,7 @@ function renderDaywise(){
   } else {
     plants.forEach((p,pi)=>{
       const d=currentDay;const v=f=>lk[p][d][f]||0;
-      const sT=spinT[p],sA=v('spin_actual'),sPct=pct(sA,sT);
+      const sT=acpT[p],sA=v('acp_actual'),sPct=pct(sA,sT);
       const ptT=packT[p],pA=v('pack_actual'),ppPct=pct(pA,ptT);
       const slT=v('sales_target'),slA=v('sales_actual'),slPct=pct(slA,slT);
       const tnT=v('turnover_target'),tnA=v('turnover_actual');
@@ -964,7 +964,7 @@ function buildAllRemarksHTML(containerId){
   if(!sections.length){container.innerHTML='<div style="padding:16px 20px;color:var(--muted);font-size:12px">No remarks available.</div>';return;}
 
   // Section label map
-  const sectionLabels={'remarks':'Spinning / Production Remarks','sales_remarks':'Sales Remarks'};
+  const sectionLabels={'remarks':'AutoConer / Production Remarks','sales_remarks':'Sales Remarks'};
   let html='';
   sections.forEach(sec=>{
     const label=sectionLabels[sec]||(sec.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())+' Remarks');
@@ -999,7 +999,7 @@ function buildAllRemarksHTML(containerId){
 // PRODUCTION KGS TAB
 // ══════════════════════════════════════════════════════
 function renderProduction(){
-  const{plants,dates,dateLabels,lk,spinT,packT,remarks}=G;
+  const{plants,dates,dateLabels,lk,acpT,packT,remarks}=G;
 
   // Plant pills
   const pillBar=document.getElementById('plantPills');pillBar.innerHTML='';
@@ -1024,35 +1024,35 @@ function renderProduction(){
   drawPlantTrend();
 
   // All plants grouped bar
-  mk('chDailySpinning','bar',{
+  mk('chDailyAutoConer','bar',{
     labels:dateLabels,
-    datasets:plants.map((p,i)=>({label:p,data:dates.map(d=>lk[p][d]['spin_actual']),backgroundColor:pColorsFill[i],borderRadius:3}))
+    datasets:plants.map((p,i)=>({label:p,data:dates.map(d=>lk[p][d]['acp_actual']),backgroundColor:pColorsFill[i],borderRadius:3}))
   },{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
-  // Spinning table
-  let spinHead=`<tr><th>Date</th>${plants.map(p=>`<th>${p} Tgt</th><th>${p} Act</th>`).join('')}<th>Total Tgt</th><th>Total Act</th></tr>`;
-  let spinBody='';
+  // AutoConer table
+  let acpHead=`<tr><th>Date</th>${plants.map(p=>`<th>${p} Tgt</th><th>${p} Act</th>`).join('')}<th>Total Tgt</th><th>Total Act</th></tr>`;
+  let acpBody='';
   dates.forEach((d,di)=>{
-    const totT=sum(plants.map(p=>spinT[p]));
-    const totA=sum(plants.map(p=>lk[p][d]['spin_actual']));
-    spinBody+=`<tr><td>${dateLabels[di]}</td>`;
+    const totT=sum(plants.map(p=>acpT[p]));
+    const totA=sum(plants.map(p=>lk[p][d]['acp_actual']));
+    acpBody+=`<tr><td>${dateLabels[di]}</td>`;
     plants.forEach(p=>{
-      const a=lk[p][d]['spin_actual'],t=spinT[p];
-      spinBody+=`<td>${fmt(t,0)}</td><td class="${a<t?'val-neg':''}">${fmt(a,0)}</td>`;
+      const a=lk[p][d]['acp_actual'],t=acpT[p];
+      acpBody+=`<td>${fmt(t,0)}</td><td class="${a<t?'val-neg':''}">${fmt(a,0)}</td>`;
     });
-    spinBody+=`<td>${fmt(totT,0)}</td><td class="${totA<totT?'val-neg':''}">${fmt(totA,0)}</td></tr>`;
+    acpBody+=`<td>${fmt(totT,0)}</td><td class="${totA<totT?'val-neg':''}">${fmt(totA,0)}</td></tr>`;
   });
   // Total row
-  const overallSpinT=sum(plants.map(p=>spinT[p]))*dates.length;
-  const overallSpinA=sum(plants.map(p=>sum(dates.map(d=>lk[p][d]['spin_actual']))));
-  spinBody+=`<tr style="background:var(--warm);font-weight:600"><td>Period Total</td>`;
+  const overallAcpT=sum(plants.map(p=>acpT[p]))*dates.length;
+  const overallAcpA=sum(plants.map(p=>sum(dates.map(d=>lk[p][d]['acp_actual']))));
+  acpBody+=`<tr style="background:var(--warm);font-weight:600"><td>Period Total</td>`;
   plants.forEach(p=>{
-    const pT=spinT[p]*dates.length,pA=sum(dates.map(d=>lk[p][d]['spin_actual']));
-    spinBody+=`<td>${fmt(pT,0)}</td><td class="${pA<pT?'val-neg':''}">${fmt(pA,0)}</td>`;
+    const pT=acpT[p]*dates.length,pA=sum(dates.map(d=>lk[p][d]['acp_actual']));
+    acpBody+=`<td>${fmt(pT,0)}</td><td class="${pA<pT?'val-neg':''}">${fmt(pA,0)}</td>`;
   });
-  spinBody+=`<td>${fmt(overallSpinT,0)}</td><td class="${overallSpinA<overallSpinT?'val-neg':''}">${fmt(overallSpinA,0)}</td></tr>`;
-  document.getElementById('prodSpinHead').innerHTML=spinHead;
-  document.getElementById('prodSpinBody').innerHTML=spinBody;
+  acpBody+=`<td>${fmt(overallAcpT,0)}</td><td class="${overallAcpA<overallAcpT?'val-neg':''}">${fmt(overallAcpA,0)}</td></tr>`;
+  document.getElementById('prodSpinHead').innerHTML=acpHead;
+  document.getElementById('prodSpinBody').innerHTML=acpBody;
 
   // Packing table
   let packHead=`<tr><th>Date</th>${plants.map(p=>`<th>${p} Tgt</th><th>${p} Act</th>`).join('')}<th>Total Tgt</th><th>Total Act</th></tr>`;
@@ -1081,8 +1081,8 @@ function renderProduction(){
   // Remarks table
   let remBody='';
   plants.forEach((p,i)=>{
-    const tA=avg(dates.map(d=>lk[p][d]['spin_actual']));
-    const tT=spinT[p];
+    const tA=avg(dates.map(d=>lk[p][d]['acp_actual']));
+    const tT=acpT[p];
     const diff=tA-tT;const pc=pct(tA,tT);
     const rem=remarks[p]||'—';
     remBody+=`<tr>
@@ -1094,20 +1094,20 @@ function renderProduction(){
     </tr>`;
   });
   // Total
-  const avgSpinA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['spin_actual']))));
-  const avgSpinT=sum(plants.map(p=>spinT[p]));
-  const diff=avgSpinA-avgSpinT;
-  remBody+=`<tr style="background:var(--warm);font-weight:600"><td>TOTAL</td><td>${fmt(avgSpinT,0)}</td><td class="${diff<0?'val-neg':''}">${fmt(avgSpinA,1)}</td><td class="${diff<0?'val-neg':'val-pos'}">${diff>=0?'+':''}${fmt(diff,1)}</td><td><span class="pct-pill ${pillCls(pct(avgSpinA,avgSpinT))}">${pct(avgSpinA,avgSpinT)}%</span></td><td>—</td></tr>`;
+  const avgAcpA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_actual']))));
+  const avgAcpT=sum(plants.map(p=>acpT[p]));
+  const diff=avgAcpA-avgAcpT;
+  remBody+=`<tr style="background:var(--warm);font-weight:600"><td>TOTAL</td><td>${fmt(avgAcpT,0)}</td><td class="${diff<0?'val-neg':''}">${fmt(avgAcpA,1)}</td><td class="${diff<0?'val-neg':'val-pos'}">${diff>=0?'+':''}${fmt(diff,1)}</td><td><span class="pct-pill ${pillCls(pct(avgAcpA,avgAcpT))}">${pct(avgAcpA,avgAcpT)}%</span></td><td>—</td></tr>`;
   document.getElementById('prodRemarksBody').innerHTML=remBody;
   buildAllRemarksHTML('allRemarksContainer');
 }
 
 function drawPlantTrend(){
-  const{plants,dates,dateLabels,lk,spinT}=G;
+  const{plants,dates,dateLabels,lk,acpT}=G;
   const i=activePlantIdx,p=plants[i];
   mk('chPlantTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dates.map(()=>spinT[p]),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
-    {label:`${p} Actual`,data:dates.map(d=>lk[p][d]['spin_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
+    {label:'Target',data:dates.map(()=>acpT[p]),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
+    {label:`${p} Actual`,data:dates.map(d=>lk[p][d]['acp_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 }
 
@@ -1434,9 +1434,9 @@ function renderUPC(){
 // COMPARATIVE TAB
 // ══════════════════════════════════════════════════════
 function renderComparative(){
-  const{plants,dates,lk,spinT,packT,mpProdT,mpMaintT,upcT}=G;
+  const{plants,dates,lk,acpT,packT,mpProdT,mpMaintT,upcT}=G;
 
-  const spinAvg=plants.map(p=>avg(dates.map(d=>lk[p][d]['spin_actual'])));
+  const acpAvg=plants.map(p=>avg(dates.map(d=>lk[p][d]['acp_actual'])));
   const packAvg=plants.map(p=>avg(dates.map(d=>lk[p][d]['pack_actual'])));
   const salesTotalT=plants.map(p=>sum(dates.map(d=>lk[p][d]['sales_target'])));
   const salesTotalA=plants.map(p=>sum(dates.map(d=>lk[p][d]['sales_actual'])));
@@ -1449,14 +1449,14 @@ function renderComparative(){
   // Scorecard table
   let compBody='';
   plants.forEach((p,i)=>{
-    const sP=pct(spinAvg[i],spinT[p]);const pkP=pct(packAvg[i],packT[p]);
+    const sP=pct(acpAvg[i],acpT[p]);const pkP=pct(packAvg[i],packT[p]);
     const slP=pct(salesTotalA[i],salesTotalT[i]);const tnP=pct(turnTotalA[i],turnTotalT[i]);
     const pGap=(mpProdAvg[i]-mpProdT[p]).toFixed(1);
     const mGap=(mpMaintAvg[i]-mpMaintT[p]).toFixed(1);
     const upcIsOver=upcAvg[i]>upcT[p]+0.001;
     compBody+=`<tr>
       <td style="color:${pColors[i]};font-weight:700">${p}</td>
-      <td>${fmt(spinAvg[i],0)}</td><td><span class="pct-pill ${pillCls(sP)}">${sP}%</span></td>
+      <td>${fmt(acpAvg[i],0)}</td><td><span class="pct-pill ${pillCls(sP)}">${sP}%</span></td>
       <td>${fmt(packAvg[i],0)}</td><td><span class="pct-pill ${pillCls(pkP)}">${pkP}%</span></td>
       <td>${fmt(salesTotalA[i],0)}</td><td>${salesTotalT[i]>0?`<span class="pct-pill ${pillCls(slP)}">${slP}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
       <td>${fmt(turnTotalA[i],1)}</td><td>${turnTotalT[i]>0?`<span class="pct-pill ${pillCls(tnP)}">${tnP}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
@@ -1466,15 +1466,15 @@ function renderComparative(){
     </tr>`;
   });
   // Total row
-  const totSpinAvg=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['spin_actual']))));
-  const totSpinT=sum(plants.map(p=>spinT[p]));
+  const totAcpAvg=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_actual']))));
+  const totAcpT=sum(plants.map(p=>acpT[p]));
   const totPackAvg=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['pack_actual']))));
   const totPackT=sum(plants.map(p=>packT[p]));
   const totSA=sum(salesTotalA),totST=sum(salesTotalT);
   const totTA=sum(turnTotalA),totTT=sum(turnTotalT);
   compBody+=`<tr style="background:var(--warm);font-weight:600">
     <td>TOTAL</td>
-    <td>${fmt(totSpinAvg,0)}</td><td><span class="pct-pill ${pillCls(pct(totSpinAvg,totSpinT))}">${pct(totSpinAvg,totSpinT)}%</span></td>
+    <td>${fmt(totAcpAvg,0)}</td><td><span class="pct-pill ${pillCls(pct(totAcpAvg,totAcpT))}">${pct(totAcpAvg,totAcpT)}%</span></td>
     <td>${fmt(totPackAvg,0)}</td><td><span class="pct-pill ${pillCls(pct(totPackAvg,totPackT))}">${pct(totPackAvg,totPackT)}%</span></td>
     <td>${fmt(totSA,0)}</td><td><span class="pct-pill ${pillCls(pct(totSA,totST))}">${pct(totSA,totST)}%</span></td>
     <td>₹${fmt(totTA,1)}L</td><td><span class="pct-pill ${pillCls(pct(totTA,totTT))}">${pct(totTA,totTT)}%</span></td>
@@ -1484,7 +1484,7 @@ function renderComparative(){
 
   // Production attainment chart
   mk('chCompare','bar',{labels:plants,datasets:[
-    {label:'Spinning %',data:plants.map((p,i)=>pct(spinAvg[i],spinT[p])),backgroundColor:pColorsFill,borderRadius:4},
+    {label:'ACP %',data:plants.map((p,i)=>pct(acpAvg[i],acpT[p])),backgroundColor:pColorsFill,borderRadius:4},
     {label:'Packing %',data:plants.map((p,i)=>pct(packAvg[i],packT[p])),backgroundColor:pColors.map(c=>c+'55'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{min:60,max:110,...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v+'%'}}}});
 
@@ -1495,7 +1495,7 @@ function renderComparative(){
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v+'%'}}}});
 
   // Loss analysis
-  const lossKgs=plants.map((p,i)=>Math.max(0,spinT[p]-spinAvg[i]));
+  const lossKgs=plants.map((p,i)=>Math.max(0,acpT[p]-acpAvg[i]));
   mk('chLoss','bar',{labels:plants,datasets:[{
     label:'Avg Daily Loss (kgs)',data:lossKgs,
     backgroundColor:lossKgs.map((v,i)=>pColorsFill[i]),borderRadius:5
@@ -1519,7 +1519,7 @@ function switchTab(id,el){
 // ══════════════════════════════════════════════════════
 // EMBEDDED DEFAULT DATA (data.csv)
 // ══════════════════════════════════════════════════════
-const DEFAULT_CSV = `section,plant,date,spin_target,spin_actual,pack_target,pack_actual,sales_target,sales_actual,turnover_target,turnover_actual,mp_prod_target,mp_prod_actual,mp_maint_target,mp_maint_actual,upc_target,upc_actual,remarks
+const DEFAULT_CSV = `section,plant,date,acp_target,acp_actual,pack_target,pack_actual,sales_target,sales_actual,turnover_target,turnover_actual,mp_prod_target,mp_prod_actual,mp_maint_target,mp_maint_actual,upc_target,upc_actual,remarks
 daily,P-4,01-04-2026,3727,3658,3727,3392,3200,5312,5.312,9.91,54,53,3,2,0.12,0.139,
 daily,P-5,01-04-2026,3440,3052,3440,3200,0,4128,10.02496,8.9,59,59,11,13,0.12,0.123991,
 daily,P-6,01-04-2026,6537,6473.82,6537,6450,5883.6,9210,20.068716,31.09,287,276,91,72,0.106471,0.104498,
