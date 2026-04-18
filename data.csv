@@ -1,4 +1,4 @@
-section,plant,date,spin_target,spin_actual,pack_target,pack_actual,sales_target,sales_actual,turnover_target,turnover_actual,mp_prod_target,mp_prod_actual,mp_maint_target,mp_maint_actual,upc_target,upc_actual,remarks
+section,plant,date,acp_target,acp_actual,pack_target,pack_actual,sales_target,sales_actual,turnover_target,turnover_actual,mp_prod_target,mp_prod_actual,mp_maint_target,mp_maint_actual,upc_target,upc_actual,remarks
 daily,P-4,01-04-2026,3727,3658,3727,3392,3200,5312,5.312,9.91,54,53,3,2,0.12,0.139,
 daily,P-5,01-04-2026,3440,3052,3440,3200,0,4128,10.02496,8.9,59,59,11,13,0.12,0.123991,
 daily,P-6,01-04-2026,6537,6473.82,6537,6450,5883.6,9210,20.068716,31.09,287,276,91,72,0.106471,0.104498,
@@ -111,17 +111,24 @@ daily,P-7,16-04-2026,11872,11952,11872,11648,6400,18880,10.82,34.36,130,126,24,2
 daily,P-9,16-04-2026,10496,10205,10496,10175.76,0,16934.4,0,58.17,459,463,150,143,0.119539,0.118516,
 daily,P-10,16-04-2026,4750,4626,4750,4626.72,3628.8,612,12.01,35.7,223,232,60,59,0.11553,0.113291,
 daily,P-11,16-04-2026,5173,4939,5173,4944.24,9072,6123.6,30.21,22.05,217,225,63,59,0.103572,0.104212,
+daily,P-4,17-04-2026,3727,3679,3727,3200,3200,3200,5.31,5.44,54,49,3,2,0.12,0.139811,
+daily,P-5,17-04-2026,3440,3161,3440,3264,4800,3792,5.02,8.64,59,57,11,12,0.12,0.131285,
+daily,P-6,17-04-2026,6537,6297.76,6537,6324,6186,4233.6,21.07,14.52,287,289,91,74,0.106471,0.104633,
+daily,P-7,17-04-2026,11872,11644,11872,11968,16000,6400,26.59,11.78,130,128,24,23,0.107016,0.108963,
+daily,P-9,17-04-2026,10496,10325,10496,10251.36,24192,4536,81.44,15.37,459,466,150,145,0.119539,0.119698,
+daily,P-10,17-04-2026,4750,4486,4750,4399.92,0,3628.8,0,13.2,223,230,60,57.35,0.11553,0.113628,
+daily,P-11,17-04-2026,5173,4851,5173,4823.28,0,3326.4,0,11.11,217,224,63,63.5,0.103572,0.104589,
 remarks,P-4,,,,,,,,,,,,,,,,"OE 2,6 Speed 85000 / 80000,                                                                                                                                               OE 4,5 Speed  90000 / 85000                                        . OE Plan For 6 Fr Running 5 Frame"
-remarks,P-5,,,,,,,,,,,,,,,,"30sK TM Plan 7.50 / 7.80                                                               . OE - 3 Speed  85000 / 80000. 26sK TM 6.00 / 6.50"
-remarks,P-6,,,,,,,,,,,,,,,,"60 /1 C  TM  4.34 / 4.44                                                     . 60/1 C 6/S Spees 21500 / 20500"
-remarks,P-7,,,,,,,,,,,,,,,,"20sK TM  7.00 / 7.30"
+remarks,P-5,,,,,,,,,,,,,,,,30sK TM Plan 7.50 / 7.80                                                               . OE - 3 Speed  85000 / 80000. 26sK TM 6.00 / 6.50
+remarks,P-6,,,,,,,,,,,,,,,,60 /1 C  TM  4.34 / 4.44                                                     . 60/1 C 6/S Spees 21500 / 20500
+remarks,P-7,,,,,,,,,,,,,,,,20sK TM  7.00 / 7.30
 remarks,P-9,,,,,,,,,,,,,,,,"60 /1 C  TM 4.30 / 4.40                   . 43,44,45 60 /1 C  Speed 20000 / 19500 TM  4.45 / 4.55 . 60sC 28,29,30 Speed 21000 / 20500. 61sCC 22-27 TM 4.00 / 4.10, Spg-46 Speed 20000 / 15000"
-remarks,P-10,,,,,,,,,,,,,,,,"Spg - 1 to 9  TM Plan 4.43 / 4.53"
+remarks,P-10,,,,,,,,,,,,,,,,Spg - 1 to 9  TM Plan 4.43 / 4.53
 remarks,P-11,,,,,,,,,,,,,,,,"Spg 1 to 18 Speed 22000 / 21000    . 61sCC Speed 23500 / 23000, 22500"
-sales_remarks,P-4,,,,,,,,,,,,,,,,"20s OE - 285 Bags Stock"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"Production Shortage"
-sales_remarks,P-6,,,,,,,,,,,,,,,,"68s  - 60 Bags Stock"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"-"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"-"
-sales_remarks,P-10,,,,,,,,,,,,,,,,"-"
-sales_remarks,P-11,,,,,,,,,,,,,,,,"6125 - 31 Bags Stock"
+sales_remarks,P-4,,,,,,,,,,,,,,,,20s OE - 285 Bags Stock
+sales_remarks,P-5,,,,,,,,,,,,,,,,Production Shortage
+sales_remarks,P-6,,,,,,,,,,,,,,,,68s  - 95 Bags Stock
+sales_remarks,P-7,,,,,,,,,,,,,,,,16sOE - 60 Bags & 20s OE - 50 Bags
+sales_remarks,P-9,,,,,,,,,,,,,,,,Production Shortage & 615 - 45 Bags & 6145 - 30 Bags & 6145 Netural - 38 Box Stock
+sales_remarks,P-10,,,,,,,,,,,,,,,,-
+sales_remarks,P-11,,,,,,,,,,,,,,,,-
