@@ -305,7 +305,7 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 <div id="tab-production" class="content">
   <div class="section-head"><div class="section-title">Production — Kgs Analysis</div><div class="section-tag">AutoConer &amp; Packing</div></div>
   <div class="chart-card full" style="margin-bottom:20px">
-    <div class="chart-title">Individual Plant — Daily Trend (Target vs Actual)</div>
+    <div class="chart-title">AutoConer — Individual Plant Daily Trend (Target vs Actual)</div>
     <div class="chart-sub">Select a plant to view its AutoConer production trend</div>
     <div class="plant-select-bar" id="plantPills"></div>
     <canvas id="chPlantTrend" height="220"></canvas>
@@ -314,6 +314,17 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
     <div class="chart-title">All Plants — Day-wise AutoConer Production</div>
     <div class="chart-sub">Grouped by day — plant-coded bars</div>
     <canvas id="chDailyAutoConer" height="220"></canvas>
+  </div>
+  <div class="chart-card full" style="margin-bottom:20px">
+    <div class="chart-title">Packing — Individual Plant Daily Trend (Target vs Actual)</div>
+    <div class="chart-sub">Select a plant to view its Packing production trend</div>
+    <div class="plant-select-bar" id="packPlantPills"></div>
+    <canvas id="chPackPlantTrend" height="220"></canvas>
+  </div>
+  <div class="chart-card full" style="margin-bottom:20px">
+    <div class="chart-title">All Plants — Day-wise Packing Production</div>
+    <div class="chart-sub">Grouped by day — plant-coded bars</div>
+    <canvas id="chDailyPacking" height="220"></canvas>
   </div>
   <div class="table-wrap" style="margin-bottom:22px">
     <div class="table-header"><div class="table-title">Date-wise &amp; Plant-wise AutoConer Production</div><div class="table-note">kgs · Target | Actual</div></div>
@@ -498,6 +509,7 @@ let activePlantIdx=0;
 let activeSalesPlantIdx=0;
 let activeTurnPlantIdx=0;
 let activeUpcPlantIdx=0;
+let activePackPlantIdx=0;
 
 // ══════════════════════════════════════════════════════
 // CHART FACTORY
@@ -551,6 +563,12 @@ function parseCSV(text){
     vals.push(cur.trim());
     const row={};
     headers.forEach((h,i)=>{row[h]=(vals[i]||'').replace(/^"|"$/g,'').trim();});
+    // Remarks rows have one extra comma — fold overflow into last header (remarks).
+    if(vals.length>headers.length){
+      const lastH=headers[headers.length-1];
+      const overflow=(vals[vals.length-1]||'').replace(/^"|"$/g,'').trim();
+      if(overflow) row[lastH]=overflow;
+    }
     return row;
   }).filter(r=>Object.values(r).some(v=>v!=''));
 }
@@ -1161,10 +1179,38 @@ function renderProduction(){
   });
   drawPlantTrend();
 
-  // All plants grouped bar
+  // All plants grouped bar — AutoConer
   mk('chDailyAutoConer','bar',{
     labels:dateLabels,
     datasets:plants.map((p,i)=>({label:p,data:dates.map(d=>lk[p][d]['acp_actual']),backgroundColor:pColorsFill[i],borderRadius:3}))
+  },{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
+  // Packing plant pills
+  const packPillBar=document.getElementById('packPlantPills');packPillBar.innerHTML='';
+  plants.forEach((p,i)=>{
+    const btn=document.createElement('button');
+    btn.className='plant-pill'+(i===activePackPlantIdx?' active':'');
+    btn.textContent=p;btn.style.borderColor=pColors[i];
+    if(i===activePackPlantIdx){btn.style.background=pColors[i];btn.style.color='#fff';}
+    else{btn.style.background='#fff';btn.style.color=pColors[i];}
+    btn.onclick=()=>{
+      activePackPlantIdx=i;
+      document.querySelectorAll('#packPlantPills .plant-pill').forEach((b,bi)=>{
+        b.classList.toggle('active',bi===i);
+        b.style.background=bi===i?pColors[bi]:'#fff';
+        b.style.color=bi===i?'#fff':pColors[bi];
+        b.style.borderColor=pColors[bi];
+      });
+      drawPackPlantTrend();
+    };
+    packPillBar.appendChild(btn);
+  });
+  drawPackPlantTrend();
+
+  // All plants grouped bar — Packing
+  mk('chDailyPacking','bar',{
+    labels:dateLabels,
+    datasets:plants.map((p,i)=>({label:p,data:dates.map(d=>lk[p][d]['pack_actual']),backgroundColor:pColorsFill[i],borderRadius:3}))
   },{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   // AutoConer table
@@ -1244,8 +1290,17 @@ function drawPlantTrend(){
   const{plants,dates,dateLabels,lk,acpT}=G;
   const i=activePlantIdx,p=plants[i];
   mk('chPlantTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dates.map(()=>acpT[p]),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
+    {label:'Target',data:dates.map(d=>lk[p][d]['acp_target']),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
     {label:`${p} Actual`,data:dates.map(d=>lk[p][d]['acp_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
+  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+}
+
+function drawPackPlantTrend(){
+  const{plants,dates,dateLabels,lk,packT}=G;
+  const i=activePackPlantIdx,p=plants[i];
+  mk('chPackPlantTrend','line',{labels:dateLabels,datasets:[
+    {label:'Target',data:dates.map(d=>lk[p][d]['pack_target']),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
+    {label:`${p} Actual`,data:dates.map(d=>lk[p][d]['pack_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 }
 
@@ -1780,19 +1835,19 @@ daily,P-7,16-04-2026,11872,11952,11872,11648,6400,18880,10.82,34.36,130,126,24,2
 daily,P-9,16-04-2026,10496,10205,10496,10175.76,0,16934.4,0,58.17,459,463,150,143,0.119539,0.118516,
 daily,P-10,16-04-2026,4750,4626,4750,4626.72,3628.8,612,12.01,35.7,223,232,60,59,0.11553,0.113291,
 daily,P-11,16-04-2026,5173,4939,5173,4944.24,9072,6123.6,30.21,22.05,217,225,63,59,0.103572,0.104212,
-remarks,P-4,,,,,,,,,,,,,,,,,"OE 2,6 Speed 85000 / 80000,                                                                                                                                               OE 4,5 Speed  90000 / 85000                                        . OE Plan For 6 Fr Running 5 Frame"
-remarks,P-5,,,,,,,,,,,,,,,,,"30sK TM Plan 7.50 / 7.80                                                               . OE - 3 Speed  85000 / 80000. 26sK TM 6.00 / 6.50"
-remarks,P-6,,,,,,,,,,,,,,,,,"60 /1 C  TM  4.34 / 4.44                                                     . 60/1 C 6/S Spees 21500 / 20500"
-remarks,P-7,,,,,,,,,,,,,,,,,"20sK TM  7.00 / 7.30"
-remarks,P-9,,,,,,,,,,,,,,,,,"60 /1 C  TM 4.30 / 4.40                   . 43,44,45 60 /1 C  Speed 20000 / 19500 TM  4.45 / 4.55 . 60sC 28,29,30 Speed 21000 / 20500. 61sCC 22-27 TM 4.00 / 4.10, Spg-46 Speed 20000 / 15000"
-remarks,P-10,,,,,,,,,,,,,,,,,"Spg - 1 to 9  TM Plan 4.43 / 4.53"
-remarks,P-11,,,,,,,,,,,,,,,,,"Spg 1 to 18 Speed 22000 / 21000    . 61sCC Speed 23500 / 23000, 22500"
-sales_remarks,P-4,,,,,,,,,,,,,,,,,"20s OE - 285 Bags Stock"
-sales_remarks,P-5,,,,,,,,,,,,,,,,,"Production Shortage"
-sales_remarks,P-6,,,,,,,,,,,,,,,,,"68s  - 60 Bags Stock"
-sales_remarks,P-7,,,,,,,,,,,,,,,,,-
-sales_remarks,P-9,,,,,,,,,,,,,,,,,-
-sales_remarks,P-10,,,,,,,,,,,,,,,,,-
+remarks,P-4,,,,,,,,,,,,,,,,"OE 2,6 Speed 85000 / 80000,                                                                                                                                               OE 4,5 Speed  90000 / 85000                                        . OE Plan For 6 Fr Running 5 Frame"
+remarks,P-5,,,,,,,,,,,,,,,,"30sK TM Plan 7.50 / 7.80                                                               . OE - 3 Speed  85000 / 80000. 26sK TM 6.00 / 6.50"
+remarks,P-6,,,,,,,,,,,,,,,,"60 /1 C  TM  4.34 / 4.44                                                     . 60/1 C 6/S Spees 21500 / 20500"
+remarks,P-7,,,,,,,,,,,,,,,,"20sK TM  7.00 / 7.30"
+remarks,P-9,,,,,,,,,,,,,,,,"60 /1 C  TM 4.30 / 4.40                   . 43,44,45 60 /1 C  Speed 20000 / 19500 TM  4.45 / 4.55 . 60sC 28,29,30 Speed 21000 / 20500. 61sCC 22-27 TM 4.00 / 4.10, Spg-46 Speed 20000 / 15000"
+remarks,P-10,,,,,,,,,,,,,,,,"Spg - 1 to 9  TM Plan 4.43 / 4.53"
+remarks,P-11,,,,,,,,,,,,,,,,"Spg 1 to 18 Speed 22000 / 21000    . 61sCC Speed 23500 / 23000, 22500"
+sales_remarks,P-4,,,,,,,,,,,,,,,,"20s OE - 285 Bags Stock"
+sales_remarks,P-5,,,,,,,,,,,,,,,,"Production Shortage"
+sales_remarks,P-6,,,,,,,,,,,,,,,,"68s  - 60 Bags Stock"
+sales_remarks,P-7,,,,,,,,,,,,,,,,-
+sales_remarks,P-9,,,,,,,,,,,,,,,,-
+sales_remarks,P-10,,,,,,,,,,,,,,,,-
 sales_remarks,P-11,,,,,,,,,,,,,,,,,"6125 - 31 Bags Stock"`;
 
 // ══════════════════════════════════════════════════════
@@ -1808,7 +1863,7 @@ function handleCSV(text){
     if(!rows||rows.length===0){alert('⚠ Could not parse CSV. Please check the file format.');return;}
     G=processData(rows);
     if(!G.plants||G.plants.length===0){alert('⚠ No plant data found in CSV.');return;}
-    activePlantIdx=0;activeSalesPlantIdx=0;activeTurnPlantIdx=0;activeUpcPlantIdx=0;
+    activePlantIdx=0;activeSalesPlantIdx=0;activeTurnPlantIdx=0;activeUpcPlantIdx=0;activePackPlantIdx=0;
     // Default to LAST available date in day-wise tab
     currentDay=G.dates[G.dates.length-1];
     // Reset to overview tab
