@@ -11,7 +11,7 @@
   --cream:#FAF7F2;--warm:#F2EDE4;--border:#E2D9CC;--muted:#9C8F82;
   --ink:#2A2118;--sub:#6B5F52;--green:#2D7D4E;--green-lt:#E6F4EC;
   --red:#C0392B;--red-lt:#FDECEA;--amber:#B8620A;--amber-lt:#FEF3E2;
-  --blue:#1A5C96;--blue-lt:#E8F1FB;--teal:#0F7B7B;--teal-lt:#E3F5F5;
+  --blue:#0000FF;--blue-lt:#E8F1FB;--teal:#0F7B7B;--teal-lt:#E3F5F5;
   --accent:#8B4513;--gold:#C9963A;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -487,8 +487,8 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 // ══════════════════════════════════════════════════════
 // CONSTANTS
 // ══════════════════════════════════════════════════════
-const pColors=['#1A5C96','#D44000','#2D7D4E','#7B2FBE','#0F7B7B','#C9963A','#C0392B'];
-const pColorsFill=['rgba(26,92,150,0.82)','rgba(212,64,0,0.82)','rgba(45,125,78,0.82)','rgba(123,47,190,0.82)','rgba(15,123,123,0.82)','rgba(201,150,58,0.82)','rgba(204,0,0,0.85)'];
+const pColors=['#0000FF','#D44000','#2D7D4E','#7B2FBE','#0F7B7B','#C9963A','#C0392B'];
+const pColorsFill=['rgba(0,0,255,0.82)','rgba(212,64,0,0.82)','rgba(45,125,78,0.82)','rgba(123,47,190,0.82)','rgba(15,123,123,0.82)','rgba(201,150,58,0.82)','rgba(204,0,0,0.85)'];
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const C={tgt:'rgba(107,95,82,0.45)',gridLine:'rgba(226,217,204,0.6)',gridTick:'#9C8F82'};
 
@@ -666,7 +666,7 @@ function renderOverview(){
   document.getElementById('ovTag').textContent=G.numDays+'-Day Actuals · '+G.daysStr;
 
   // Colour constants
-  const COL_TGT='rgba(10,36,99,0.85)';       // Dark Blue — target
+  const COL_TGT='rgba(0,0,255,0.85)';       // Dark Blue — target
   const COL_HIT='rgba(21,87,36,0.85)';        // Dark Green — achieved
   const COL_MISS='rgba(204,0,0,0.85)';         // Dark Red — not achieved
 
@@ -830,7 +830,7 @@ function renderOverview(){
      pointBackgroundColor:trendActualColor(dailyMpProdA,dailyMpProdT,true),
      pointBorderColor:trendActualColor(dailyMpProdA,dailyMpProdT,true),
      pointRadius:2.5,borderWidth:1.8,tension:.3,fill:true},
-    {label:'Maint Tgt',data:dailyMpMaintT,borderColor:'rgba(10,36,99,0.4)',borderDash:[4,4],pointRadius:0,borderWidth:1.2,fill:false},
+    {label:'Maint Tgt',data:dailyMpMaintT,borderColor:'rgba(0,0,255,0.4)',borderDash:[4,4],pointRadius:0,borderWidth:1.2,fill:false},
     {label:'Maint Act',data:dailyMpMaintA,borderColor:'rgba(204,0,0,0.7)',backgroundColor:'rgba(204,0,0,0.05)',
      pointBackgroundColor:trendActualColor(dailyMpMaintA,dailyMpMaintT,true),
      pointBorderColor:trendActualColor(dailyMpMaintA,dailyMpMaintT,true),
@@ -1003,33 +1003,33 @@ function renderDaywise(){
 
   // Charts
   mk('chDayAutoConer','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>acpT[p]),backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:plants.map(p=>acpT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual',data:spinA,backgroundColor:spinA.map((a,i)=>a>=acpT[plants[i]]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   mk('chDayPacking','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>packT[p]),backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:plants.map(p=>packT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual',data:packA,backgroundColor:packA.map((a,i)=>a>=packT[plants[i]]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   mk('chDaySales','bar',{labels:plants,datasets:[
-    {label:'Target',data:salesTDay,backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:salesTDay,backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual',data:salesA,backgroundColor:salesA.map((a,i)=>salesTDay[i]===0?'rgba(21,87,36,0.85)':a>=salesTDay[i]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   mk('chDayTurn','bar',{labels:plants,datasets:[
-    {label:'Target (₹L)',data:turnTDay,backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target (₹L)',data:turnTDay,backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual (₹L)',data:turnA,backgroundColor:turnA.map((a,i)=>turnTDay[i]===0?'rgba(21,87,36,0.85)':a>=turnTDay[i]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(1)}}}});
 
   const mpPA=getDayVals('mp_prod_actual',isAll);
   mk('chDayMPProd','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>mpProdT[p]),backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:plants.map(p=>mpProdT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual',data:mpPA,backgroundColor:mpPA.map((a,i)=>colorForVal(a,mpProdT[plants[i]],false)),borderRadius:4}
   ]});
   const mpMA=getDayVals('mp_maint_actual',isAll);
   mk('chDayMPMaint','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>mpMaintT[p]),backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:plants.map(p=>mpMaintT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual',data:mpMA,backgroundColor:mpMA.map((a,i)=>colorForVal(a,mpMaintT[plants[i]],false)),borderRadius:4}
   ]});
 
@@ -1377,7 +1377,7 @@ function renderSales(){
 
   // Cumulative bar
   mk('chSalesBar','bar',{labels:plants,datasets:[
-    {label:'Target',data:salesTotalT,backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:salesTotalT,backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual',data:salesTotalA,backgroundColor:salesTotalA.map((a,i)=>salesTotalT[i]===0?'rgba(21,87,36,0.85)':a>=salesTotalT[i]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
@@ -1462,7 +1462,7 @@ function renderTurnover(){
 
   // Cumulative bar
   mk('chTurnBar','bar',{labels:plants,datasets:[
-    {label:'Target (₹L)',data:turnTotalT,backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target (₹L)',data:turnTotalT,backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual (₹L)',data:turnTotalA,backgroundColor:turnTotalA.map((a,i)=>turnTotalT[i]===0?'rgba(21,87,36,0.85)':a>=turnTotalT[i]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(0)}}}});
 
@@ -1534,12 +1534,12 @@ function renderManpower(){
     kpiCard('amber','Maintenance Gap %',Math.abs(100-maintGapPct).toFixed(1)+'%',totMaintA<totMaintT?'Deficit — under-staffed':'Surplus — over-staffed',totMaintA<totMaintT?'⚠ Monitor closely':'✓ Adequate','badge-amber');
 
   mk('chMPProd','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>mpProdT[p]),backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:plants.map(p=>mpProdT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual (Avg)',data:mpProdAvg,backgroundColor:mpProdAvg.map((a,i)=>colorForVal(a,mpProdT[plants[i]],false)),borderRadius:4}
   ]});
 
   mk('chMPMaint','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>mpMaintT[p]),backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:plants.map(p=>mpMaintT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual (Avg)',data:mpMaintAvg,backgroundColor:mpMaintAvg.map((a,i)=>colorForVal(a,mpMaintT[plants[i]],false)),borderRadius:4}
   ]});
 
@@ -1547,7 +1547,7 @@ function renderManpower(){
   const dailyMaintTotal=dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual'])));
   mk('chMPTrend','line',{labels:dateLabels,datasets:[
     {label:'Prod Target',data:dates.map(()=>totProdT),borderColor:'#9C8F82',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Prod Actual',data:dailyProdTotal,borderColor:'#1A5C96',backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',borderWidth:2.5,tension:.3,fill:true},
+    {label:'Prod Actual',data:dailyProdTotal,borderColor:'#0000FF',backgroundColor:'rgba(0,0,255,.1)',pointBackgroundColor:'#0000FF',borderWidth:2.5,tension:.3,fill:true},
     {label:'Maint Target',data:dates.map(()=>totMaintT),borderColor:'#C0392B',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
     {label:'Maint Actual',data:dailyMaintTotal,borderColor:'#D44000',backgroundColor:'rgba(212,64,0,.08)',pointBackgroundColor:'#D44000',borderWidth:2.5,tension:.3,fill:true}
   ]});
@@ -1574,7 +1574,7 @@ function renderUPC(){
   const upcAvg=plants.map(p=>avg(dates.map(d=>lk[p][d]['upc_actual'])));
 
   mk('chUPC','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>upcT[p]),backgroundColor:'rgba(10,36,99,0.85)',borderRadius:4},
+    {label:'Target',data:plants.map(p=>upcT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual (Avg)',data:upcAvg,backgroundColor:upcAvg.map((a,i)=>a<=upcT[plants[i]]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(3)}}}});
 
@@ -1674,10 +1674,10 @@ function renderComparative(){
   document.getElementById('comparativeBody').innerHTML=compBody;
 
   // Colour constants (matching global scheme)
-  const COL_BLUE ='rgba(10,36,99,0.85)';    // Dark Blue
+  const COL_BLUE ='rgba(0,0,255,0.85)';    // Dark Blue
   const COL_GREEN='rgba(21,87,36,0.85)';    // Dark Green — achieved
   const COL_RED  ='rgba(204,0,0,0.85)';     // Blood Red — not achieved
-  const COL_BLUE_LT ='rgba(10,36,99,0.45)'; // Light Dark Blue (second dataset)
+  const COL_BLUE_LT ='rgba(0,0,255,0.45)'; // Light Dark Blue (second dataset)
   const COL_GREEN_LT='rgba(21,87,36,0.45)'; // Light Green
   const COL_RED_LT  ='rgba(204,0,0,0.45)';  // Light Blood Red
 
