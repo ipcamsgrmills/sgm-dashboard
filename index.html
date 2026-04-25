@@ -11,14 +11,14 @@
   --cream:#FAF7F2;--warm:#F2EDE4;--border:#E2D9CC;--muted:#9C8F82;
   --ink:#2A2118;--sub:#6B5F52;--green:#2D7D4E;--green-lt:#E6F4EC;
   --red:#C0392B;--red-lt:#FDECEA;--amber:#B8620A;--amber-lt:#FEF3E2;
-  --blue:#0000FF;--blue-lt:#E8F1FB;--teal:#0F7B7B;--teal-lt:#E3F5F5;
-  --accent:#8B4513;--gold:#C9963A;
+  --blue:#1A5C96;--blue-lt:#E8F1FB;--teal:#0F7B7B;--teal-lt:#E3F5F5;
+  --accent:#166534;--gold:#C9963A;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);padding:0 0 60px}
 
 /* LOAD SCREEN */
-.load-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink);position:relative;overflow:hidden}
+.load-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#14532d;position:relative;overflow:hidden}
 .load-screen::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 40px,rgba(201,150,58,.04) 40px,rgba(201,150,58,.04) 41px)}
 .load-box{position:relative;text-align:center;padding:60px 50px;background:rgba(250,247,242,.04);border:1px solid rgba(201,150,58,.2);border-radius:20px;max-width:480px;width:90%}
 .load-logo{font-family:'DM Serif Display',serif;font-size:48px;color:var(--gold);margin-bottom:12px;letter-spacing:.06em}
@@ -32,7 +32,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);p
 .load-hint{font-size:11px;color:rgba(250,247,242,.3);margin-top:16px;line-height:1.6}
 
 /* HERO */
-.hero{background:var(--ink);color:var(--cream);padding:28px 44px 24px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;border-bottom:4px solid var(--gold);position:relative;overflow:hidden}
+.hero{background:#14532d;color:var(--cream);padding:28px 44px 24px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;border-bottom:4px solid var(--gold);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 40px,rgba(201,150,58,.04) 40px,rgba(201,150,58,.04) 41px)}
 .hero-left{position:relative;display:flex;align-items:center;gap:18px}
 .hero-logo-wrap{flex-shrink:0;display:flex;align-items:center}
@@ -52,7 +52,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);p
 .reload-btn:hover{background:rgba(201,150,58,.32)}
 
 /* TABS */
-.tabs-wrap{background:var(--warm);border-bottom:1px solid var(--border);padding:0 44px;display:flex;overflow-x:auto}
+.tabs-wrap{background:#f0fdf4;border-bottom:1px solid #bbf7d0;padding:0 44px;display:flex;overflow-x:auto}
 .tab-btn{background:none;border:none;padding:13px 18px 11px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--sub);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
 .tab-btn:hover{color:var(--ink)}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
@@ -64,8 +64,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);p
 
 /* SECTION HEAD */
 .section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px}
-.section-title{font-family:'DM Serif Display',serif;font-size:21px;color:var(--ink)}
-.section-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--warm);border:1px solid var(--border);border-radius:4px;padding:2px 7px}
+.section-title{font-family:'DM Serif Display',serif;font-size:21px;color:#166534}
+.section-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#166534;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px;padding:2px 7px}
 
 /* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:28px}
@@ -93,14 +93,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);p
 .chart-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;transition:box-shadow .2s}
 .chart-card:hover{box-shadow:0 4px 18px rgba(42,33,24,.07)}
 .chart-card.full{grid-column:1/-1}
-.chart-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.chart-title{font-size:13px;font-weight:600;color:#166534;margin-bottom:3px}
 .chart-sub{font-size:11px;color:var(--muted);margin-bottom:14px}
 .chart-card canvas{max-height:280px !important}
 .chart-card.full canvas{max-height:260px !important}
 
 /* TABLES */
 .table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:22px}
-.table-header{background:var(--warm);padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.table-header{background:#dcfce7;padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .table-title{font-size:13px;font-weight:600;color:var(--ink)}
 .table-note{font-size:11px;color:var(--muted)}
 table{width:100%;border-collapse:collapse}
@@ -159,7 +159,7 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 
 /* COMPARE CARD */
 .compare-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:22px}
-.compare-head{padding:14px 20px 12px;background:linear-gradient(135deg,var(--ink) 0%,#3d3028 100%);color:#fff}
+.compare-head{padding:14px 20px 12px;background:linear-gradient(135deg,#14532d 0%,#1a6b38 100%);color:#fff}
 .compare-head h3{font-family:'DM Serif Display',serif;font-size:15px;margin-bottom:2px}
 .compare-head p{font-size:11px;opacity:.5}
 
@@ -487,8 +487,8 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 // ══════════════════════════════════════════════════════
 // CONSTANTS
 // ══════════════════════════════════════════════════════
-const pColors=['#0000FF','#D44000','#2D7D4E','#7B2FBE','#0F7B7B','#C9963A','#C0392B'];
-const pColorsFill=['rgba(0,0,255,0.82)','rgba(212,64,0,0.82)','rgba(45,125,78,0.82)','rgba(123,47,190,0.82)','rgba(15,123,123,0.82)','rgba(201,150,58,0.82)','rgba(204,0,0,0.85)'];
+const pColors=['#1A5C96','#D44000','#2D7D4E','#7B2FBE','#0F7B7B','#C9963A','#C0392B'];
+const pColorsFill=['rgba(26,92,150,0.82)','rgba(212,64,0,0.82)','rgba(45,125,78,0.82)','rgba(123,47,190,0.82)','rgba(15,123,123,0.82)','rgba(201,150,58,0.82)','rgba(204,0,0,0.85)'];
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const C={tgt:'rgba(107,95,82,0.45)',gridLine:'rgba(226,217,204,0.6)',gridTick:'#9C8F82'};
 
@@ -1037,7 +1037,7 @@ function renderDaywise(){
   let rows='';
   if(isAll){
     plants.forEach((p,pi)=>{
-      rows+=`<tr style="background:linear-gradient(135deg,var(--ink) 0%,#3d3028 100%)">
+      rows+=`<tr style="background:linear-gradient(135deg,#14532d 0%,#1a6b38 100%)">
         <td colspan="19" style="color:#fff;font-family:'DM Serif Display',serif;font-size:13px;padding:10px 12px;font-weight:600;letter-spacing:.03em">
           <span style="color:${pColors[pi]}">■</span>&nbsp;&nbsp;${p} — ${lbl}
         </td></tr>`;
@@ -1547,7 +1547,7 @@ function renderManpower(){
   const dailyMaintTotal=dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual'])));
   mk('chMPTrend','line',{labels:dateLabels,datasets:[
     {label:'Prod Target',data:dates.map(()=>totProdT),borderColor:'#9C8F82',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Prod Actual',data:dailyProdTotal,borderColor:'#0000FF',backgroundColor:'rgba(0,0,255,.1)',pointBackgroundColor:'#0000FF',borderWidth:2.5,tension:.3,fill:true},
+    {label:'Prod Actual',data:dailyProdTotal,borderColor:'#1A5C96',backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',borderWidth:2.5,tension:.3,fill:true},
     {label:'Maint Target',data:dates.map(()=>totMaintT),borderColor:'#C0392B',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
     {label:'Maint Actual',data:dailyMaintTotal,borderColor:'#D44000',backgroundColor:'rgba(212,64,0,.08)',pointBackgroundColor:'#D44000',borderWidth:2.5,tension:.3,fill:true}
   ]});
