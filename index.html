@@ -219,6 +219,9 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 #modalCanvas{width:100%!important;height:100%!important}
 .chart-card{cursor:pointer}
 .chart-card:hover{box-shadow:0 6px 24px rgba(22,101,52,.15);border-color:#86efac}
+
+/* HISTORY BARS in trend charts */
+.hist-note{font-size:10px;color:#6b7280;margin-bottom:4px;font-style:italic}
 </style>
 </head>
 <body>
@@ -245,6 +248,8 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
     <div class="hero-period" id="heroPeriod">—</div>
     <div class="status-badge"><span class="status-dot"></span> Days Reported: <span id="heroDays">—</span></div>
     <button class="reload-btn" onclick="triggerReload()" title="Load a different data.csv file">📂 Reload CSV</button>
+    <div id="histBadge" style="display:none;margin-top:5px;font-size:10px;color:#86efac;text-align:right"></div>
+    <div id="histBadge" style="display:none;margin-top:5px;font-size:10px;color:#86efac;text-align:right"></div>
   </div>
 </div>
 
@@ -276,7 +281,8 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
     <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Packing — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants combined vs target</div><canvas id="chOvPackTrend" height="130"></canvas></div>
     <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Sales — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants combined (kgs)</div><canvas id="chOvSalesTrend" height="130"></canvas></div>
     <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Turnover — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants combined (₹ Lakhs)</div><canvas id="chOvTurnTrend" height="130"></canvas></div>
-    <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Manpower — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">Production &amp; Maintenance vs targets</div><canvas id="chOvMPTrend" height="130"></canvas></div>
+    <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Production Manpower — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants avg headcount vs target per day</div><canvas id="chOvMPProdTrend" height="130"></canvas></div>
+    <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Maintenance Manpower — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants avg headcount vs target per day</div><canvas id="chOvMPMaintTrend" height="130"></canvas></div>
   </div>
 </div>
 
@@ -331,24 +337,18 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
     <div class="chart-title">AutoConer — Individual Plant Daily Trend (Target vs Actual)</div>
     <div class="chart-sub">Select a plant to view its AutoConer production trend</div>
     <div class="plant-select-bar" id="plantPills"></div>
+    <div class="hist-note" id="acpTrendNote" style="display:none"></div>
     <canvas id="chPlantTrend" height="220"></canvas>
   </div>
-  <div class="chart-card full" style="margin-bottom:20px">
-    <div class="chart-title">All Plants — Day-wise AutoConer Production</div>
-    <div class="chart-sub">Grouped by day — plant-coded bars</div>
-    <canvas id="chDailyAutoConer" height="220"></canvas>
-  </div>
+
   <div class="chart-card full" style="margin-bottom:20px">
     <div class="chart-title">Packing — Individual Plant Daily Trend (Target vs Actual)</div>
     <div class="chart-sub">Select a plant to view its Packing production trend</div>
     <div class="plant-select-bar" id="packPlantPills"></div>
+    <div class="hist-note" id="packTrendNote" style="display:none"></div>
     <canvas id="chPackPlantTrend" height="220"></canvas>
   </div>
-  <div class="chart-card full" style="margin-bottom:20px">
-    <div class="chart-title">All Plants — Day-wise Packing Production</div>
-    <div class="chart-sub">Grouped by day — plant-coded bars</div>
-    <canvas id="chDailyPacking" height="220"></canvas>
-  </div>
+
   <div class="table-wrap" style="margin-bottom:22px">
     <div class="table-header"><div class="table-title">Date-wise &amp; Plant-wise AutoConer Production</div><div class="table-note">kgs · Target | Actual</div></div>
     <div style="overflow-x:auto"><table><thead id="prodSpinHead"></thead><tbody id="prodSpinBody"></tbody></table></div>
@@ -441,11 +441,15 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 <!-- ===== MANPOWER ===== -->
 <div id="tab-manpower" class="content">
   <div class="section-head"><div class="section-title">Man Power Analysis</div><div class="section-tag">Production &amp; Maintenance</div></div>
-  <div class="kpi-grid" id="kpiManpower"></div>
+  <div class="section-sub-head" style="margin:18px 0 6px;font-size:13px;font-weight:700;color:#166534;letter-spacing:.3px;">⚙ Production Manpower</div>
+  <div class="kpi-grid" id="kpiMPProd"></div>
+  <div class="section-sub-head" style="margin:20px 0 6px;font-size:13px;font-weight:700;color:#166534;letter-spacing:.3px;">🔧 Maintenance Manpower</div>
+  <div class="kpi-grid" id="kpiMPMaint"></div>
   <div class="chart-grid">
     <div class="chart-card"><div class="chart-title">Production Manpower — Plant-wise</div><div class="chart-sub">Green = under target (efficient) · Red = over target</div><canvas id="chMPProd" height="240"></canvas></div>
     <div class="chart-card"><div class="chart-title">Maintenance Manpower — Plant-wise</div><div class="chart-sub">Green = under target · Red = over target</div><canvas id="chMPMaint" height="240"></canvas></div>
-    <div class="chart-card full"><div class="chart-title">Daily Overall Manpower Trend</div><div class="chart-sub">Production + Maintenance actuals per day</div><canvas id="chMPTrend" height="220"></canvas></div>
+    <div class="chart-card full"><div class="chart-title">Daily Production Manpower Trend</div><div class="chart-sub">All-plant production headcount vs target per day</div><canvas id="chMPProdTrend" height="220"></canvas></div>
+    <div class="chart-card full"><div class="chart-title">Daily Maintenance Manpower Trend</div><div class="chart-sub">All-plant maintenance headcount vs target per day</div><canvas id="chMPMaintTrend" height="220"></canvas></div>
   </div>
   <div class="table-wrap">
     <div class="table-header"><div class="table-title">Manpower Summary by Plant</div><div class="table-note">Period average · Green = under, Red = over</div></div>
@@ -510,6 +514,15 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 // ══════════════════════════════════════════════════════
 // CONSTANTS
 // ══════════════════════════════════════════════════════
+// Global mini-chart options — shared across overview & manpower tabs
+const miniOpts={
+  plugins:{legend:{display:false,position:'bottom'}},
+  scales:{
+    x:{grid:{display:false},ticks:{color:'#b0a898',font:{size:8},maxTicksLimit:6,maxRotation:0}},
+    y:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'#b0a898',font:{size:8},maxTicksLimit:4}}
+  }
+};
+
 const pColors=['#1A5C96','#D44000','#2D7D4E','#7B2FBE','#0F7B7B','#C9963A','#C0392B'];
 const pColorsFill=['rgba(26,92,150,0.82)','rgba(212,64,0,0.82)','rgba(45,125,78,0.82)','rgba(123,47,190,0.82)','rgba(15,123,123,0.82)','rgba(201,150,58,0.82)','rgba(204,0,0,0.85)'];
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -519,7 +532,7 @@ const baseOpts={
   responsive:true,
   maintainAspectRatio:true,
   animation:{duration:1350,easing:'easeInOutQuart'},
-  plugins:{legend:{labels:{font:{family:"'DM Sans',sans-serif",size:11},color:'#6B5F52',boxWidth:11,boxHeight:11}}},
+  plugins:{legend:{position:'bottom',labels:{font:{family:"'DM Sans',sans-serif",size:11},color:'#6B5F52',boxWidth:11,boxHeight:11}}},
   scales:{
     x:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11}}},
     y:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11}}}
@@ -609,20 +622,67 @@ function parseCSV(text){
 // DATA PROCESSOR
 // ══════════════════════════════════════════════════════
 function processData(rows){
-  const daily=rows.filter(r=>r.section==='daily');
+  const allDaily=rows.filter(r=>r.section==='daily');
   const remarksRows=rows.filter(r=>r.section==='remarks');
   const salesRemarksRows=rows.filter(r=>r.section==='sales_remarks');
-  // Collect all extra remark sections
   const allRemarkSections={};
   rows.filter(r=>r.section&&r.section!=='daily').forEach(r=>{
     if(!allRemarkSections[r.section]) allRemarkSections[r.section]={};
     allRemarkSections[r.section][r.plant]=r.remarks||'—';
   });
 
-  // Plants: preserve CSV order
-  const plants=[]; daily.forEach(r=>{if(!plants.includes(r.plant))plants.push(r.plant);});
+  // ── Separate months ───────────────────────────────────────
+  // Each row date is DD-MM-YYYY.  Group by MM-YYYY as the month key.
+  function monthKey(dateStr){
+    const p=dateStr.split('-');
+    return p.length===3?p[1]+'-'+p[2]:'00-0000';
+  }
+  function monthSortVal(mk){
+    const[mm,yy]=mk.split('-').map(Number);
+    return yy*100+mm;
+  }
 
-  // Dates: sorted chronologically (DD-MM-YYYY)
+  // Collect all unique month keys sorted chronologically
+  const monthSet=new Set(allDaily.map(r=>monthKey(r.date)));
+  const monthsSorted=[...monthSet].sort((a,b)=>monthSortVal(a)-monthSortVal(b));
+
+  // Latest month = "current month" for day-by-day display
+  const currentMonthKey=monthsSorted[monthsSorted.length-1];
+  const histMonthKeys=monthsSorted.slice(0,-1);
+
+  // Filter daily rows to current month only
+  const daily=allDaily.filter(r=>monthKey(r.date)===currentMonthKey);
+
+  // Plants: preserve CSV order (from current month)
+  const plants=[]; daily.forEach(r=>{if(!plants.includes(r.plant))plants.push(r.plant);});
+  // Fallback: if no current-month rows yet, use all plants
+  if(!plants.length) allDaily.forEach(r=>{if(!plants.includes(r.plant))plants.push(r.plant);});
+
+  // ── Build history from previous months ────────────────────
+  const HIST_SUM=['sales','turnover']; // sum for these; avg for rest
+  const HIST_FIELDS=['acp','pack','sales','turnover','mp_prod','mp_maint','upc'];
+  const history=histMonthKeys.map(mk=>{
+    const mRows=allDaily.filter(r=>monthKey(r.date)===mk);
+    const[mm,yy]=mk.split('-').map(Number);
+    const MNAMES=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const label=MNAMES[mm-1]+'-'+String(yy).slice(2);
+    const sortKey=monthSortVal(mk);
+    const data={};
+    plants.forEach(p=>{
+      const pRows=mRows.filter(r=>r.plant===p);
+      data[p]={};
+      HIST_FIELDS.forEach(f=>{
+        const tVals=pRows.map(r=>parseFloat(r[f+'_target'])||0).filter(v=>v>0);
+        const aVals=pRows.map(r=>parseFloat(r[f+'_actual'])||0).filter(v=>v>0);
+        const isSum=HIST_SUM.includes(f);
+        data[p][f+'_target_agg']=tVals.length?(isSum?tVals.reduce((s,v)=>s+v,0):tVals.reduce((s,v)=>s+v,0)/tVals.length):0;
+        data[p][f+'_actual_agg']=aVals.length?(isSum?aVals.reduce((s,v)=>s+v,0):aVals.reduce((s,v)=>s+v,0)/aVals.length):0;
+      });
+    });
+    return{label,sortKey,data};
+  });
+
+  // ── Current month daily dates ─────────────────────────────
   const datesSet=[]; daily.forEach(r=>{if(r.date&&!datesSet.includes(r.date))datesSet.push(r.date);});
   const dates=datesSet.sort((a,b)=>{
     const[da,ma,ya]=a.split('-').map(Number);
@@ -631,7 +691,7 @@ function processData(rows){
   });
   const dateLabels=dates.map(dateLabel);
 
-  // Build lookup[plant][date][field]
+  // Build lookup[plant][date][field] for current month
   const fields=['acp_target','acp_actual','pack_target','pack_actual',
     'sales_target','sales_actual','turnover_target','turnover_actual',
     'mp_prod_target','mp_prod_actual','mp_maint_target','mp_maint_actual',
@@ -644,7 +704,7 @@ function processData(rows){
     }
   });
 
-  // Plant constant targets (avg across dates)
+  // Plant constant targets for current month (avg across dates)
   const acpT={},packT={},mpProdT={},mpMaintT={},upcT={};
   plants.forEach(p=>{
     acpT[p]=avg(dates.map(d=>lk[p][d]['acp_target']));
@@ -654,19 +714,21 @@ function processData(rows){
     upcT[p]=avg(dates.map(d=>lk[p][d]['upc_target']));
   });
 
-  // Remarks
+  // Remarks — use latest available entry per plant
   const remarks={};remarksRows.forEach(r=>{remarks[r.plant]=r.remarks||'—';});
   const salesRemarks={};salesRemarksRows.forEach(r=>{salesRemarks[r.plant]=r.remarks||'—';});
 
-  // Period string
-  const fd=dates[0],ld=dates[dates.length-1];
+  // Period string — current month only
+  const fd=dates[0]||currentMonthKey.replace('-','-01-');
+  const ld=dates[dates.length-1]||fd;
   const[fday,fm,fy]=fd.split('-').map(Number);
   const[lday,lm,ly]=ld.split('-').map(Number);
   const periodStr=fm===lm&&fy===ly?MONTHS[fm-1]+' '+fy:MONTHS[fm-1]+'–'+MONTHS[lm-1]+' '+ly;
   const daysStr=fday+'–'+lday;
 
   return{plants,dates,dateLabels,lk,acpT,packT,mpProdT,mpMaintT,upcT,
-         remarks,salesRemarks,allRemarkSections,periodStr,daysStr,numDays:dates.length};
+         remarks,salesRemarks,allRemarkSections,periodStr,daysStr,numDays:dates.length,
+         history};  // history passed back to be set on G
 }
 
 // ══════════════════════════════════════════════════════
@@ -695,14 +757,25 @@ function updateHeader(){
 // ══════════════════════════════════════════════════════
 // OVERVIEW TAB
 // ══════════════════════════════════════════════════════
+
+// Wrapper to store overview chart data after creation
+function mkAndStore(canvasId, type, chartData, opts, storageData) {
+  mk(canvasId, type, chartData, opts);
+  // Store data on canvas element immediately (data is captured by closure)
+  const canvas = document.getElementById(canvasId);
+  if (canvas && storageData) {
+    canvas.dataset.ovData = JSON.stringify(storageData);
+  }
+}
+
+// Global colour constants for all charts
+const COL_TGT='rgba(0,0,255,0.85)';       // Dark Blue — target
+const COL_HIT='rgba(21,87,36,0.85)';        // Dark Green — achieved
+const COL_MISS='rgba(204,0,0,0.85)';         // Dark Red — not achieved
+
 function renderOverview(){
   const{plants,dates,dateLabels,lk,acpT,packT,mpProdT,mpMaintT}=G;
   document.getElementById('ovTag').textContent=G.numDays+'-Day Actuals · '+G.daysStr;
-
-  // Colour constants
-  const COL_TGT='rgba(0,0,255,0.85)';       // Dark Blue — target
-  const COL_HIT='rgba(21,87,36,0.85)';        // Dark Green — achieved
-  const COL_MISS='rgba(204,0,0,0.85)';         // Dark Red — not achieved
 
   // Compute averages per plant
   const acpAvg={},packAvg={},mpProdAvg={},mpMaintAvg={};
@@ -806,70 +879,80 @@ function renderOverview(){
 
   // AutoConer trend
   // Compact options for small trend cards
-  const miniOpts = {
-    plugins:{legend:{display:false}},
-    scales:{
-      x:{grid:{display:false},ticks:{color:C.gridTick,font:{size:8},maxTicksLimit:6,maxRotation:0}},
-      y:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:8},maxTicksLimit:4}}
-    }
-  };
 
   const dailyAcpA = dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_actual'])));
-  const dailyAcpT = dates.map(()=>totAcpT);
-  mk('chOvAcpTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dailyAcpT,borderColor:COL_TGT,borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Actual',data:dailyAcpA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
-     pointBackgroundColor:trendActualColor(dailyAcpA,dailyAcpT),
-     pointBorderColor:trendActualColor(dailyAcpA,dailyAcpT),
-     pointRadius:2.5,borderWidth:2,tension:.3,fill:true}
-  ]},{...miniOpts,scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+  const dailyAcpT = dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_target'])));
+  // Build overview history: sum across all plants
+  const ovHistAcpT=(G.history||[]).map(h=>sum(plants.map(p=>(h.data[p]&&h.data[p]['acp_target_agg'])||0)));
+  const ovHistAcpA=(G.history||[]).map(h=>sum(plants.map(p=>(h.data[p]&&h.data[p]['acp_actual_agg'])||0)));
+  const hC=(G.history||[]).length;
+  const ovAcpLabels=[...(G.history||[]).map(h=>h.label),...dateLabels];
+  const nullH=Array(hC).fill(null),nullC=Array(dates.length).fill(null);
+  mk('chOvAcpTrend','bar',{labels:ovAcpLabels,datasets:[
+    {type:'bar',label:'Prev Tgt',data:[...ovHistAcpT,...nullC],backgroundColor:'rgba(0,0,255,1)',borderColor:'rgba(0,0,255,1)',borderWidth:1.5,borderRadius:2,order:2,hidden:!hC},
+    {type:'bar',label:'Prev Act',data:[...ovHistAcpA,...nullC],
+     backgroundColor:[...ovHistAcpA.map((a,i)=>a>=ovHistAcpT[i]?'rgba(21,128,61,1)':'rgba(185,28,28,1)'),...nullC.map(()=>'transparent')],
+     borderColor:[...ovHistAcpA.map((a,i)=>a>=ovHistAcpT[i]?'rgba(21,128,61,1)':'rgba(185,28,28,1)'),...nullC.map(()=>'transparent')],
+     borderWidth:1.5,borderRadius:2,order:3,hidden:!hC},
+    {type:'line',label:'Target',data:[...nullH,...dailyAcpT],borderColor:COL_TGT,borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false,spanGaps:false},
+    {type:'line',label:'Actual',data:[...nullH,...dailyAcpA],borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',pointRadius:2,borderWidth:2,tension:.3,fill:true,spanGaps:false}
+  ]},{...miniOpts,plugins:{...miniOpts.plugins,legend:{display:!!hC,position:'bottom',labels:{font:{size:9},boxWidth:8,boxHeight:8,filter:item=>hC||!item.text.startsWith('Prev')}}},scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   const dailyPackA= dates.map(d=>sum(plants.map(p=>lk[p][d]['pack_actual'])));
-  const dailyPackT= dates.map(()=>totPackT);
-  mk('chOvPackTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dailyPackT,borderColor:COL_TGT,borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Actual',data:dailyPackA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
-     pointBackgroundColor:trendActualColor(dailyPackA,dailyPackT),
-     pointBorderColor:trendActualColor(dailyPackA,dailyPackT),
-     pointRadius:2.5,borderWidth:2,tension:.3,fill:true}
-  ]},{...miniOpts,scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+  const dailyPackT= dates.map(d=>sum(plants.map(p=>lk[p][d]['pack_target'])));
+  const ovHistPackT=(G.history||[]).map(h=>sum(plants.map(p=>(h.data[p]&&h.data[p]['pack_target_agg'])||0)));
+  const ovHistPackA=(G.history||[]).map(h=>sum(plants.map(p=>(h.data[p]&&h.data[p]['pack_actual_agg'])||0)));
+  mk('chOvPackTrend','bar',{labels:ovAcpLabels,datasets:[
+    {type:'bar',label:'Prev Tgt',data:[...ovHistPackT,...nullC],backgroundColor:'rgba(0,0,255,1)',borderColor:'rgba(0,0,255,1)',borderWidth:1.5,borderRadius:2,order:2,hidden:!hC},
+    {type:'bar',label:'Prev Act',data:[...ovHistPackA,...nullC],
+     backgroundColor:[...ovHistPackA.map((a,i)=>a>=ovHistPackT[i]?'rgba(21,128,61,1)':'rgba(185,28,28,1)'),...nullC.map(()=>'transparent')],
+     borderColor:[...ovHistPackA.map((a,i)=>a>=ovHistPackT[i]?'rgba(21,128,61,1)':'rgba(185,28,28,1)'),...nullC.map(()=>'transparent')],
+     borderWidth:1.5,borderRadius:2,order:3,hidden:!hC},
+    {type:'line',label:'Target',data:[...nullH,...dailyPackT],borderColor:COL_TGT,borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false,spanGaps:false},
+    {type:'line',label:'Actual',data:[...nullH,...dailyPackA],borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',pointRadius:2,borderWidth:2,tension:.3,fill:true,spanGaps:false}
+  ]},{...miniOpts,plugins:{...miniOpts.plugins,legend:{display:!!hC,position:'bottom',labels:{font:{size:9},boxWidth:8,boxHeight:8}}},scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   const dailySalesA = dates.map(d=>sum(plants.map(p=>lk[p][d]['sales_actual'])));
   const dailySalesT = dates.map(d=>sum(plants.map(p=>lk[p][d]['sales_target'])));
-  mk('chOvSalesTrend','line',{labels:dateLabels,datasets:[
+  mkAndStore('chOvSalesTrend','line',{labels:dateLabels,datasets:[
     {label:'Target',data:dailySalesT,borderColor:COL_TGT,borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
     {label:'Actual',data:dailySalesA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
      pointBackgroundColor:trendActualColor(dailySalesA,dailySalesT),
      pointBorderColor:trendActualColor(dailySalesA,dailySalesT),
      pointRadius:2.5,borderWidth:2,tension:.3,fill:true}
-  ]},{...miniOpts,scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+  ]},{...miniOpts,scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}}, {dailySalesT,dailySalesA,dateLabels});
 
   const dailyTurnA = dates.map(d=>sum(plants.map(p=>lk[p][d]['turnover_actual'])));
   const dailyTurnT = dates.map(d=>sum(plants.map(p=>lk[p][d]['turnover_target'])));
-  mk('chOvTurnTrend','line',{labels:dateLabels,datasets:[
+  mkAndStore('chOvTurnTrend','line',{labels:dateLabels,datasets:[
     {label:'Target',data:dailyTurnT,borderColor:COL_TGT,borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
     {label:'Actual',data:dailyTurnA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
      pointBackgroundColor:trendActualColor(dailyTurnA,dailyTurnT),
      pointBorderColor:trendActualColor(dailyTurnA,dailyTurnT),
      pointRadius:2.5,borderWidth:2,tension:.3,fill:true}
-  ]},{...miniOpts,scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v.toFixed(0)}}}});
+  ]},{...miniOpts,scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v.toFixed(0)}}}}, {dailyTurnT,dailyTurnA,dateLabels});
 
   const dailyMpProdA = dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_prod_actual'])));
   const dailyMpProdT = dates.map(()=>totMPProdT);
   const dailyMpMaintA= dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual'])));
   const dailyMpMaintT= dates.map(()=>totMPMaintT);
-  mk('chOvMPTrend','line',{labels:dateLabels,datasets:[
-    {label:'Prod Tgt',data:dailyMpProdT,borderColor:COL_TGT,borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Prod Act',data:dailyMpProdA,borderColor:'rgba(21,87,36,0.9)',backgroundColor:'rgba(21,87,36,0.06)',
+  // Production Manpower trend
+  mkAndStore('chOvMPProdTrend','line',{labels:dateLabels,datasets:[
+    {label:'Target',data:dailyMpProdT,borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
+    {label:'Actual',data:dailyMpProdA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
      pointBackgroundColor:trendActualColor(dailyMpProdA,dailyMpProdT,true),
      pointBorderColor:trendActualColor(dailyMpProdA,dailyMpProdT,true),
-     pointRadius:2.5,borderWidth:1.8,tension:.3,fill:true},
-    {label:'Maint Tgt',data:dailyMpMaintT,borderColor:'rgba(0,0,255,0.4)',borderDash:[4,4],pointRadius:0,borderWidth:1.2,fill:false},
-    {label:'Maint Act',data:dailyMpMaintA,borderColor:'rgba(204,0,0,0.7)',backgroundColor:'rgba(204,0,0,0.05)',
+     pointRadius:2.5,borderWidth:1.8,tension:.3,fill:true}
+  ]},miniOpts, {dailyMpProdT,dailyMpProdA,dateLabels});
+
+  // Maintenance Manpower trend
+  mkAndStore('chOvMPMaintTrend','line',{labels:dateLabels,datasets:[
+    {label:'Target',data:dailyMpMaintT,borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
+    {label:'Actual',data:dailyMpMaintA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
      pointBackgroundColor:trendActualColor(dailyMpMaintA,dailyMpMaintT,true),
      pointBorderColor:trendActualColor(dailyMpMaintA,dailyMpMaintT,true),
      pointRadius:2.5,borderWidth:1.8,tension:.3,fill:true}
-  ]},miniOpts);
+  ]},miniOpts, {dailyMpMaintT,dailyMpMaintA,dateLabels});
 }
 
 // ══════════════════════════════════════════════════════
@@ -1199,7 +1282,7 @@ function renderProduction(){
     btn.textContent=p;btn.style.borderColor=pColors[i];
     if(i===activePlantIdx){btn.style.background=pColors[i];btn.style.color='#fff';}
     else{btn.style.background='#fff';btn.style.color=pColors[i];}
-    btn.onclick=()=>{
+    btn.onclick=(e)=>{e.stopPropagation();
       activePlantIdx=i;
       document.querySelectorAll('.plant-pill').forEach((b,bi)=>{
         b.classList.toggle('active',bi===i);
@@ -1213,11 +1296,7 @@ function renderProduction(){
   });
   drawPlantTrend();
 
-  // All plants grouped bar — AutoConer
-  mk('chDailyAutoConer','bar',{
-    labels:dateLabels,
-    datasets:plants.map((p,i)=>({label:p,data:dates.map(d=>lk[p][d]['acp_actual']),backgroundColor:pColorsFill[i],borderRadius:3}))
-  },{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
 
   // Packing plant pills
   const packPillBar=document.getElementById('packPlantPills');packPillBar.innerHTML='';
@@ -1227,7 +1306,7 @@ function renderProduction(){
     btn.textContent=p;btn.style.borderColor=pColors[i];
     if(i===activePackPlantIdx){btn.style.background=pColors[i];btn.style.color='#fff';}
     else{btn.style.background='#fff';btn.style.color=pColors[i];}
-    btn.onclick=()=>{
+    btn.onclick=(e)=>{e.stopPropagation();
       activePackPlantIdx=i;
       document.querySelectorAll('#packPlantPills .plant-pill').forEach((b,bi)=>{
         b.classList.toggle('active',bi===i);
@@ -1241,11 +1320,7 @@ function renderProduction(){
   });
   drawPackPlantTrend();
 
-  // All plants grouped bar — Packing
-  mk('chDailyPacking','bar',{
-    labels:dateLabels,
-    datasets:plants.map((p,i)=>({label:p,data:dates.map(d=>lk[p][d]['pack_actual']),backgroundColor:pColorsFill[i],borderRadius:3}))
-  },{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+
 
   // AutoConer table
   let acpHead=`<tr><th>Date</th>${plants.map(p=>`<th>${p} Tgt</th><th>${p} Act</th>`).join('')}<th>Total Tgt</th><th>Total Act</th></tr>`;
@@ -1321,50 +1396,58 @@ function renderProduction(){
 }
 
 function drawPlantTrend(){
-  const{plants,dates,dateLabels,lk,acpT}=G;
+  const{plants,dates,dateLabels,lk}=G;
   const i=activePlantIdx,p=plants[i];
-  mk('chPlantTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dates.map(d=>lk[p][d]['acp_target']),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
-    {label:`${p} Actual`,data:dates.map(d=>lk[p][d]['acp_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
-  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+  mkMixed('chPlantTrend',p,'acp',
+    dates.map(d=>lk[p][d]['acp_target']),
+    dates.map(d=>lk[p][d]['acp_actual']),
+    dateLabels, pColors[i],
+    v=>v/1000+'k',
+    document.getElementById('acpTrendNote'));
 }
 
 function drawPackPlantTrend(){
-  const{plants,dates,dateLabels,lk,packT}=G;
+  const{plants,dates,dateLabels,lk}=G;
   const i=activePackPlantIdx,p=plants[i];
-  mk('chPackPlantTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dates.map(d=>lk[p][d]['pack_target']),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
-    {label:`${p} Actual`,data:dates.map(d=>lk[p][d]['pack_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
-  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
+  mkMixed('chPackPlantTrend',p,'pack',
+    dates.map(d=>lk[p][d]['pack_target']),
+    dates.map(d=>lk[p][d]['pack_actual']),
+    dateLabels, pColors[i],
+    v=>v/1000+'k',
+    document.getElementById('packTrendNote'));
 }
 
 function drawSalesPlantTrend(){
   const{plants,dates,dateLabels,lk}=G;
   const i=activeSalesPlantIdx,p=plants[i];
-  const salesTarget=dates.map(d=>lk[p][d]['sales_target']);
-  mk('chSalesTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:salesTarget,borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
-    {label:`${p} Actual`,data:dates.map(d=>lk[p][d]['sales_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
-  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v>0?fmt(v,0):0}}}});
+  mkMixed('chSalesTrend',p,'sales',
+    dates.map(d=>lk[p][d]['sales_target']),
+    dates.map(d=>lk[p][d]['sales_actual']),
+    dateLabels, pColors[i],
+    v=>v>0?fmt(v,0):0,
+    document.getElementById('salesTrendNote'));
 }
 
 function drawTurnPlantTrend(){
   const{plants,dates,dateLabels,lk}=G;
   const i=activeTurnPlantIdx,p=plants[i];
-  const turnTarget=dates.map(d=>lk[p][d]['turnover_target']);
-  mk('chTurnTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target (₹L)',data:turnTarget,borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
-    {label:`${p} Actual (₹L)`,data:dates.map(d=>lk[p][d]['turnover_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
-  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(1)}}}});
+  mkMixed('chTurnTrend',p,'turnover',
+    dates.map(d=>lk[p][d]['turnover_target']),
+    dates.map(d=>lk[p][d]['turnover_actual']),
+    dateLabels, pColors[i],
+    v=>v.toFixed(1),
+    document.getElementById('turnTrendNote'));
 }
 
 function drawUpcPlantTrend(){
   const{plants,dates,dateLabels,lk,upcT}=G;
   const i=activeUpcPlantIdx,p=plants[i];
-  mk('chUPCTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dates.map(()=>upcT[p]),borderColor:'rgba(107,95,82,0.6)',borderDash:[6,3],pointRadius:0,borderWidth:2,fill:false},
-    {label:`${p} Actual`,data:dates.map(d=>lk[p][d]['upc_actual']),borderColor:pColors[i],backgroundColor:pColors[i]+'22',pointBackgroundColor:pColors[i],pointRadius:4,borderWidth:2.5,tension:.3,fill:true}
-  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(3)}}}});
+  mkMixed('chUPCTrend',p,'upc',
+    dates.map(()=>upcT[p]),
+    dates.map(d=>lk[p][d]['upc_actual']),
+    dateLabels, pColors[i],
+    v=>v.toFixed(3),
+    document.getElementById('upcTrendNote'));
 }
 
 // ══════════════════════════════════════════════════════
@@ -1396,7 +1479,7 @@ function renderSales(){
     btn.textContent=p;btn.style.borderColor=pColors[i];
     btn.style.background=i===activeSalesPlantIdx?pColors[i]:'#fff';
     btn.style.color=i===activeSalesPlantIdx?'#fff':pColors[i];
-    btn.onclick=()=>{
+    btn.onclick=(e)=>{e.stopPropagation();
       activeSalesPlantIdx=i;
       document.querySelectorAll('#salesPlantPills .plant-pill').forEach((b,bi)=>{
         b.style.background=bi===i?pColors[bi]:'#fff';
@@ -1421,7 +1504,7 @@ function renderSales(){
     label:'Achievement %',data:achPcts,
     backgroundColor:achPcts.map(p=>p===null?'rgba(107,95,82,0.4)':p>=100?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),
     borderRadius:4
-  }]},{plugins:{legend:{display:false}},scales:{...baseOpts.scales,y:{min:0,max:130,...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v+'%'}}}});
+  }]},{plugins:{legend:{display:false,position:'bottom'}},scales:{...baseOpts.scales,y:{min:0,max:130,...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v+'%'}}}});
 
   // Table
   let salesHead=`<tr><th>Date</th>${plants.map(p=>`<th>${p} Tgt</th><th>${p} Act</th>`).join('')}<th>Total Tgt</th><th>Total Act</th><th>Achievement</th></tr>`;
@@ -1481,7 +1564,7 @@ function renderTurnover(){
     btn.textContent=p;btn.style.borderColor=pColors[i];
     btn.style.background=i===activeTurnPlantIdx?pColors[i]:'#fff';
     btn.style.color=i===activeTurnPlantIdx?'#fff':pColors[i];
-    btn.onclick=()=>{
+    btn.onclick=(e)=>{e.stopPropagation();
       activeTurnPlantIdx=i;
       document.querySelectorAll('#turnPlantPills .plant-pill').forEach((b,bi)=>{
         b.style.background=bi===i?pColors[bi]:'#fff';
@@ -1506,7 +1589,7 @@ function renderTurnover(){
     label:'Achievement %',data:achPcts,
     backgroundColor:achPcts.map(p=>p===null?'rgba(107,95,82,0.4)':p>=100?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),
     borderRadius:4
-  }]},{plugins:{legend:{display:false}},scales:{...baseOpts.scales,y:{min:0,max:140,...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v+'%'}}}});
+  }]},{plugins:{legend:{display:false,position:'bottom'}},scales:{...baseOpts.scales,y:{min:0,max:140,...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v+'%'}}}});
 
   // Table
   let turnHead=`<tr><th>Date</th>${plants.map(p=>`<th>${p} Tgt(₹L)</th><th>${p} Act(₹L)</th>`).join('')}<th>Total Tgt</th><th>Total Act</th><th>Achievement</th></tr>`;
@@ -1562,10 +1645,18 @@ function renderManpower(){
   const totMaintA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual']))));
   const maintGapPct=pct(totMaintA,totMaintT);
 
-  document.getElementById('kpiManpower').innerHTML=
-    kpiCard(totProdA>totProdT?'red':'green','Production Headcount (Avg)',fmt(totProdA,0),'Target: '+fmt(totProdT,0),(totProdA>totProdT?'▲ +':'▼ ')+Math.abs(totProdA-totProdT).toFixed(0)+' workers',totProdA>totProdT?'badge-red':'badge-green')+
-    kpiCard(totMaintA>totMaintT?'red':'amber','Maintenance Headcount (Avg)',fmt(totMaintA,0),'Target: '+fmt(totMaintT,0),(totMaintA>totMaintT?'▲ +':'▼ ')+Math.abs(totMaintA-totMaintT).toFixed(0)+' workers',totMaintA>totMaintT?'badge-red':'badge-amber')+
-    kpiCard('amber','Maintenance Gap %',Math.abs(100-maintGapPct).toFixed(1)+'%',totMaintA<totMaintT?'Deficit — under-staffed':'Surplus — over-staffed',totMaintA<totMaintT?'⚠ Monitor closely':'✓ Adequate','badge-amber');
+  // Production Manpower KPI cards
+  const prodGapPct=pct(totProdA,totProdT);
+  document.getElementById('kpiMPProd').innerHTML=
+    kpiCard(totProdA>totProdT?'red':'green','Production Headcount (Avg/Day)',fmt(totProdA,0),'Target: '+fmt(totProdT,0)+' workers/day',(totProdA>totProdT?'▲ +':'▼ -')+Math.abs(totProdA-totProdT).toFixed(0)+' workers',totProdA>totProdT?'badge-red':'badge-green')+
+    kpiCard(totProdA<=totProdT?'green':'red','Production Efficiency',prodGapPct.toFixed(1)+'%','Headcount vs target',totProdA<=totProdT?'✓ Within target':'⚠ Over-staffed',totProdA<=totProdT?'badge-green':'badge-red')+
+    kpiCard('blue','Production — Best Plant',plants[mpProdAvg.indexOf(Math.min(...mpProdAvg))],'Lowest avg headcount','Most efficient plant','badge-blue');
+
+  // Maintenance Manpower KPI cards
+  document.getElementById('kpiMPMaint').innerHTML=
+    kpiCard(totMaintA>totMaintT?'red':'amber','Maintenance Headcount (Avg/Day)',fmt(totMaintA,0),'Target: '+fmt(totMaintT,0)+' workers/day',(totMaintA>totMaintT?'▲ +':'▼ -')+Math.abs(totMaintA-totMaintT).toFixed(0)+' workers',totMaintA>totMaintT?'badge-red':'badge-amber')+
+    kpiCard(totMaintA<=totMaintT?'green':'amber','Maintenance Gap %',Math.abs(100-maintGapPct).toFixed(1)+'%',totMaintA<totMaintT?'Deficit — under-staffed':'Surplus — over-staffed',totMaintA<totMaintT?'⚠ Monitor closely':'✓ Adequate',totMaintA<=totMaintT?'badge-green':'badge-amber')+
+    kpiCard('blue','Maintenance — Best Plant',plants[mpMaintAvg.indexOf(Math.min(...mpMaintAvg))],'Lowest avg headcount','Most efficient plant','badge-blue');
 
   mk('chMPProd','bar',{labels:plants,datasets:[
     {label:'Target',data:plants.map(p=>mpProdT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
@@ -1579,12 +1670,15 @@ function renderManpower(){
 
   const dailyProdTotal=dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_prod_actual'])));
   const dailyMaintTotal=dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual'])));
-  mk('chMPTrend','line',{labels:dateLabels,datasets:[
-    {label:'Prod Target',data:dates.map(()=>totProdT),borderColor:'#9C8F82',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Prod Actual',data:dailyProdTotal,borderColor:'#1A5C96',backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',borderWidth:2.5,tension:.3,fill:true},
-    {label:'Maint Target',data:dates.map(()=>totMaintT),borderColor:'#C0392B',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Maint Actual',data:dailyMaintTotal,borderColor:'#D44000',backgroundColor:'rgba(212,64,0,.08)',pointBackgroundColor:'#D44000',borderWidth:2.5,tension:.3,fill:true}
-  ]});
+  mk('chMPProdTrend','line',{labels:dateLabels,datasets:[
+    {label:'Target',data:dates.map(()=>totProdT),borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
+    {label:'Actual',data:dailyProdTotal,borderColor:COL_HIT,backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',pointRadius:3,borderWidth:2.5,tension:.3,fill:true}
+  ]},miniOpts);
+
+  mk('chMPMaintTrend','line',{labels:dateLabels,datasets:[
+    {label:'Target',data:dates.map(()=>totMaintT),borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
+    {label:'Actual',data:dailyMaintTotal,borderColor:COL_HIT,backgroundColor:'rgba(212,64,0,.08)',pointBackgroundColor:'#D44000',pointRadius:3,borderWidth:2.5,tension:.3,fill:true}
+  ]},miniOpts);
 
   let mpBody='';
   plants.forEach((p,i)=>{
@@ -1616,7 +1710,7 @@ function renderUPC(){
   mk('chUPCDev','bar',{labels:plants,datasets:[{
     label:'UPC Deviation',data:upcDiff,
     backgroundColor:upcDiff.map(v=>v>0?'rgba(204,0,0,0.85)':'rgba(21,87,36,0.85)'),borderRadius:4
-  }]},{plugins:{legend:{display:false}},scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(4)}}}});
+  }]},{plugins:{legend:{display:false,position:'bottom'}},scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(4)}}}});
 
   // UPC plant pills
   const upcPillBar=document.getElementById('upcPlantPills');upcPillBar.innerHTML='';
@@ -1626,7 +1720,7 @@ function renderUPC(){
     btn.textContent=p;btn.style.borderColor=pColors[i];
     btn.style.background=i===activeUpcPlantIdx?pColors[i]:'#fff';
     btn.style.color=i===activeUpcPlantIdx?'#fff':pColors[i];
-    btn.onclick=()=>{
+    btn.onclick=(e)=>{e.stopPropagation();
       activeUpcPlantIdx=i;
       document.querySelectorAll('#upcPlantPills .plant-pill').forEach((b,bi)=>{
         b.style.background=bi===i?pColors[bi]:'#fff';
@@ -1736,7 +1830,7 @@ function renderComparative(){
   mk('chLoss','bar',{labels:plants,datasets:[{
     label:'Avg Daily Loss (kgs)',data:lossKgs,
     backgroundColor:lossKgs.map(v=>v>0?COL_RED:COL_GREEN),borderRadius:5
-  }]},{indexAxis:'y',plugins:{legend:{display:false}},scales:{y:{grid:{display:false},ticks:{color:C.gridTick,font:{size:11}}},x:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11}}}}});
+  }]},{indexAxis:'y',plugins:{legend:{display:false,position:'bottom'}},scales:{y:{grid:{display:false},ticks:{color:C.gridTick,font:{size:11}}},x:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11}}}}});
 }
 
 // ══════════════════════════════════════════════════════
@@ -1900,6 +1994,9 @@ function handleCSV(text){
     G=processData(rows);
     if(!G.plants||G.plants.length===0){alert('⚠ No plant data found in CSV.');return;}
     activePlantIdx=0;activeSalesPlantIdx=0;activeTurnPlantIdx=0;activeUpcPlantIdx=0;activePackPlantIdx=0;
+    // history is built automatically inside processData from multi-month CSV
+    G.history=G.history||[];
+    updateHistBadge();
     // Default to LAST available date in day-wise tab
     currentDay=G.dates[G.dates.length-1];
     // Reset to overview tab
@@ -1953,35 +2050,81 @@ function openChartModal(sourceId, title) {
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  // Clone config from the source chart
-  const cfg = src.config;
-  const canvas = document.getElementById('modalCanvas');
-
-  // Resize canvas to fill modal
-  const wrap = canvas.parentElement;
-  canvas.width  = wrap.clientWidth;
-  canvas.height = wrap.clientHeight || Math.round(wrap.clientWidth * 0.84);
-
   if (modalChartInstance) { modalChartInstance.destroy(); modalChartInstance = null; }
 
-  // Deep-clone data so modal has its own copy
-  const clonedData = JSON.parse(JSON.stringify(cfg.data));
-  const clonedOpts = JSON.parse(JSON.stringify(cfg.options));
+  // Defer rendering until modal is painted so clientWidth/Height are valid
+  requestAnimationFrame(() => {
+  const canvas = document.getElementById('modalCanvas');
+  const wrap = canvas.parentElement;
+  canvas.width  = wrap.clientWidth  || Math.round(window.innerWidth  * 0.82);
+  canvas.height = wrap.clientHeight || Math.round(wrap.clientWidth  * 0.84) || Math.round(window.innerHeight * 0.72);
+
+  // Try to get overview chart data from storage
+  let clonedData;
+  const ovData = document.getElementById(sourceId)?.dataset?.ovData;
+  if (ovData) {
+    try {
+      const parsed = JSON.parse(ovData);
+      const keys = Object.keys(parsed).filter(k => k !== 'dateLabels');
+      const tgtKey = keys.find(k => k.endsWith('T'));
+      const actKey = keys.find(k => k.endsWith('A'));
+      if (tgtKey && actKey) {
+        const tgt = parsed[tgtKey] || [];
+        const act = parsed[actKey] || [];
+        const lbls = parsed.dateLabels || [];
+        // For manpower charts, lower is better (inverse logic)
+        const isManpower = sourceId.includes('MPProd') || sourceId.includes('MPMaint');
+        clonedData = {
+          labels: lbls,
+          datasets: [
+            {label: 'Target', data: tgt, borderColor: 'rgba(0,0,255,0.85)', borderDash: [5,3], pointRadius: 0, borderWidth: 2, fill: false},
+            {label: 'Actual', data: act, borderColor: act.map((a, i) => isManpower ? (a <= tgt[i] ? 'rgba(21,128,61,0.9)' : 'rgba(185,28,28,0.9)') : (a >= tgt[i] ? 'rgba(21,128,61,0.9)' : 'rgba(185,28,28,0.9)')), backgroundColor: 'rgba(0,0,0,0)', pointBackgroundColor: act.map((a, i) => isManpower ? (a <= tgt[i] ? 'rgba(21,128,61,0.9)' : 'rgba(185,28,28,0.9)') : (a >= tgt[i] ? 'rgba(21,128,61,0.9)' : 'rgba(185,28,28,0.9)')), pointBorderColor: act.map((a, i) => isManpower ? (a <= tgt[i] ? 'rgba(21,128,61,1)' : 'rgba(185,28,28,1)') : (a >= tgt[i] ? 'rgba(21,128,61,1)' : 'rgba(185,28,28,1)')), pointRadius: 3, pointBorderWidth: 1, borderWidth: 2.5, tension: 0.3, fill: false}
+          ]
+        };
+      }
+    } catch(e) { clonedData = null; }
+  }
+  // Fallback: use chart instance data
+  if (!clonedData) {
+    const rawDatasets = [];
+    try {
+      if (src.data?.datasets) {
+        src.data.datasets.forEach(ds => {
+          const d = {};
+          Object.keys(ds).forEach(k => {
+            if (k === 'data' || typeof ds[k] === 'string' || typeof ds[k] === 'number' || Array.isArray(ds[k])) {
+              d[k] = ds[k];
+            }
+          });
+          rawDatasets.push(d);
+        });
+      }
+    } catch(e) {}
+    clonedData = { labels: src.data?.labels || [], datasets: rawDatasets };
+  }
+
+  // Use simple default options for modal
+  let clonedOpts = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: {duration: 900, easing: 'easeInOutQuart'},
+    plugins: {legend: {position: 'bottom', labels: {font: {size: 13}, color: '#6B5F52'}}},
+    scales: {
+      x: {grid: {display: false}, ticks: {color: '#b0a898', font: {size: 12}}},
+      y: {grid: {color: 'rgba(0,0,0,0.05)'}, ticks: {color: '#b0a898', font: {size: 12}}}
+    }
+  };
+  // Override with source chart's y-axis callback if available
+  if (src.config.options?.scales?.y?.ticks?.callback) {
+    clonedOpts.scales.y.ticks.callback = src.config.options.scales.y.ticks.callback;
+  }
 
   // Override animation for modal: smooth scale-in
   clonedOpts.animation = { duration: 900, easing: 'easeInOutQuart' };
   clonedOpts.responsive = true;
   clonedOpts.maintainAspectRatio = false;
 
-  // Larger fonts for modal
-  if (clonedOpts.plugins && clonedOpts.plugins.legend)
-    clonedOpts.plugins.legend.labels.font = { size: 13 };
-  if (clonedOpts.scales) {
-    ['x','y'].forEach(ax => {
-      if (clonedOpts.scales[ax] && clonedOpts.scales[ax].ticks)
-        clonedOpts.scales[ax].ticks.font = { size: 12 };
-    });
-  }
+  // Font sizes already set in clonedOpts initialization above
   // Fatter lines & bigger points
   if (clonedData.datasets) {
     clonedData.datasets.forEach(ds => {
@@ -1991,7 +2134,8 @@ function openChartModal(sourceId, title) {
     });
   }
 
-  modalChartInstance = new Chart(canvas, { type: cfg.type, data: clonedData, options: clonedOpts });
+  modalChartInstance = new Chart(canvas, { type: src.config.type, data: clonedData, options: clonedOpts });
+  }); // end requestAnimationFrame
 }
 
 function closeChartModal() {
@@ -2022,6 +2166,172 @@ function attachChartCardClicks() {
       const title = card.querySelector('.chart-title')?.textContent || '';
       openChartModal(canvas.id, title);
     };
+  });
+}
+
+
+// ══════════════════════════════════════════════════════
+// HISTORY (PREVIOUS MONTHS) SUPPORT
+// ══════════════════════════════════════════════════════
+if(!window.G) window.G={};
+if(!G.history) G.history=[];
+
+
+document.addEventListener('DOMContentLoaded',function(){
+
+});
+
+function processHistoryCSV(text,fname){
+  const rows=parseCSV(text).filter(r=>r.section==='daily');
+  if(!rows.length) return;
+
+  // Derive month label from filename or from data
+  // filename e.g. "data_Mar-26.csv" or "Prodn_...Mar-26.csv"
+  let label='';
+  const mMatch=fname.match(/([A-Za-z]{3}[-_ ]?2\d)/);
+  if(mMatch) label=mMatch[1].replace(/[-_ ]/,'-');
+
+  if(!label){
+    // derive from first row date DD-MM-YYYY
+    const d=rows[0].date||'';
+    const parts=d.split('-');
+    if(parts.length===3){
+      const MONTHS=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      label=MONTHS[+parts[1]]+'-'+parts[2].slice(2);
+    }
+  }
+  if(!label) label=fname.replace('.csv','');
+
+  // Get month/year for sort key
+  const MMAP={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+  const sortM=(label.slice(0,3).toLowerCase());
+  const sortY=parseInt(label.slice(4))||0;
+  const sortKey=sortY*100+(MMAP[sortM]||0);
+
+  // Aggregate per plant
+  const plants=[...new Set(rows.map(r=>r.plant))];
+  const data={};
+  const FIELDS=['acp','pack','sales','turnover','mp_prod','mp_maint','upc'];
+  const SUM_FIELDS=['sales','turnover']; // use sum; rest use average
+
+  plants.forEach(p=>{
+    const pRows=rows.filter(r=>r.plant===p);
+    data[p]={};
+    FIELDS.forEach(f=>{
+      const tKey=f+'_target', aKey=f+'_actual';
+      const tVals=pRows.map(r=>+r[tKey]||0).filter(v=>v>0);
+      const aVals=pRows.map(r=>+r[aKey]||0).filter(v=>v>0);
+      if(SUM_FIELDS.includes(f)){
+        data[p][f+'_target_agg']=tVals.reduce((s,v)=>s+v,0);
+        data[p][f+'_actual_agg']=aVals.reduce((s,v)=>s+v,0);
+      } else {
+        data[p][f+'_target_agg']=tVals.length?tVals.reduce((s,v)=>s+v,0)/tVals.length:0;
+        data[p][f+'_actual_agg']=aVals.length?aVals.reduce((s,v)=>s+v,0)/aVals.length:0;
+      }
+    });
+  });
+
+  // Remove existing entry for same month label and add new
+  G.history=G.history.filter(h=>h.label!==label);
+  G.history.push({label,sortKey,data});
+  G.history.sort((a,b)=>a.sortKey-b.sortKey);
+}
+
+function updateHistBadge(){
+  const b=document.getElementById('histBadge');
+  if(!G||!G.history||!G.history.length){b.style.display='none';return;}
+  b.style.display='block';
+  b.textContent='History loaded: '+G.history.map(h=>h.label).join(', ');
+}
+
+// Build combined labels + null-padded datasets for a mixed trend chart
+// histField e.g. 'acp', currentTargetKey e.g. 'acp_target', currentActualKey e.g. 'acp_actual'
+// sumMode: true for sales/turnover
+function buildMixedTrend(plant, histField, currentTargetVals, currentActualVals, currentLabels){
+  const hist=G.history||[];
+  const hCount=hist.length;
+  const cCount=currentLabels.length;
+
+  const labels=[...hist.map(h=>h.label),...currentLabels];
+  const nullH=Array(hCount).fill(null);
+  const nullC=Array(cCount).fill(null);
+
+  const hTgt=hist.map(h=>(h.data[plant]&&h.data[plant][histField+'_target_agg'])||0);
+  const hAct=hist.map(h=>(h.data[plant]&&h.data[plant][histField+'_actual_agg'])||0);
+
+  return {
+    labels,
+    hCount,
+    datasets:{
+      histTarget: [...hTgt,...nullC],
+      histActual: [...hAct,...nullC],
+      currTarget: [...nullH,...currentTargetVals],
+      currActual: [...nullH,...currentActualVals],
+    }
+  };
+}
+
+// Make a mixed trend chart (bars for history, line for current)
+function mkMixed(canvasId, plant, histField, currTgtVals, currActVals, currLabels, plantColor, yFmt, noteEl){
+  const {labels,hCount,datasets}=buildMixedTrend(plant,histField,currTgtVals,currActVals,currLabels);
+  if(noteEl){
+    noteEl.style.display=hCount?'block':'none';
+    if(hCount) noteEl.textContent='Bars = monthly avg/sum for previous month(s) · Line = daily for current month';
+  }
+  // Per-point actual bar color: green if actual>=target, red if actual<target
+  const histActualBg=datasets.histActual.map((a,idx)=>{
+    if(a===null) return 'transparent';
+    const t=datasets.histTarget[idx]||0;
+    return a>=t?'rgba(21,128,61,1)':'rgba(185,28,28,1)';
+  });
+  const histActualBorder=datasets.histActual.map((a,idx)=>{
+    if(a===null) return 'transparent';
+    const t=datasets.histTarget[idx]||0;
+    return a>=t?'rgba(21,128,61,1)':'rgba(185,28,28,1)';
+  });
+  // Order: target bar (index 0 = drawn first), actual bar (index 1 = drawn on top)
+  const chartDatasets=[
+    {type:'bar',label:'Prev Target',data:datasets.histTarget,
+     backgroundColor:'rgba(0,0,255,1)',borderColor:'rgba(0,0,255,1)',
+     borderWidth:1.5,borderRadius:3,order:2},
+    {type:'bar',label:'Prev Actual',data:datasets.histActual,
+     backgroundColor:histActualBg,borderColor:histActualBorder,
+     borderWidth:1.5,borderRadius:3,order:3},
+    {type:'line',label:'Target',data:datasets.currTarget,
+     borderColor:'rgba(0,0,255,0.85)',borderDash:[6,3],
+     pointRadius:0,borderWidth:2,fill:false,order:1,spanGaps:false},
+    {type:'line',label:'Actual',data:datasets.currActual,
+     borderColor:plantColor,backgroundColor:plantColor+'22',
+     pointBackgroundColor:plantColor,pointRadius:hCount?3:4,
+     borderWidth:2.5,tension:.3,fill:true,order:0,spanGaps:false},
+  ];
+  if(!hCount){chartDatasets[0].hidden=true;chartDatasets[1].hidden=true;}
+  mk(canvasId,'bar',{labels,datasets:chartDatasets},{
+    scales:{
+      ...baseOpts.scales,
+      x:{...baseOpts.scales.x,
+         ticks:{...baseOpts.scales.x.ticks,
+           color:ctx=>{
+             // Grey colour for history labels, normal for current
+             return ctx.index<hCount?'#9ca3af':baseOpts.scales.x.ticks.color;
+           }
+         }
+      },
+      y:{...baseOpts.scales.y,
+         ticks:{...baseOpts.scales.y.ticks,callback:yFmt}
+      }
+    },
+    plugins:{
+      ...baseOpts.plugins,
+      legend:{
+        display:true,
+        position:'bottom',
+        labels:{
+          filter:item=>hCount||(!item.text.startsWith('Prev')),
+          font:{size:10},color:'#6B5F52',boxWidth:10,boxHeight:10
+        }
+      }
+    }
   });
 }
 
