@@ -68,25 +68,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);p
 .section-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#166534;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px;padding:2px 7px}
 
 /* KPI */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:28px}
-.kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;transition:box-shadow .2s}
-.kpi-card:hover{box-shadow:0 4px 18px rgba(42,33,24,.08)}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.kpi-card.green::before{background:var(--green)}
-.kpi-card.red::before{background:var(--red)}
-.kpi-card.amber::before{background:var(--amber)}
-.kpi-card.blue::before{background:var(--blue)}
-.kpi-card.teal::before{background:var(--teal)}
-.kpi-card.gold::before{background:var(--gold)}
-.kpi-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px}
-.kpi-value{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);line-height:1}
-.kpi-sub{font-size:11px;color:var(--sub);margin-top:5px}
-.kpi-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;border-radius:6px;padding:2px 7px;margin-top:7px;font-family:'JetBrains Mono',monospace}
-.badge-red{background:var(--red-lt);color:var(--red)}
-.badge-green{background:var(--green-lt);color:var(--green)}
-.badge-amber{background:var(--amber-lt);color:var(--amber)}
-.badge-blue{background:var(--blue-lt);color:var(--blue)}
-.badge-gold{background:#fef8ec;color:var(--gold)}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,max-content));gap:14px;margin-bottom:28px;align-items:start}
+.kpi-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 18px 14px;position:relative;overflow:hidden;transition:box-shadow .25s,transform .2s;display:flex;flex-direction:column;gap:0}
+.kpi-card:hover{box-shadow:0 6px 24px rgba(42,33,24,.10);transform:translateY(-1px)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;border-radius:14px 0 0 14px}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:100%;opacity:.032;pointer-events:none}
+.kpi-card.green::before{background:linear-gradient(180deg,#2D7D4E,#155724)}
+.kpi-card.green::after{background:var(--green)}
+.kpi-card.red::before{background:linear-gradient(180deg,#e05252,#CC0000)}
+.kpi-card.red::after{background:var(--red)}
+.kpi-card.amber::before{background:linear-gradient(180deg,#e08a2a,var(--amber))}
+.kpi-card.amber::after{background:var(--amber)}
+.kpi-card.blue::before{background:linear-gradient(180deg,#3a82c3,var(--blue))}
+.kpi-card.blue::after{background:var(--blue)}
+.kpi-card.teal::before{background:linear-gradient(180deg,#1aa0a0,var(--teal))}
+.kpi-card.teal::after{background:var(--teal)}
+.kpi-inner{padding-left:10px}
+.kpi-label{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:8px;line-height:1.3}
+.kpi-value{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);line-height:1;margin-bottom:4px}
+.kpi-sub{font-size:10.5px;color:var(--sub);margin-bottom:8px;line-height:1.4}
+.kpi-divider{height:1px;background:var(--border);margin:0 0 7px}
+.kpi-badge{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;border-radius:20px;padding:3px 9px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
+.badge-red{background:#fff0f0;color:#CC0000;border:1px solid #fccaca}
+.badge-green{background:#f0faf4;color:#155724;border:1px solid #b8dfc8}
+.badge-amber{background:#fff8ec;color:var(--amber);border:1px solid #f5d99a}
+.badge-blue{background:var(--blue-lt);color:var(--blue);border:1px solid #c3d9f4}
+.kpi-card[style*="border-left"]::before{display:none}
+.kpi-card[style*="border-left"]{border-top:1px solid var(--border)}
 
 /* CHARTS */
 .chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:18px;margin-bottom:24px}
@@ -270,19 +278,17 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
     <div class="section-title">Executive Summary</div>
     <div class="section-tag" id="ovTag">Period Actuals</div>
   </div>
-  <div class="kpi-grid" id="kpiOverview"></div>
+  <div class="kpi-grid" id="kpiOverview" style="grid-template-columns:repeat(auto-fit,minmax(185px,max-content));align-items:start"></div>
 
   <!-- Plant-wise Attainment KPI Cards (one card per metric, bar chart inside) -->
   <div class="attain-kpi-grid" id="ovAttainCards"></div>
 
   <!-- Trend Charts — same grid as KPI cards above -->
   <div class="attain-kpi-grid" style="margin-bottom:24px">
-    <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">AutoConer — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants combined vs target</div><canvas id="chOvAcpTrend" height="130"></canvas></div>
     <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Packing — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants combined vs target</div><canvas id="chOvPackTrend" height="130"></canvas></div>
     <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Sales — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants combined (kgs)</div><canvas id="chOvSalesTrend" height="130"></canvas></div>
     <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Turnover — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants combined (₹ Lakhs)</div><canvas id="chOvTurnTrend" height="130"></canvas></div>
-    <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Production Manpower — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants avg headcount vs target per day</div><canvas id="chOvMPProdTrend" height="130"></canvas></div>
-    <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Maintenance Manpower — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">All plants avg headcount vs target per day</div><canvas id="chOvMPMaintTrend" height="130"></canvas></div>
+    <div class="chart-card" style="padding:14px 16px"><div class="chart-title" style="font-size:11px">Total Manpower — Daily Trend</div><div class="chart-sub" style="font-size:10px;margin-bottom:10px">Production + Maintenance combined headcount vs target</div><canvas id="chOvMPCombTrend" height="130"></canvas></div>
   </div>
 </div>
 
@@ -305,24 +311,20 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
   </div>
   <div class="kpi-grid" id="dayKPIs"></div>
   <div class="chart-grid">
-    <div class="chart-card"><div class="chart-title" id="titleDayAutoConer">AutoConer Production</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDayAutoConer" height="230"></canvas></div>
     <div class="chart-card"><div class="chart-title" id="titleDayPacking">Packing Production</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDayPacking" height="230"></canvas></div>
     <div class="chart-card"><div class="chart-title" id="titleDaySales">Sales</div><div class="chart-sub">Plant-wise target vs actual (kgs)</div><canvas id="chDaySales" height="230"></canvas></div>
     <div class="chart-card"><div class="chart-title" id="titleDayTurn">Turnover</div><div class="chart-sub">Plant-wise target vs actual (₹ Lakhs)</div><canvas id="chDayTurn" height="230"></canvas></div>
-    <div class="chart-card"><div class="chart-title" id="titleDayMPProd">Manpower Production</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDayMPProd" height="230"></canvas></div>
-    <div class="chart-card"><div class="chart-title" id="titleDayMPMaint">Manpower Maintenance</div><div class="chart-sub">Plant-wise target vs actual</div><canvas id="chDayMPMaint" height="230"></canvas></div>
+    <div class="chart-card"><div class="chart-title" id="titleDayMPComb">Total Manpower (Prod + Maint)</div><div class="chart-sub">Plant-wise combined target vs actual</div><canvas id="chDayMPComb" height="230"></canvas></div>
   </div>
   <div class="table-wrap">
     <div class="table-header"><div class="table-title" id="dayTableTitle">Day-wise Summary</div><div class="table-note">All values; production in kgs; turnover in ₹L</div></div>
     <div style="overflow-x:auto"><table id="dayTable">
       <thead><tr>
         <th>Date</th><th>Plant</th>
-        <th>ACP Tgt</th><th>ACP Act</th><th>ACP %</th>
         <th>Pack Tgt</th><th>Pack Act</th><th>Pack %</th>
         <th>Sales Tgt</th><th>Sales Act</th><th>Sales %</th>
         <th>Turn Tgt(₹L)</th><th>Turn Act(₹L)</th>
-        <th>MP Prod T</th><th>MP Prod A</th>
-        <th>MP Maint T</th><th>MP Maint A</th>
+        <th>Total MP Tgt</th><th>Total MP Act</th>
         <th>UPC Tgt</th><th>UPC Act</th>
       </tr></thead>
       <tbody id="dayTableBody"></tbody>
@@ -332,15 +334,7 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 
 <!-- ===== PRODUCTION KGS ===== -->
 <div id="tab-production" class="content">
-  <div class="section-head"><div class="section-title">Production — Kgs Analysis</div><div class="section-tag">AutoConer &amp; Packing</div></div>
-  <div class="chart-card full" style="margin-bottom:20px">
-    <div class="chart-title">AutoConer — Individual Plant Daily Trend (Target vs Actual)</div>
-    <div class="chart-sub">Select a plant to view its AutoConer production trend</div>
-    <div class="plant-select-bar" id="plantPills"></div>
-    <div class="hist-note" id="acpTrendNote" style="display:none"></div>
-    <canvas id="chPlantTrend" height="220"></canvas>
-  </div>
-
+  <div class="section-head"><div class="section-title">Production — Kgs Analysis</div><div class="section-tag">Packing Production</div></div>
   <div class="chart-card full" style="margin-bottom:20px">
     <div class="chart-title">Packing — Individual Plant Daily Trend (Target vs Actual)</div>
     <div class="chart-sub">Select a plant to view its Packing production trend</div>
@@ -350,19 +344,8 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
   </div>
 
   <div class="table-wrap" style="margin-bottom:22px">
-    <div class="table-header"><div class="table-title">Date-wise &amp; Plant-wise AutoConer Production</div><div class="table-note">kgs · Target | Actual</div></div>
-    <div style="overflow-x:auto"><table><thead id="prodSpinHead"></thead><tbody id="prodSpinBody"></tbody></table></div>
-  </div>
-  <div class="table-wrap" style="margin-bottom:22px">
     <div class="table-header"><div class="table-title">Date-wise &amp; Plant-wise Packing Production</div><div class="table-note">kgs · Target | Actual</div></div>
     <div style="overflow-x:auto"><table><thead id="prodPackHead"></thead><tbody id="prodPackBody"></tbody></table></div>
-  </div>
-  <div class="table-wrap">
-    <div class="table-header"><div class="table-title">AutoConer Summary — with Key Remarks</div><div class="table-note">Hover remark tag to see full reason</div></div>
-    <table>
-      <thead><tr><th>Plant</th><th>Avg Target (kgs)</th><th>Avg Actual (kgs)</th><th>Avg Loss/Gain</th><th>Avg Loss %</th><th>Key Remark</th></tr></thead>
-      <tbody id="prodRemarksBody"></tbody>
-    </table>
   </div>
   <div class="table-wrap" style="margin-top:22px">
     <div class="table-header"><div class="table-title">All Remarks — by Category &amp; Plant</div><div class="table-note">All remark types from current data</div></div>
@@ -440,21 +423,16 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
 
 <!-- ===== MANPOWER ===== -->
 <div id="tab-manpower" class="content">
-  <div class="section-head"><div class="section-title">Man Power Analysis</div><div class="section-tag">Production &amp; Maintenance</div></div>
-  <div class="section-sub-head" style="margin:18px 0 6px;font-size:13px;font-weight:700;color:#166534;letter-spacing:.3px;">⚙ Production Manpower</div>
-  <div class="kpi-grid" id="kpiMPProd"></div>
-  <div class="section-sub-head" style="margin:20px 0 6px;font-size:13px;font-weight:700;color:#166534;letter-spacing:.3px;">🔧 Maintenance Manpower</div>
-  <div class="kpi-grid" id="kpiMPMaint"></div>
+  <div class="section-head"><div class="section-title">Man Power Analysis</div><div class="section-tag">Combined Headcount</div></div>
+  <div class="kpi-grid" id="kpiMPComb"></div>
   <div class="chart-grid">
-    <div class="chart-card"><div class="chart-title">Production Manpower — Plant-wise</div><div class="chart-sub">Green = under target (efficient) · Red = over target</div><canvas id="chMPProd" height="240"></canvas></div>
-    <div class="chart-card"><div class="chart-title">Maintenance Manpower — Plant-wise</div><div class="chart-sub">Green = under target · Red = over target</div><canvas id="chMPMaint" height="240"></canvas></div>
-    <div class="chart-card full"><div class="chart-title">Daily Production Manpower Trend</div><div class="chart-sub">All-plant production headcount vs target per day</div><canvas id="chMPProdTrend" height="220"></canvas></div>
-    <div class="chart-card full"><div class="chart-title">Daily Maintenance Manpower Trend</div><div class="chart-sub">All-plant maintenance headcount vs target per day</div><canvas id="chMPMaintTrend" height="220"></canvas></div>
+    <div class="chart-card full"><div class="chart-title">Total Manpower (Production + Maintenance) — Plant-wise</div><div class="chart-sub">Combined headcount: Green = under target · Red = over target</div><canvas id="chMPComb" height="240"></canvas></div>
+    <div class="chart-card full"><div class="chart-title">Daily Total Manpower Trend</div><div class="chart-sub">All-plant combined (Production + Maintenance) headcount vs target per day</div><canvas id="chMPCombTrend" height="220"></canvas></div>
   </div>
   <div class="table-wrap">
-    <div class="table-header"><div class="table-title">Manpower Summary by Plant</div><div class="table-note">Period average · Green = under, Red = over</div></div>
+    <div class="table-header"><div class="table-title">Manpower Summary by Plant</div><div class="table-note">Period average · Green = under, Red = over · Prod + Maint combined</div></div>
     <table>
-      <thead><tr><th>Plant</th><th>Prod Target</th><th>Prod Actual (Avg)</th><th>Prod Gap</th><th>Maint Target</th><th>Maint Actual (Avg)</th><th>Maint Gap</th></tr></thead>
+      <thead><tr><th>Plant</th><th>Total Target</th><th>Total Actual (Avg)</th><th>Gap</th></tr></thead>
       <tbody id="mpSummaryBody"></tbody>
     </table>
   </div>
@@ -492,14 +470,13 @@ tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:
   <div class="compare-card">
     <div class="compare-head"><h3>Plant Performance Scorecard</h3><p>Composite view — Production, Sales, Turnover, Manpower &amp; Power Efficiency</p></div>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th>Plant</th><th>ACP Avg</th><th>ACP %</th><th>Pack Avg</th><th>Pack %</th><th>Sales Total</th><th>Sales %</th><th>Turnover(₹L)</th><th>Turn %</th><th>Prod MP Gap</th><th>Maint MP Gap</th><th>UPC Status</th></tr></thead>
+      <thead><tr><th>Plant</th><th>Pack Avg</th><th>Pack %</th><th>Sales Total</th><th>Sales %</th><th>Turnover(₹L)</th><th>Turn %</th><th>Total MP Target</th><th>Total MP Actual</th><th>Total MP Gap</th><th>UPC Status</th></tr></thead>
       <tbody id="comparativeBody"></tbody>
     </table></div>
   </div>
   <div class="chart-grid">
     <div class="chart-card"><div class="chart-title">Production Attainment % by Plant</div><div class="chart-sub">AutoConer vs Packing side by side</div><canvas id="chCompare" height="240"></canvas></div>
     <div class="chart-card"><div class="chart-title">Sales &amp; Turnover Achievement %</div><div class="chart-sub">Plant-wise cumulative achievement</div><canvas id="chSalesTurnComp" height="240"></canvas></div>
-    <div class="chart-card"><div class="chart-title">Loss Analysis — AutoConer Kgs by Plant</div><div class="chart-sub">Larger bar = more attention needed (avg daily loss)</div><canvas id="chLoss" height="240"></canvas></div>
   </div>
 </div>
 
@@ -587,8 +564,16 @@ function colorForVal(actual,target,higherBetter=true){
   if(higherBetter) return actual>=target?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)';
   return actual<=target?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)';
 }
-function kpiCard(color,label,value,sub,badge,badgeClass){
-  return `<div class="kpi-card ${color}"><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-sub">${sub}</div><div class="kpi-badge ${badgeClass}">${badge}</div></div>`;
+function kpiCard(color,label,value,sub,badge,badgeClass,icon=''){
+  const icons={packing:'📦',sales:'📈',turnover:'₹',manpower:'👷',upc:'⚡',default:'📊'};
+  const ic=icon||'';
+  return `<div class="kpi-card ${color}"><div class="kpi-inner">
+    <div class="kpi-label">${ic?ic+' ':''}${label}</div>
+    <div class="kpi-value">${value}</div>
+    <div class="kpi-sub">${sub}</div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-badge ${badgeClass}">${badge}</div>
+  </div></div>`;
 }
 
 // ══════════════════════════════════════════════════════
@@ -774,7 +759,7 @@ const COL_HIT='rgba(21,87,36,0.85)';        // Dark Green — achieved
 const COL_MISS='rgba(204,0,0,0.85)';         // Dark Red — not achieved
 
 function renderOverview(){
-  const{plants,dates,dateLabels,lk,acpT,packT,mpProdT,mpMaintT}=G;
+  const{plants,dates,dateLabels,lk,acpT,packT,mpProdT,mpMaintT,upcT}=G;
   document.getElementById('ovTag').textContent=G.numDays+'-Day Actuals · '+G.daysStr;
 
   // Compute averages per plant
@@ -810,16 +795,63 @@ function renderOverview(){
   const salesP= pct(totSalesA,totSalesT);
   const turnP = pct(totTurnA,totTurnT);
 
-  // KPI Cards
-  document.getElementById('kpiOverview').innerHTML=
-    kpiCard(acpP>=100?'green':'red','AutoConer Prod (Avg/Day)',fmt(totAcpA),'Target: '+fmt(totAcpT)+' kgs/day',arrow(acpP)+' '+Math.abs(acpP-100).toFixed(1)+'% '+(acpP>=100?'above':'below')+' target',badgeCls(acpP))+
-    kpiCard(packP>=100?'green':'red','Packing Prod (Avg/Day)',fmt(totPackA),'Target: '+fmt(totPackT)+' kgs/day',arrow(packP)+' '+Math.abs(packP-100).toFixed(1)+'% '+(packP>=100?'above':'below')+' target',badgeCls(packP))+
-    kpiCard(salesP>=100?'green':'amber','Sales — Period Total',fmt(totSalesA)+' kgs','Target: '+fmt(totSalesT)+' kgs',salesP.toFixed(1)+'% achieved','badge-'+(salesP>=100?'green':salesP>=90?'amber':'red'))+
-    kpiCard(turnP>=100?'green':'amber','Turnover — Period Total','₹'+fmt(totTurnA,2)+'L','Target: ₹'+fmt(totTurnT,2)+'L',turnP.toFixed(1)+'% achieved','badge-'+(turnP>=100?'green':turnP>=90?'amber':'red'))+
-    kpiCard(totMPProdA>totMPProdT?'red':'green','Manpower – Production (Avg)',fmt(totMPProdA,0),'Target: '+fmt(totMPProdT,0)+' workers/day',(totMPProdA>totMPProdT?'▲':'▼')+' '+Math.abs(totMPProdA-totMPProdT).toFixed(0)+' workers',totMPProdA>totMPProdT?'badge-red':'badge-green')+
-    kpiCard(totMPMaintA>totMPMaintT?'red':'amber','Manpower – Maintenance (Avg)',fmt(totMPMaintA,0),'Target: '+fmt(totMPMaintT,0)+' workers/day',(totMPMaintA>totMPMaintT?'▲ surplus':'▼ deficit')+' '+Math.abs(totMPMaintA-totMPMaintT).toFixed(0)+' workers',totMPMaintA>totMPMaintT?'badge-red':'badge-amber');
+  // KPI Cards — merged manpower, added UPC, removed AutoConer
+  const totMPCombT = totMPProdT + totMPMaintT;
+  const totMPCombA = totMPProdA + totMPMaintA;
+  // Plant-wise UPC card
+  const upcPlantData = plants.map((p,i)=>({plant:p,col:pColors[i],tgt:upcT[p],act:avg(dates.map(d=>lk[p][d]['upc_actual']))}));
+  const upcAnyOver = upcPlantData.some(r=>r.act>r.tgt+0.001);
+  const upcAllOk   = upcPlantData.every(r=>r.act<=r.tgt+0.001);
 
-  // ── Plant-wise Attainment KPI Cards (bar chart inside each card) ──
+  function buildUpcRows(slice){
+    return slice.map(r=>{
+      const diff=+(r.act-r.tgt).toFixed(4),over=diff>0.001;
+      const diffStr=(over?'+':'')+diff.toFixed(4);
+      const valCol=over?'#CC0000':'#155724';
+      const dot=over?'<span style="color:#CC0000">&#9679;</span>':'<span style="color:#155724">&#9679;</span>';
+      return '<div style="display:flex;align-items:center;padding:4px 0;border-bottom:1px solid var(--border)">'
+        +'<span style="font-family:\'JetBrains Mono\',monospace;font-size:11px;font-weight:700;color:'+r.col+';width:30px;flex-shrink:0">'+r.plant+'</span>'
+        +'<span style="font-family:\'JetBrains Mono\',monospace;font-size:11px;color:#1A5C96;font-weight:600;width:58px;flex-shrink:0">'+r.tgt.toFixed(4)+'</span>'
+        +'<span style="font-family:\'JetBrains Mono\',monospace;font-size:11px;font-weight:700;width:58px;flex-shrink:0;color:'+valCol+'">'+r.act.toFixed(4)+'</span>'
+        +'<span style="font-family:\'JetBrains Mono\',monospace;font-size:11px;font-weight:700;flex:1;text-align:right;color:'+valCol+'">'+diffStr+'</span>'
+        +'<span style="margin-left:5px">'+dot+'</span>'
+        +'</div>';
+    }).join('');
+  }
+
+  function buildUpcCard(slice, label){
+    const anyOver=slice.some(r=>r.act>r.tgt+0.001);
+    const allOk  =slice.every(r=>r.act<=r.tgt+0.001);
+    const barCol =allOk?'#155724':anyOver?'#CC0000':'#c08000';
+    const badgeCl=allOk?'badge-green':anyOver?'badge-red':'badge-amber';
+    const badgeTx=allOk?'&#x2713; On target':anyOver?'&#x26A0; Over target':'&#x25D1; Mixed';
+    return '<div class="kpi-card" style="border-left:4px solid '+barCol+';border-radius:0 14px 14px 0;min-width:224px;max-width:264px">'
+      +'<div class="kpi-inner">'
+      +'<div class="kpi-label">&#x26A1; UPC &#x2014; '+label+'</div>'
+      +'<div style="font-size:10px;color:var(--sub);margin-bottom:8px">Avg target vs actual &#xB7; lower is better</div>'
+      +'<div style="display:flex;padding:3px 0 6px;border-bottom:2px solid var(--border);margin-bottom:4px">'
+      +'<span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.08em;width:30px;flex-shrink:0">PLT</span>'
+      +'<span style="font-size:9px;color:#1A5C96;font-weight:700;letter-spacing:.08em;width:58px;flex-shrink:0">TARGET</span>'
+      +'<span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.08em;width:58px;flex-shrink:0">ACTUAL</span>'
+      +'<span style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.08em;flex:1;text-align:right">DIFF</span>'
+      +'</div>'
+      +buildUpcRows(slice)
+      +'<div class="kpi-divider" style="margin-top:8px"></div>'
+      +'<div class="kpi-badge '+badgeCl+'">'+badgeTx+'</div>'
+      +'</div></div>';
+  }
+
+  const upcCard1 = buildUpcCard(upcPlantData.slice(0,4), 'Plants 1–4');
+  const upcCard2 = buildUpcCard(upcPlantData.slice(4),   'Plants 5–7');
+
+  document.getElementById('kpiOverview').innerHTML=
+    kpiCard(packP>=100?'green':'red','Packing Production',fmt(totPackA),'Avg/day · Target: '+fmt(totPackT)+' kgs',arrow(packP)+' '+Math.abs(packP-100).toFixed(1)+'% '+(packP>=100?'above':'below')+' target',badgeCls(packP),'📦')+
+    kpiCard(salesP>=100?'green':'amber','Sales — Period Total',fmt(totSalesA)+' kgs','Target: '+fmt(totSalesT)+' kgs',salesP.toFixed(1)+'% achieved','badge-'+(salesP>=100?'green':salesP>=90?'amber':'red'),'📈')+
+    kpiCard(turnP>=100?'green':'amber','Turnover — Period Total','₹'+fmt(totTurnA,2)+'L','Target: ₹'+fmt(totTurnT,2)+'L',turnP.toFixed(1)+'% achieved','badge-'+(turnP>=100?'green':turnP>=90?'amber':'red'),'💰')+
+    kpiCard(totMPCombA>totMPCombT?'red':'green','Total Manpower',fmt(totMPCombA,0)+' workers','Avg/day · Target: '+fmt(totMPCombT,0)+' workers',(totMPCombA>totMPCombT?'▲ +':'▼ -')+Math.abs(totMPCombA-totMPCombT).toFixed(0)+' vs target',totMPCombA>totMPCombT?'badge-red':'badge-green','👷')+
+    upcCard1+upcCard2;
+
+  // \u2550\u2550 Plant-wise Attainment KPI Cards (bar chart inside each card) \u2550\u2550
   function attainKpiCard(title, colorClass, overallPct, plantData, lowerBetter=false){
     // plantData = [{name, pct, isNull}]
     const overallCls = (lowerBetter ? overallPct<=100 : overallPct>=100) ? 'hit' : 'miss';
@@ -860,13 +892,13 @@ function renderOverview(){
   const mpProdPD  = plants.map(p=>({name:p, p:pct(mpProdAvg[p],mpProdT[p])}));
   const mpMaintPD = plants.map(p=>({name:p, p:pct(mpMaintAvg[p],mpMaintT[p])}));
 
+  const mpCombPct=pct(totMPProdA+totMPMaintA,totMPProdT+totMPMaintT);
+  const mpCombPD=plants.map(p=>({name:p,p:pct(mpProdAvg[p]+mpMaintAvg[p],mpProdT[p]+mpMaintT[p])}));
   document.getElementById('ovAttainCards').innerHTML =
-    attainKpiCard('AutoConer Production Attainment',   acpP>=100?'green':'red',   acpP,   acpPD)  +
     attainKpiCard('Packing Production Attainment',     packP>=100?'green':'red',  packP,  packPD) +
     attainKpiCard('Sales Attainment',                  salesP>=100?'green':'red', salesP, salesPD)+
     attainKpiCard('Turnover Attainment',               turnP>=100?'green':'red',  turnP,  turnPD) +
-    attainKpiCard('Manpower Production Attainment',    pct(totMPProdA,totMPProdT)<=100?'green':'red', pct(totMPProdA,totMPProdT),  mpProdPD,  true)+
-    attainKpiCard('Manpower Maintenance Attainment',   pct(totMPMaintA,totMPMaintT)<=100?'green':'red',pct(totMPMaintA,totMPMaintT),mpMaintPD,true);
+    attainKpiCard('Total Manpower Attainment', mpCombPct<=100?'green':'red', mpCombPct, mpCombPD, true);
 
   // ── Trend Charts (Dark Blue target, Dark Green/Red actual) ──
   // Helper: colour each point based on achieved vs target
@@ -877,26 +909,10 @@ function renderOverview(){
     });
   }
 
-  // AutoConer trend
   // Compact options for small trend cards
-
-  const dailyAcpA = dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_actual'])));
-  const dailyAcpT = dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_target'])));
-  // Build overview history: sum across all plants
-  const ovHistAcpT=(G.history||[]).map(h=>sum(plants.map(p=>(h.data[p]&&h.data[p]['acp_target_agg'])||0)));
-  const ovHistAcpA=(G.history||[]).map(h=>sum(plants.map(p=>(h.data[p]&&h.data[p]['acp_actual_agg'])||0)));
   const hC=(G.history||[]).length;
   const ovAcpLabels=[...(G.history||[]).map(h=>h.label),...dateLabels];
   const nullH=Array(hC).fill(null),nullC=Array(dates.length).fill(null);
-  mk('chOvAcpTrend','bar',{labels:ovAcpLabels,datasets:[
-    {type:'bar',label:'Prev Tgt',data:[...ovHistAcpT,...nullC],backgroundColor:'rgba(0,0,255,1)',borderColor:'rgba(0,0,255,1)',borderWidth:1.5,borderRadius:2,order:2,hidden:!hC},
-    {type:'bar',label:'Prev Act',data:[...ovHistAcpA,...nullC],
-     backgroundColor:[...ovHistAcpA.map((a,i)=>a>=ovHistAcpT[i]?'rgba(21,128,61,1)':'rgba(185,28,28,1)'),...nullC.map(()=>'transparent')],
-     borderColor:[...ovHistAcpA.map((a,i)=>a>=ovHistAcpT[i]?'rgba(21,128,61,1)':'rgba(185,28,28,1)'),...nullC.map(()=>'transparent')],
-     borderWidth:1.5,borderRadius:2,order:3,hidden:!hC},
-    {type:'line',label:'Target',data:[...nullH,...dailyAcpT],borderColor:COL_TGT,borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false,spanGaps:false},
-    {type:'line',label:'Actual',data:[...nullH,...dailyAcpA],borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',pointRadius:2,borderWidth:2,tension:.3,fill:true,spanGaps:false}
-  ]},{...miniOpts,plugins:{...miniOpts.plugins,legend:{display:!!hC,position:'bottom',labels:{font:{size:9},boxWidth:8,boxHeight:8,filter:item=>hC||!item.text.startsWith('Prev')}}},scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
 
   const dailyPackA= dates.map(d=>sum(plants.map(p=>lk[p][d]['pack_actual'])));
   const dailyPackT= dates.map(d=>sum(plants.map(p=>lk[p][d]['pack_target'])));
@@ -933,26 +949,17 @@ function renderOverview(){
   ]},{...miniOpts,scales:{...miniOpts.scales,y:{...miniOpts.scales.y,ticks:{...miniOpts.scales.y.ticks,callback:v=>v.toFixed(0)}}}}, {dailyTurnT,dailyTurnA,dateLabels});
 
   const dailyMpProdA = dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_prod_actual'])));
-  const dailyMpProdT = dates.map(()=>totMPProdT);
   const dailyMpMaintA= dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual'])));
-  const dailyMpMaintT= dates.map(()=>totMPMaintT);
-  // Production Manpower trend
-  mkAndStore('chOvMPProdTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dailyMpProdT,borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Actual',data:dailyMpProdA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
-     pointBackgroundColor:trendActualColor(dailyMpProdA,dailyMpProdT,true),
-     pointBorderColor:trendActualColor(dailyMpProdA,dailyMpProdT,true),
+  const dailyMpCombA = dates.map((d,i)=>dailyMpProdA[i]+dailyMpMaintA[i]);
+  const dailyMpCombT = dates.map(()=>totMPProdT+totMPMaintT);
+  // Combined Manpower trend (Production + Maintenance)
+  mkAndStore('chOvMPCombTrend','line',{labels:dateLabels,datasets:[
+    {label:'Target',data:dailyMpCombT,borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
+    {label:'Actual',data:dailyMpCombA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
+     pointBackgroundColor:trendActualColor(dailyMpCombA,dailyMpCombT,true),
+     pointBorderColor:trendActualColor(dailyMpCombA,dailyMpCombT,true),
      pointRadius:2.5,borderWidth:1.8,tension:.3,fill:true}
-  ]},miniOpts, {dailyMpProdT,dailyMpProdA,dateLabels});
-
-  // Maintenance Manpower trend
-  mkAndStore('chOvMPMaintTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dailyMpMaintT,borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Actual',data:dailyMpMaintA,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',
-     pointBackgroundColor:trendActualColor(dailyMpMaintA,dailyMpMaintT,true),
-     pointBorderColor:trendActualColor(dailyMpMaintA,dailyMpMaintT,true),
-     pointRadius:2.5,borderWidth:1.8,tension:.3,fill:true}
-  ]},miniOpts, {dailyMpMaintT,dailyMpMaintA,dateLabels});
+  ]},miniOpts, {dailyMpCombT,dailyMpCombA,dateLabels});
 }
 
 // ══════════════════════════════════════════════════════
@@ -1091,8 +1098,8 @@ function renderDaywise(){
   else if(currentDay.startsWith('week')) lbl=currentDay.replace('week','Week ');
   else lbl=dateLabel(currentDay);
 
-  ['AutoConer Production','Packing Production','Sales (kgs)','Turnover (₹L)','Manpower Production','Manpower Maintenance'].forEach((n,i)=>{
-    const ids=['titleDayAutoConer','titleDayPacking','titleDaySales','titleDayTurn','titleDayMPProd','titleDayMPMaint'];
+  ['Packing Production','Sales (kgs)','Turnover (₹L)','Total Manpower (Prod+Maint)'].forEach((n,i)=>{
+    const ids=['titleDayPacking','titleDaySales','titleDayTurn','titleDayMPComb'];
     const el=document.getElementById(ids[i]);if(el)el.textContent=n+' — '+lbl;
   });
   document.getElementById('dwTag').textContent=lbl;
@@ -1113,17 +1120,11 @@ function renderDaywise(){
   const saP=pct(tSA,tST),taP=pct(tTA,tTT);
 
   document.getElementById('dayKPIs').innerHTML=
-    kpiCard(spP>=100?'green':'red','AutoConer Total',fmt(tsA,0),'Target: '+fmt(tsT,0)+' kgs',spP.toFixed(1)+'% achieved',badgeCls(spP))+
     kpiCard(pkP>=100?'green':'red','Packing Total',fmt(tpA,0),'Target: '+fmt(tpT,0)+' kgs',pkP.toFixed(1)+'% achieved',badgeCls(pkP))+
     kpiCard(saP>=100?'green':'amber','Sales Total',fmt(tSA,0)+' kgs','Target: '+fmt(tST,0)+' kgs',saP.toFixed(1)+'% achieved','badge-'+(saP>=100?'green':saP>=90?'amber':'red'))+
     kpiCard(taP>=100?'green':'amber','Turnover Total','₹'+fmt(tTA,2)+'L','Target: ₹'+fmt(tTT,2)+'L',taP.toFixed(1)+'% achieved','badge-'+(taP>=100?'green':taP>=90?'amber':'red'));
 
   // Charts
-  mk('chDayAutoConer','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>acpT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
-    {label:'Actual',data:spinA,backgroundColor:spinA.map((a,i)=>a>=acpT[plants[i]]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
-  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v/1000+'k'}}}});
-
   mk('chDayPacking','bar',{labels:plants,datasets:[
     {label:'Target',data:plants.map(p=>packT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
     {label:'Actual',data:packA,backgroundColor:packA.map((a,i)=>a>=packT[plants[i]]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
@@ -1140,14 +1141,12 @@ function renderDaywise(){
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toFixed(1)}}}});
 
   const mpPA=getDayVals('mp_prod_actual',isAll);
-  mk('chDayMPProd','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>mpProdT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
-    {label:'Actual',data:mpPA,backgroundColor:mpPA.map((a,i)=>colorForVal(a,mpProdT[plants[i]],false)),borderRadius:4}
-  ]});
   const mpMA=getDayVals('mp_maint_actual',isAll);
-  mk('chDayMPMaint','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>mpMaintT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
-    {label:'Actual',data:mpMA,backgroundColor:mpMA.map((a,i)=>colorForVal(a,mpMaintT[plants[i]],false)),borderRadius:4}
+  const mpCombA=mpPA.map((a,i)=>a+mpMA[i]);
+  const mpCombT=plants.map(p=>mpProdT[p]+mpMaintT[p]);
+  mk('chDayMPComb','bar',{labels:plants,datasets:[
+    {label:'Target',data:mpCombT,backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
+    {label:'Actual',data:mpCombA,backgroundColor:mpCombA.map((a,i)=>colorForVal(a,mpCombT[i],false)),borderRadius:4}
   ]});
 
   // Table — plant-wise grouping for all range modes, single day for single date
@@ -1167,14 +1166,13 @@ function renderDaywise(){
         const mpPT=mpProdT[p],mpPA2=v('mp_prod_actual');
         const mpMT=mpMaintT[p],mpMA2=v('mp_maint_actual');
         const uTA=upcT[p],uA=v('upc_actual');
+        const mpCombTVal=mpPT+mpMT; const mpCombAVal=mpPA2+mpMA2;
         rows+=`<tr>
           <td>${dateLabel(d)}</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
-          <td>${fmt(sT,0)}</td><td class="${sA<sT?'val-neg':''}">${fmt(sA,0)}</td><td><span class="pct-pill ${pillCls(sPct)}">${sPct}%</span></td>
           <td>${fmt(ptT,0)}</td><td class="${pA<ptT?'val-neg':''}">${fmt(pA,0)}</td><td><span class="pct-pill ${pillCls(ppPct)}">${ppPct}%</span></td>
           <td>${fmt(slT,0)}</td><td class="${slA<slT&&slT>0?'val-neg':slA>0&&slT===0?'val-pos':''}">${fmt(slA,0)}</td><td>${slT>0?`<span class="pct-pill ${pillCls(slPct)}">${slPct}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
           <td>${fmt(tnT,2)}</td><td class="${tnA<tnT&&tnT>0?'val-neg':tnA>0&&tnT===0?'val-pos':''}">${fmt(tnA,2)}</td>
-          <td>${mpPT}</td><td class="${mpPA2<mpPT?'val-pos':'val-neg'}">${mpPA2}</td>
-          <td>${mpMT}</td><td class="${mpMA2<mpMT?'val-pos':'val-neg'}">${mpMA2}</td>
+          <td>${mpCombTVal}</td><td class="${mpCombAVal<mpCombTVal?'val-pos':'val-neg'}">${mpCombAVal}</td>
           <td>${uTA.toFixed(4)}</td><td class="${uA>uTA?'val-neg':'val-pos'}">${uA.toFixed(4)}</td>
         </tr>`;
       });
@@ -1188,36 +1186,33 @@ function renderDaywise(){
       const avgMpP=avg(useDates.map(d=>lk[p][d]['mp_prod_actual']));
       const avgMpM=avg(useDates.map(d=>lk[p][d]['mp_maint_actual']));
       const avgUpc=avg(useDates.map(d=>lk[p][d]['upc_actual']));
+      const avgMpCombT=mpProdT[p]+mpMaintT[p]; const avgMpCombA=+(avgMpP+avgMpM).toFixed(1);
       rows+=`<tr style="background:var(--warm);font-weight:600;border-top:2px solid var(--border)">
         <td>Avg/Total</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
-        <td>${fmt(acpT[p],0)}</td><td class="${avgSA<acpT[p]?'val-neg':''}">${fmt(avgSA,0)}</td><td><span class="pct-pill ${pillCls(pct(avgSA,acpT[p]))}">${pct(avgSA,acpT[p])}%</span></td>
         <td>${fmt(packT[p],0)}</td><td class="${avgPA<packT[p]?'val-neg':''}">${fmt(avgPA,0)}</td><td><span class="pct-pill ${pillCls(pct(avgPA,packT[p]))}">${pct(avgPA,packT[p])}%</span></td>
         <td>${fmt(totSlT,0)}</td><td class="${totSlA<totSlT&&totSlT>0?'val-neg':''}">${fmt(totSlA,0)}</td><td>${totSlT>0?`<span class="pct-pill ${pillCls(pct(totSlA,totSlT))}">${pct(totSlA,totSlT)}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
         <td>${fmt(totTnT,2)}</td><td class="${totTnA<totTnT&&totTnT>0?'val-neg':''}">${fmt(totTnA,2)}</td>
-        <td>${fmt(mpProdT[p],0)}</td><td class="${avgMpP<mpProdT[p]?'val-pos':'val-neg'}">${fmt(avgMpP,1)}</td>
-        <td>${fmt(mpMaintT[p],0)}</td><td class="${avgMpM<mpMaintT[p]?'val-pos':'val-neg'}">${fmt(avgMpM,1)}</td>
+        <td>${avgMpCombT}</td><td class="${avgMpCombA<avgMpCombT?'val-pos':'val-neg'}">${avgMpCombA}</td>
         <td>${upcT[p].toFixed(4)}</td><td class="${avgUpc>upcT[p]?'val-neg':'val-pos'}">${avgUpc.toFixed(4)}</td>
       </tr>`;
-      if(pi<plants.length-1) rows+=`<tr style="height:8px;background:var(--cream)"><td colspan="19"></td></tr>`;
+      if(pi<plants.length-1) rows+=`<tr style="height:8px;background:var(--cream)"><td colspan="15"></td></tr>`;
     });
   } else {
     plants.forEach((p,pi)=>{
       const d=currentDay;const v=f=>lk[p][d][f]||0;
-      const sT=acpT[p],sA=v('acp_actual'),sPct=pct(sA,sT);
       const ptT=packT[p],pA=v('pack_actual'),ppPct=pct(pA,ptT);
       const slT=v('sales_target'),slA=v('sales_actual'),slPct=pct(slA,slT);
       const tnT=v('turnover_target'),tnA=v('turnover_actual');
       const mpPT=mpProdT[p],mpPA2=v('mp_prod_actual');
       const mpMT=mpMaintT[p],mpMA2=v('mp_maint_actual');
+      const mpCombTDay=mpPT+mpMT; const mpCombADay=mpPA2+mpMA2;
       const uTA=upcT[p],uA=v('upc_actual');
       rows+=`<tr>
         <td>${dateLabel(d)}</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
-        <td>${fmt(sT,0)}</td><td class="${sA<sT?'val-neg':''}">${fmt(sA,0)}</td><td><span class="pct-pill ${pillCls(sPct)}">${sPct}%</span></td>
         <td>${fmt(ptT,0)}</td><td class="${pA<ptT?'val-neg':''}">${fmt(pA,0)}</td><td><span class="pct-pill ${pillCls(ppPct)}">${ppPct}%</span></td>
         <td>${fmt(slT,0)}</td><td class="${slA<slT&&slT>0?'val-neg':slA>0&&slT===0?'val-pos':''}">${fmt(slA,0)}</td><td>${slT>0?`<span class="pct-pill ${pillCls(slPct)}">${slPct}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
         <td>${fmt(tnT,2)}</td><td class="${tnA<tnT&&tnT>0?'val-neg':tnA>0&&tnT===0?'val-pos':''}">${fmt(tnA,2)}</td>
-        <td>${mpPT}</td><td class="${mpPA2<mpPT?'val-pos':'val-neg'}">${mpPA2}</td>
-        <td>${mpMT}</td><td class="${mpMA2<mpMT?'val-pos':'val-neg'}">${mpMA2}</td>
+        <td>${mpCombTDay}</td><td class="${mpCombADay<mpCombTDay?'val-pos':'val-neg'}">${mpCombADay}</td>
         <td>${uTA.toFixed(4)}</td><td class="${uA>uTA?'val-neg':'val-pos'}">${uA.toFixed(4)}</td>
       </tr>`;
     });
@@ -1274,30 +1269,6 @@ function buildAllRemarksHTML(containerId){
 function renderProduction(){
   const{plants,dates,dateLabels,lk,acpT,packT,remarks}=G;
 
-  // Plant pills
-  const pillBar=document.getElementById('plantPills');pillBar.innerHTML='';
-  plants.forEach((p,i)=>{
-    const btn=document.createElement('button');
-    btn.className='plant-pill'+(i===activePlantIdx?' active':'');
-    btn.textContent=p;btn.style.borderColor=pColors[i];
-    if(i===activePlantIdx){btn.style.background=pColors[i];btn.style.color='#fff';}
-    else{btn.style.background='#fff';btn.style.color=pColors[i];}
-    btn.onclick=(e)=>{e.stopPropagation();
-      activePlantIdx=i;
-      document.querySelectorAll('.plant-pill').forEach((b,bi)=>{
-        b.classList.toggle('active',bi===i);
-        b.style.background=bi===i?pColors[bi]:'#fff';
-        b.style.color=bi===i?'#fff':pColors[bi];
-        b.style.borderColor=pColors[bi];
-      });
-      drawPlantTrend();
-    };
-    pillBar.appendChild(btn);
-  });
-  drawPlantTrend();
-
-
-
   // Packing plant pills
   const packPillBar=document.getElementById('packPlantPills');packPillBar.innerHTML='';
   plants.forEach((p,i)=>{
@@ -1321,31 +1292,6 @@ function renderProduction(){
   drawPackPlantTrend();
 
 
-
-  // AutoConer table
-  let acpHead=`<tr><th>Date</th>${plants.map(p=>`<th>${p} Tgt</th><th>${p} Act</th>`).join('')}<th>Total Tgt</th><th>Total Act</th></tr>`;
-  let acpBody='';
-  dates.forEach((d,di)=>{
-    const totT=sum(plants.map(p=>acpT[p]));
-    const totA=sum(plants.map(p=>lk[p][d]['acp_actual']));
-    acpBody+=`<tr><td>${dateLabels[di]}</td>`;
-    plants.forEach(p=>{
-      const a=lk[p][d]['acp_actual'],t=acpT[p];
-      acpBody+=`<td>${fmt(t,0)}</td><td class="${a<t?'val-neg':''}">${fmt(a,0)}</td>`;
-    });
-    acpBody+=`<td>${fmt(totT,0)}</td><td class="${totA<totT?'val-neg':''}">${fmt(totA,0)}</td></tr>`;
-  });
-  // Total row
-  const overallAcpT=sum(plants.map(p=>acpT[p]))*dates.length;
-  const overallAcpA=sum(plants.map(p=>sum(dates.map(d=>lk[p][d]['acp_actual']))));
-  acpBody+=`<tr style="background:var(--warm);font-weight:600"><td>Period Total</td>`;
-  plants.forEach(p=>{
-    const pT=acpT[p]*dates.length,pA=sum(dates.map(d=>lk[p][d]['acp_actual']));
-    acpBody+=`<td>${fmt(pT,0)}</td><td class="${pA<pT?'val-neg':''}">${fmt(pA,0)}</td>`;
-  });
-  acpBody+=`<td>${fmt(overallAcpT,0)}</td><td class="${overallAcpA<overallAcpT?'val-neg':''}">${fmt(overallAcpA,0)}</td></tr>`;
-  document.getElementById('prodSpinHead').innerHTML=acpHead;
-  document.getElementById('prodSpinBody').innerHTML=acpBody;
 
   // Packing table
   let packHead=`<tr><th>Date</th>${plants.map(p=>`<th>${p} Tgt</th><th>${p} Act</th>`).join('')}<th>Total Tgt</th><th>Total Act</th></tr>`;
@@ -1371,39 +1317,7 @@ function renderProduction(){
   document.getElementById('prodPackHead').innerHTML=packHead;
   document.getElementById('prodPackBody').innerHTML=packBody;
 
-  // Remarks table
-  let remBody='';
-  plants.forEach((p,i)=>{
-    const tA=avg(dates.map(d=>lk[p][d]['acp_actual']));
-    const tT=acpT[p];
-    const diff=tA-tT;const pc=pct(tA,tT);
-    const rem=remarks[p]||'—';
-    remBody+=`<tr>
-      <td style="color:${pColors[i]};font-weight:700">${p}</td>
-      <td>${fmt(tT,0)}</td><td class="${diff<0?'val-neg':''}">${fmt(tA,1)}</td>
-      <td class="${diff<0?'val-neg':'val-pos'}">${diff>=0?'+':''}${fmt(diff,1)}</td>
-      <td><span class="pct-pill ${pillCls(pc)}">${pc}%</span></td>
-      <td>${rem!=='—'?`<span class="remark-cell"><span class="remark-short">${rem.substring(0,50)}${rem.length>50?'…':''}</span><div class="remark-popup">🔧 <strong>${p}</strong><br><br>${rem}</div></span>`:'<span class="remark-none">—</span>'}</td>
-    </tr>`;
-  });
-  // Total
-  const avgAcpA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['acp_actual']))));
-  const avgAcpT=sum(plants.map(p=>acpT[p]));
-  const diff=avgAcpA-avgAcpT;
-  remBody+=`<tr style="background:var(--warm);font-weight:600"><td>TOTAL</td><td>${fmt(avgAcpT,0)}</td><td class="${diff<0?'val-neg':''}">${fmt(avgAcpA,1)}</td><td class="${diff<0?'val-neg':'val-pos'}">${diff>=0?'+':''}${fmt(diff,1)}</td><td><span class="pct-pill ${pillCls(pct(avgAcpA,avgAcpT))}">${pct(avgAcpA,avgAcpT)}%</span></td><td>—</td></tr>`;
-  document.getElementById('prodRemarksBody').innerHTML=remBody;
   buildAllRemarksHTML('allRemarksContainer');
-}
-
-function drawPlantTrend(){
-  const{plants,dates,dateLabels,lk}=G;
-  const i=activePlantIdx,p=plants[i];
-  mkMixed('chPlantTrend',p,'acp',
-    dates.map(d=>lk[p][d]['acp_target']),
-    dates.map(d=>lk[p][d]['acp_actual']),
-    dateLabels, pColors[i],
-    v=>v/1000+'k',
-    document.getElementById('acpTrendNote'));
 }
 
 function drawPackPlantTrend(){
@@ -1639,55 +1553,43 @@ function renderManpower(){
 
   const mpProdAvg=plants.map(p=>avg(dates.map(d=>lk[p][d]['mp_prod_actual'])));
   const mpMaintAvg=plants.map(p=>avg(dates.map(d=>lk[p][d]['mp_maint_actual'])));
+  const mpCombAvg=plants.map((p,i)=>mpProdAvg[i]+mpMaintAvg[i]);
+  const mpCombT=plants.map(p=>mpProdT[p]+mpMaintT[p]);
+
   const totProdT=sum(plants.map(p=>mpProdT[p]));
   const totMaintT=sum(plants.map(p=>mpMaintT[p]));
+  const totCombT=totProdT+totMaintT;
   const totProdA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_prod_actual']))));
   const totMaintA=avg(dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual']))));
-  const maintGapPct=pct(totMaintA,totMaintT);
+  const totCombA=totProdA+totMaintA;
 
-  // Production Manpower KPI cards
-  const prodGapPct=pct(totProdA,totProdT);
-  document.getElementById('kpiMPProd').innerHTML=
-    kpiCard(totProdA>totProdT?'red':'green','Production Headcount (Avg/Day)',fmt(totProdA,0),'Target: '+fmt(totProdT,0)+' workers/day',(totProdA>totProdT?'▲ +':'▼ -')+Math.abs(totProdA-totProdT).toFixed(0)+' workers',totProdA>totProdT?'badge-red':'badge-green')+
-    kpiCard(totProdA<=totProdT?'green':'red','Production Efficiency',prodGapPct.toFixed(1)+'%','Headcount vs target',totProdA<=totProdT?'✓ Within target':'⚠ Over-staffed',totProdA<=totProdT?'badge-green':'badge-red')+
-    kpiCard('blue','Production — Best Plant',plants[mpProdAvg.indexOf(Math.min(...mpProdAvg))],'Lowest avg headcount','Most efficient plant','badge-blue');
+  // Combined KPI cards — total only
+  document.getElementById('kpiMPComb').innerHTML=
+    kpiCard(totCombA>totCombT?'red':'green','Total Manpower (Avg/Day)',fmt(totCombA,0),'Target: '+fmt(totCombT,0)+' workers/day',(totCombA>totCombT?'▲ +':'▼ -')+Math.abs(totCombA-totCombT).toFixed(0)+' vs target',totCombA>totCombT?'badge-red':'badge-green')+
+    kpiCard(totCombA>totCombT?'red':'green','Gap vs Target',(totCombA>totCombT?'+':'')+Math.abs(totCombA-totCombT).toFixed(0)+' workers','Period avg daily variance',pct(totCombA,totCombT).toFixed(1)+'% of target',totCombA>totCombT?'badge-red':'badge-green')+
+    kpiCard('blue','Most Efficient Plant',plants[mpCombAvg.indexOf(Math.min(...mpCombAvg))],'Lowest combined headcount','All plants combined','badge-blue');
 
-  // Maintenance Manpower KPI cards
-  document.getElementById('kpiMPMaint').innerHTML=
-    kpiCard(totMaintA>totMaintT?'red':'amber','Maintenance Headcount (Avg/Day)',fmt(totMaintA,0),'Target: '+fmt(totMaintT,0)+' workers/day',(totMaintA>totMaintT?'▲ +':'▼ -')+Math.abs(totMaintA-totMaintT).toFixed(0)+' workers',totMaintA>totMaintT?'badge-red':'badge-amber')+
-    kpiCard(totMaintA<=totMaintT?'green':'amber','Maintenance Gap %',Math.abs(100-maintGapPct).toFixed(1)+'%',totMaintA<totMaintT?'Deficit — under-staffed':'Surplus — over-staffed',totMaintA<totMaintT?'⚠ Monitor closely':'✓ Adequate',totMaintA<=totMaintT?'badge-green':'badge-amber')+
-    kpiCard('blue','Maintenance — Best Plant',plants[mpMaintAvg.indexOf(Math.min(...mpMaintAvg))],'Lowest avg headcount','Most efficient plant','badge-blue');
-
-  mk('chMPProd','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>mpProdT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
-    {label:'Actual (Avg)',data:mpProdAvg,backgroundColor:mpProdAvg.map((a,i)=>colorForVal(a,mpProdT[plants[i]],false)),borderRadius:4}
+  // Single combined bar chart — total only
+  mk('chMPComb','bar',{labels:plants,datasets:[
+    {label:'Target',data:mpCombT,backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
+    {label:'Actual',data:mpCombAvg,backgroundColor:mpCombAvg.map((a,i)=>a<=mpCombT[i]?'rgba(21,87,36,0.85)':'rgba(204,0,0,0.85)'),borderRadius:4}
   ]});
 
-  mk('chMPMaint','bar',{labels:plants,datasets:[
-    {label:'Target',data:plants.map(p=>mpMaintT[p]),backgroundColor:'rgba(0,0,255,0.85)',borderRadius:4},
-    {label:'Actual (Avg)',data:mpMaintAvg,backgroundColor:mpMaintAvg.map((a,i)=>colorForVal(a,mpMaintT[plants[i]],false)),borderRadius:4}
-  ]});
-
+  // Daily combined trend
   const dailyProdTotal=dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_prod_actual'])));
   const dailyMaintTotal=dates.map(d=>sum(plants.map(p=>lk[p][d]['mp_maint_actual'])));
-  mk('chMPProdTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dates.map(()=>totProdT),borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Actual',data:dailyProdTotal,borderColor:COL_HIT,backgroundColor:'rgba(26,92,150,.1)',pointBackgroundColor:'#1A5C96',pointRadius:3,borderWidth:2.5,tension:.3,fill:true}
-  ]},miniOpts);
-
-  mk('chMPMaintTrend','line',{labels:dateLabels,datasets:[
-    {label:'Target',data:dates.map(()=>totMaintT),borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
-    {label:'Actual',data:dailyMaintTotal,borderColor:COL_HIT,backgroundColor:'rgba(212,64,0,.08)',pointBackgroundColor:'#D44000',pointRadius:3,borderWidth:2.5,tension:.3,fill:true}
+  const dailyCombTotal=dates.map((d,i)=>dailyProdTotal[i]+dailyMaintTotal[i]);
+  mk('chMPCombTrend','line',{labels:dateLabels,datasets:[
+    {label:'Target',data:dates.map(()=>totCombT),borderColor:'rgba(0,0,255,0.85)',borderDash:[5,3],pointRadius:0,borderWidth:1.5,fill:false},
+    {label:'Actual',data:dailyCombTotal,borderColor:COL_HIT,backgroundColor:'rgba(21,87,36,0.08)',pointBackgroundColor:'#2D7D4E',pointRadius:3,borderWidth:2.5,tension:.3,fill:true}
   ]},miniOpts);
 
   let mpBody='';
   plants.forEach((p,i)=>{
-    const pGap=mpProdAvg[i]-mpProdT[p];
-    const mGap=mpMaintAvg[i]-mpMaintT[p];
+    const cGap=+(mpCombAvg[i]-mpCombT[i]).toFixed(1);
     mpBody+=`<tr>
       <td style="color:${pColors[i]};font-weight:700">${p}</td>
-      <td>${mpProdT[p]}</td><td>${fmt(mpProdAvg[i],1)}</td><td class="${pGap<=0?'val-pos':'val-neg'}">${pGap>0?'+':''}${fmt(pGap,1)}</td>
-      <td>${mpMaintT[p]}</td><td>${fmt(mpMaintAvg[i],1)}</td><td class="${mGap<=0?'val-pos':'val-neg'}">${mGap>0?'+':''}${fmt(mGap,1)}</td>
+      <td>${mpCombT[i]}</td><td>${fmt(mpCombAvg[i],1)}</td><td class="${cGap<=0?'val-pos':'val-neg'}">${cGap>0?'+':''}${cGap}</td>
     </tr>`;
   });
   document.getElementById('mpSummaryBody').innerHTML=mpBody;
@@ -1765,22 +1667,22 @@ function renderComparative(){
   const mpMaintAvg=plants.map(p=>avg(dates.map(d=>lk[p][d]['mp_maint_actual'])));
   const upcAvg=plants.map(p=>avg(dates.map(d=>lk[p][d]['upc_actual'])));
 
+  const mpCombAvgComp=plants.map((p,i)=>mpProdAvg[i]+mpMaintAvg[i]);
+  const mpCombTComp=plants.map(p=>mpProdT[p]+mpMaintT[p]);
   // Scorecard table
   let compBody='';
   plants.forEach((p,i)=>{
-    const sP=pct(acpAvg[i],acpT[p]);const pkP=pct(packAvg[i],packT[p]);
+    const pkP=pct(packAvg[i],packT[p]);
     const slP=pct(salesTotalA[i],salesTotalT[i]);const tnP=pct(turnTotalA[i],turnTotalT[i]);
-    const pGap=(mpProdAvg[i]-mpProdT[p]).toFixed(1);
-    const mGap=(mpMaintAvg[i]-mpMaintT[p]).toFixed(1);
+    const mpCombGap=(mpCombAvgComp[i]-mpCombTComp[i]).toFixed(1);
     const upcIsOver=upcAvg[i]>upcT[p]+0.001;
     compBody+=`<tr>
       <td style="color:${pColors[i]};font-weight:700">${p}</td>
-      <td>${fmt(acpAvg[i],0)}</td><td><span class="pct-pill ${pillCls(sP)}">${sP}%</span></td>
       <td>${fmt(packAvg[i],0)}</td><td><span class="pct-pill ${pillCls(pkP)}">${pkP}%</span></td>
       <td>${fmt(salesTotalA[i],0)}</td><td>${salesTotalT[i]>0?`<span class="pct-pill ${pillCls(slP)}">${slP}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
       <td>${fmt(turnTotalA[i],1)}</td><td>${turnTotalT[i]>0?`<span class="pct-pill ${pillCls(tnP)}">${tnP}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
-      <td class="${parseFloat(pGap)>0?'val-neg':'val-pos'}">${parseFloat(pGap)>0?'+':''}${pGap}</td>
-      <td class="${parseFloat(mGap)>0?'val-neg':'val-pos'}">${parseFloat(mGap)>0?'+':''}${mGap}</td>
+      <td>${mpCombTComp[i]}</td><td>${fmt(mpCombAvgComp[i],1)}</td>
+      <td class="${parseFloat(mpCombGap)>0?'val-neg':'val-pos'}">${parseFloat(mpCombGap)>0?'+':''}${mpCombGap}</td>
       <td>${upcIsOver?'<span class="pct-pill pill-red">Over</span>':'<span class="pct-pill pill-green">Under ✓</span>'}</td>
     </tr>`;
   });
@@ -1809,12 +1711,10 @@ function renderComparative(){
   const COL_GREEN_LT='rgba(21,87,36,0.45)'; // Light Green
   const COL_RED_LT  ='rgba(204,0,0,0.45)';  // Light Blood Red
 
-  // Production attainment chart — ACP % (solid) + Packing % (lighter)
+  // Production attainment chart — Packing %
   mk('chCompare','bar',{labels:plants,datasets:[
-    {label:'ACP %',   data:plants.map((p,i)=>pct(acpAvg[i],acpT[p])),
-     backgroundColor:plants.map((p,i)=>acpAvg[i]>=acpT[p]?COL_GREEN:COL_RED),borderRadius:4},
     {label:'Packing %',data:plants.map((p,i)=>pct(packAvg[i],packT[p])),
-     backgroundColor:plants.map((p,i)=>packAvg[i]>=packT[p]?COL_GREEN_LT:COL_RED_LT),borderRadius:4}
+     backgroundColor:plants.map((p,i)=>packAvg[i]>=packT[p]?COL_GREEN:COL_RED),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{min:60,max:110,...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v+'%'}}}});
 
   // Sales & Turnover achievement chart — Sales (solid) + Turnover (lighter)
@@ -1825,12 +1725,6 @@ function renderComparative(){
      backgroundColor:plants.map((p,i)=>turnTotalT[i]>0?(turnTotalA[i]>=turnTotalT[i]?COL_GREEN_LT:COL_RED_LT):'rgba(107,95,82,0.25)'),borderRadius:4}
   ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v+'%'}}}});
 
-  // Loss analysis — horizontal bar, Blood Red for loss, Dark Green for no loss
-  const lossKgs=plants.map((p,i)=>Math.max(0,acpT[p]-acpAvg[i]));
-  mk('chLoss','bar',{labels:plants,datasets:[{
-    label:'Avg Daily Loss (kgs)',data:lossKgs,
-    backgroundColor:lossKgs.map(v=>v>0?COL_RED:COL_GREEN),borderRadius:5
-  }]},{indexAxis:'y',plugins:{legend:{display:false,position:'bottom'}},scales:{y:{grid:{display:false},ticks:{color:C.gridTick,font:{size:11}}},x:{grid:{color:C.gridLine},ticks:{color:C.gridTick,font:{size:11}}}}});
 }
 
 // ══════════════════════════════════════════════════════
@@ -1842,7 +1736,7 @@ function switchTab(id,el){
   document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   el.classList.add('active');
-  if(id==='production'){drawPlantTrend();}
+
   if(id==='sales'){drawSalesPlantTrend();}
   if(id==='turnover'){drawTurnPlantTrend();}
   if(id==='upc'){drawUpcPlantTrend();}
