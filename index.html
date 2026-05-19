@@ -1680,9 +1680,9 @@ function renderDaywise(){
         const mpCombTVal=mpPT+mpMT; const mpCombAVal=mpPA2+mpMA2;
         rows+=`<tr>
           <td>${dateLabel(d)}</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
-          <td>${fmt(ptT,0)}</td><td class="${pA<ptT?'val-neg':''}">${fmt(pA,0)}</td><td><span class="pct-pill ${pillCls(ppPct)}">${ppPct}%</span></td>
-          <td>${fmt(slT,0)}</td><td class="${slA<slT&&slT>0?'val-neg':slA>0&&slT===0?'val-pos':''}">${fmt(slA,0)}</td><td>${slT>0?`<span class="pct-pill ${pillCls(slPct)}">${slPct}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
-          <td>${fmt(tnT,2)}</td><td class="${tnA<tnT&&tnT>0?'val-neg':tnA>0&&tnT===0?'val-pos':''}">${fmt(tnA,2)}</td>
+          <td>${fmt(ptT,0)}</td><td class="${pA<ptT?'val-neg':'val-pos'}">${fmt(pA,0)}</td><td><span class="pct-pill ${pillCls(ppPct)}">${ppPct}%</span></td>
+          <td>${fmt(slT,0)}</td><td class="${slA<slT&&slT>0?'val-neg':slA>=slT&&slT>0?'val-pos':slA>0&&slT===0?'val-pos':''}">${fmt(slA,0)}</td><td>${slT>0?`<span class="pct-pill ${pillCls(slPct)}">${slPct}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
+          <td>${fmt(tnT,2)}</td><td class="${tnA<tnT&&tnT>0?'val-neg':tnA>=tnT&&tnT>0?'val-pos':tnA>0&&tnT===0?'val-pos':''}">${fmt(tnA,2)}</td>
           <td>${mpCombTVal}</td><td class="${mpCombAVal<mpCombTVal?'val-pos':'val-neg'}">${mpCombAVal}</td>
           <td>${uTA.toFixed(4)}</td><td class="${uA>uTA?'val-neg':'val-pos'}">${uA.toFixed(4)}</td>
         </tr>`;
@@ -1704,9 +1704,9 @@ function renderDaywise(){
       const avgMpCombT=+(avgMpPT+avgMpMT).toFixed(1); const avgMpCombA=+(avgMpP+avgMpM).toFixed(1);
       rows+=`<tr style="background:var(--warm);font-weight:600;border-top:2px solid var(--border)">
         <td>Avg/Total</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
-        <td>${fmt(avgPackT,0)}</td><td class="${avgPA<avgPackT?'val-neg':''}">${fmt(avgPA,0)}</td><td><span class="pct-pill ${pillCls(pct(avgPA,avgPackT))}">${pct(avgPA,avgPackT)}%</span></td>
-        <td>${fmt(totSlT,0)}</td><td class="${totSlA<totSlT&&totSlT>0?'val-neg':''}">${fmt(totSlA,0)}</td><td>${totSlT>0?`<span class="pct-pill ${pillCls(pct(totSlA,totSlT))}">${pct(totSlA,totSlT)}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
-        <td>${fmt(totTnT,2)}</td><td class="${totTnA<totTnT&&totTnT>0?'val-neg':''}">${fmt(totTnA,2)}</td>
+        <td>${fmt(avgPackT,0)}</td><td class="${avgPA<avgPackT?'val-neg':'val-pos'}">${fmt(avgPA,0)}</td><td><span class="pct-pill ${pillCls(pct(avgPA,avgPackT))}">${pct(avgPA,avgPackT)}%</span></td>
+        <td>${fmt(totSlT,0)}</td><td class="${totSlA<totSlT&&totSlT>0?'val-neg':totSlA>=totSlT&&totSlT>0?'val-pos':''}">${fmt(totSlA,0)}</td><td>${totSlT>0?`<span class="pct-pill ${pillCls(pct(totSlA,totSlT))}">${pct(totSlA,totSlT)}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
+        <td>${fmt(totTnT,2)}</td><td class="${totTnA<totTnT&&totTnT>0?'val-neg':totTnA>=totTnT&&totTnT>0?'val-pos':''}">${fmt(totTnA,2)}</td>
         <td>${avgMpCombT}</td><td class="${avgMpCombA<avgMpCombT?'val-pos':'val-neg'}">${avgMpCombA}</td>
         <td>${avgUpcT.toFixed(4)}</td><td class="${avgUpc>avgUpcT?'val-neg':'val-pos'}">${avgUpc.toFixed(4)}</td>
       </tr>`;
@@ -1732,9 +1732,9 @@ function renderDaywise(){
       const uTA=upcT[p],uA=v('upc_actual');
       rows+=`<tr>
         <td>${dateLabel(d)}</td><td style="color:${pColors[pi]};font-weight:700">${p}</td>
-        <td>${fmt(ptT,0)}</td><td class="${pA<ptT?'val-neg':''}">${fmt(pA,0)}</td><td><span class="pct-pill ${pillCls(ppPct)}">${ppPct}%</span></td>
-        <td>${fmt(slT,0)}</td><td class="${slA<slT&&slT>0?'val-neg':slA>0&&slT===0?'val-pos':''}">${fmt(slA,0)}</td><td>${slT>0?`<span class="pct-pill ${pillCls(slPct)}">${slPct}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
-        <td>${fmt(tnT,2)}</td><td class="${tnA<tnT&&tnT>0?'val-neg':tnA>0&&tnT===0?'val-pos':''}">${fmt(tnA,2)}</td>
+        <td>${fmt(ptT,0)}</td><td class="${pA<ptT?'val-neg':'val-pos'}">${fmt(pA,0)}</td><td><span class="pct-pill ${pillCls(ppPct)}">${ppPct}%</span></td>
+        <td>${fmt(slT,0)}</td><td class="${slA<slT&&slT>0?'val-neg':slA>=slT&&slT>0?'val-pos':slA>0&&slT===0?'val-pos':''}">${fmt(slA,0)}</td><td>${slT>0?`<span class="pct-pill ${pillCls(slPct)}">${slPct}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
+        <td>${fmt(tnT,2)}</td><td class="${tnA<tnT&&tnT>0?'val-neg':tnA>=tnT&&tnT>0?'val-pos':tnA>0&&tnT===0?'val-pos':''}">${fmt(tnA,2)}</td>
         <td>${mpCombTDay}</td><td class="${mpCombADay<mpCombTDay?'val-pos':'val-neg'}">${mpCombADay}</td>
         <td>${uTA.toFixed(4)}</td><td class="${uA>uTA?'val-neg':'val-pos'}">${uA.toFixed(4)}</td>
       </tr>`;
@@ -1861,18 +1861,18 @@ function renderProduction(){
     packBody+=`<tr><td>${dateLabels[di]}</td>`;
     plants.forEach(p=>{
       const a=lk[p][d]['pack_actual'],t=packT[p];
-      packBody+=`<td>${fmt(t,0)}</td><td class="${a<t?'val-neg':''}">${fmt(a,0)}</td>`;
+      packBody+=`<td>${fmt(t,0)}</td><td class="${a<t?'val-neg':'val-pos'}">${fmt(a,0)}</td>`;
     });
-    packBody+=`<td>${fmt(totT,0)}</td><td class="${totA<totT?'val-neg':''}">${fmt(totA,0)}</td></tr>`;
+    packBody+=`<td>${fmt(totT,0)}</td><td class="${totA<totT?'val-neg':'val-pos'}">${fmt(totA,0)}</td></tr>`;
   });
   const overallPackT=sum(plants.map(p=>packT[p]))*dates.length;
   const overallPackA=sum(plants.map(p=>sum(dates.map(d=>lk[p][d]['pack_actual']))));
   packBody+=`<tr style="background:var(--warm);font-weight:600"><td>Period Total</td>`;
   plants.forEach(p=>{
     const pT=packT[p]*dates.length,pA=sum(dates.map(d=>lk[p][d]['pack_actual']));
-    packBody+=`<td>${fmt(pT,0)}</td><td class="${pA<pT?'val-neg':''}">${fmt(pA,0)}</td>`;
+    packBody+=`<td>${fmt(pT,0)}</td><td class="${pA<pT?'val-neg':'val-pos'}">${fmt(pA,0)}</td>`;
   });
-  packBody+=`<td>${fmt(overallPackT,0)}</td><td class="${overallPackA<overallPackT?'val-neg':''}">${fmt(overallPackA,0)}</td></tr>`;
+  packBody+=`<td>${fmt(overallPackT,0)}</td><td class="${overallPackA<overallPackT?'val-neg':'val-pos'}">${fmt(overallPackA,0)}</td></tr>`;
   document.getElementById('prodPackHead').innerHTML=packHead;
   document.getElementById('prodPackBody').innerHTML=packBody;
 
@@ -2026,8 +2026,8 @@ function renderSales(){
     salesBody+=`<td>${fmt(tT,0)}</td><td class="${tA<tT&&tT>0?'val-neg':tA>0?'val-pos':''}">${fmt(tA,0)}</td><td>${tT>0?`<span class="pct-pill ${pillCls(dp)}">${dp.toFixed(1)}%</span>`:'<span class="pct-pill pill-gold">Unplanned</span>'}</td></tr>`;
   });
   salesBody+=`<tr style="background:var(--warm);font-weight:600"><td>Period Total</td>`;
-  plants.forEach((p,i)=>{salesBody+=`<td>${fmt(salesTotalT[i],0)}</td><td class="${salesTotalA[i]<salesTotalT[i]?'val-neg':''}">${fmt(salesTotalA[i],0)}</td>`;});
-  salesBody+=`<td>${fmt(grandT,0)}</td><td class="${grandA<grandT?'val-neg':''}">${fmt(grandA,0)}</td><td><span class="pct-pill ${pillCls(grandP)}">${grandP.toFixed(1)}%</span></td></tr>`;
+  plants.forEach((p,i)=>{salesBody+=`<td>${fmt(salesTotalT[i],0)}</td><td class="${salesTotalA[i]<salesTotalT[i]?'val-neg':salesTotalA[i]>=salesTotalT[i]?'val-pos':''}">${fmt(salesTotalA[i],0)}</td>`;});
+  salesBody+=`<td>${fmt(grandT,0)}</td><td class="${grandA<grandT?'val-neg':grandA>=grandT?'val-pos':''}">${fmt(grandA,0)}</td><td><span class="pct-pill ${pillCls(grandP)}">${grandP.toFixed(1)}%</span></td></tr>`;
   document.getElementById('salesTableHead').innerHTML=salesHead;
   document.getElementById('salesTableBody').innerHTML=salesBody;
 
@@ -2135,8 +2135,8 @@ function renderTurnover(){
     turnBody+=`<td>${fmt(tT,2)}</td><td class="${tA<tT&&tT>0?'val-neg':tA>0?'val-pos':''}">${fmt(tA,2)}</td><td>${tT>0?`<span class="pct-pill ${pillCls(dp)}">${dp.toFixed(1)}%</span>`:'<span class="pct-pill pill-gold">Unplanned</span>'}</td></tr>`;
   });
   turnBody+=`<tr style="background:var(--warm);font-weight:600"><td>Period Total</td>`;
-  plants.forEach((p,i)=>{turnBody+=`<td>${fmt(turnTotalT[i],2)}</td><td class="${turnTotalA[i]<turnTotalT[i]?'val-neg':''}">${fmt(turnTotalA[i],2)}</td>`;});
-  turnBody+=`<td>${fmt(grandT,2)}</td><td class="${grandA<grandT?'val-neg':''}">${fmt(grandA,2)}</td><td><span class="pct-pill ${pillCls(grandP)}">${grandP.toFixed(1)}%</span></td></tr>`;
+  plants.forEach((p,i)=>{turnBody+=`<td>${fmt(turnTotalT[i],2)}</td><td class="${turnTotalA[i]<turnTotalT[i]?'val-neg':turnTotalA[i]>=turnTotalT[i]?'val-pos':''}">${fmt(turnTotalA[i],2)}</td>`;});
+  turnBody+=`<td>${fmt(grandT,2)}</td><td class="${grandA<grandT?'val-neg':grandA>=grandT?'val-pos':''}">${fmt(grandA,2)}</td><td><span class="pct-pill ${pillCls(grandP)}">${grandP.toFixed(1)}%</span></td></tr>`;
   document.getElementById('turnTableHead').innerHTML=turnHead;
   document.getElementById('turnTableBody').innerHTML=turnBody;
 
@@ -2149,13 +2149,13 @@ function renderTurnover(){
     sumBody+=`<tr>
       <td style="color:${pColors[i]};font-weight:700">${p}</td>
       <td>${fmt(tT,2)}</td>
-      <td class="${tA<tT?'val-neg':''}">${fmt(tA,2)}</td>
+      <td class="${tA<tT?'val-neg':tA>=tT?'val-pos':''}">${fmt(tA,2)}</td>
       <td>${tT>0?`<span class="pct-pill ${pillCls(pc)}">${pc.toFixed(1)}%</span>`:'<span class="pct-pill pill-gold">—</span>'}</td>
       <td>${fmt(avgD,2)}</td>
       <td>${tA>=tT&&tT>0?'<span class="pct-pill pill-green">✓ On/Above Target</span>':tT>0?'<span class="pct-pill pill-red">Below Target</span>':'<span class="pct-pill pill-gold">No Target Set</span>'}</td>
     </tr>`;
   });
-  sumBody+=`<tr style="background:var(--warm);font-weight:600"><td>TOTAL</td><td>${fmt(grandT,2)}</td><td class="${grandA<grandT?'val-neg':''}">${fmt(grandA,2)}</td><td><span class="pct-pill ${pillCls(grandP)}">${grandP.toFixed(1)}%</span></td><td>${fmt(avgDailyTurn,2)}</td><td>—</td></tr>`;
+  sumBody+=`<tr style="background:var(--warm);font-weight:600"><td>TOTAL</td><td>${fmt(grandT,2)}</td><td class="${grandA<grandT?'val-neg':grandA>=grandT?'val-pos':''}">${fmt(grandA,2)}</td><td><span class="pct-pill ${pillCls(grandP)}">${grandP.toFixed(1)}%</span></td><td>${fmt(avgDailyTurn,2)}</td><td>—</td></tr>`;
   document.getElementById('turnSummaryBody').innerHTML=sumBody;
   buildAllRemarksHTML('allRemarksTurnContainer');
 }
