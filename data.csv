@@ -337,13 +337,13 @@ daily,P-10,18-05-2026,4735,4735,4735,4732.56,11340,11309.76,42.32088,43.94,223,2
 daily,P-11,18-05-2026,5179,5084,5179,5095.44,11340,10886.4,42.11676,43.04,217,223,63,52,0.103763,0.100089,
 remarks,P-4,,,,,,,,,,,,,,,,"Speed OE-1 83000/80000, OE-4,5 93000/90000, OE-6 85000/80000, . OE-4,5 TM 6.50/7.00"
 remarks,P-5,,,,,,,,,,,,,,,,"OE-1,2,3 TM 7.50/7.80,  OE m/c.no : 2 LHS Rotor belt change awork 50 mins idle"
-remarks,P-6,,,,,,,,,,,,,,,,"S?? 37,40 ?????? ????? ?????? 145??? ????"
+remarks,P-6,,,,,,,,,,,,,,,,"Spg 37,40 Bottom Apron Change 145 mins idle"
 remarks,P-7,,,,,,,,,,,,,,,,"20sK Speed 95000/93000, 16sK 95000/90500, OE : 2 Clg work & electrical checking work - 6.0 Hrs idle"
 remarks,P-9,,,,,,,,,,,,,,,,"61sCC Su Speed 22500/22000, Hand shortage"
-remarks,P-11,,,,,,,,,,,,,,,,"SPG M/c.17 RHS Jockey Pulley service work - 56 Mins idle"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"Production Shortage"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"61sC - 6109 - 68 Bags & 60sC - 606 - 74 Bags Stock"
-sales_remarks,P-10,,,,,,,,,,,,,,,,"Production Shortage"
-sales_remarks,P-11,,,,,,,,,,,,,,,,"Production Shortage"
-turnover_remarks,P-5,,,,,,,,,,,,,,,,"Production Shortage"
-turnover_remarks,P-9,,,,,,,,,,,,,,,,"61sC - 6109 - 68 Bags & 60sC - 606 - 74 Bags Stock"
+remarks,P-11,,,,,,,,,,,,,,,,SPG M/c.17 RHS Jockey Pulley service work - 56 Mins idle
+sales_remarks,P-5,,,,,,,,,,,,,,,,Production Shortage
+sales_remarks,P-9,,,,,,,,,,,,,,,,61sC - 6109 - 68 Bags & 60sC - 606 - 74 Bags Stock
+sales_remarks,P-10,,,,,,,,,,,,,,,,Production Shortage
+sales_remarks,P-11,,,,,,,,,,,,,,,,Production Shortage
+turnover_remarks,P-5,,,,,,,,,,,,,,,,Production Shortage
+turnover_remarks,P-9,,,,,,,,,,,,,,,,61sC - 6109 - 68 Bags & 60sC - 606 - 74 Bags Stock
