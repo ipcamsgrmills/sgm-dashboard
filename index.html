@@ -456,8 +456,8 @@ to{opacity:1;transform:scale(1)}}
 .details-metric-btn[data-metric="sales"].active{background:#d1fae5;color:#065f46;border-color:#6ee7b7}
 .details-metric-btn[data-metric="turn"].active{background:#fef9c3;color:#92400e;border-color:#fcd34d}
 .details-tbl{width:100%;border-collapse:collapse;font-size:12px}
-.details-tbl thead th{padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;border-bottom:2px solid var(--border)}
-.details-tbl thead .th-ondate{background:#eef2ff;color:#3730a3}
+.details-tbl thead th{padding:7px 12px;font-size:11px;font-weight:800;letter-spacing:.04em;white-space:nowrap;border-bottom:2px solid var(--border);text-transform:none}
+.details-tbl thead .th-ondate{background:#eef2ff;color:#1e3a8a}
 .details-tbl thead .th-upto{background:#f0fdf4;color:#14532d}
 .details-tbl thead .th-plant{background:var(--warm);color:var(--ink)}
 .details-tbl tbody td{padding:7px 12px;border-bottom:1px solid var(--border);white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:11.5px}
@@ -465,7 +465,7 @@ to{opacity:1;transform:scale(1)}}
 .details-tbl tbody tr.total-row{font-weight:700;background:var(--warm);border-top:2px solid var(--border)}
 .details-tbl tbody tr.total-row td{font-size:12px}
 .dtbl-plant{font-weight:700;color:var(--ink);font-family:'DM Sans',sans-serif}
-.dtbl-tgt{color:var(--sub)}
+.dtbl-tgt{color:#1d4ed8;font-weight:600}
 .dtbl-act-ok{color:#14532d;font-weight:600}
 .dtbl-act-bad{color:#991b1b;font-weight:600}
 .dtbl-gap-ok{color:#14532d}
@@ -554,9 +554,9 @@ to{opacity:1;transform:scale(1)}}
       <button class="details-view-btn" onclick="switchDetailsView('chart',this)">📊 Chart View</button>
       <div style="flex:1"></div>
       <div style="display:flex;gap:6px">
-        <button class="details-metric-btn active" data-metric="prod" onclick="switchDetailsMetric('prod',this)">Production</button>
-        <button class="details-metric-btn" data-metric="sales" onclick="switchDetailsMetric('sales',this)">Sales</button>
-        <button class="details-metric-btn" data-metric="turn" onclick="switchDetailsMetric('turn',this)">Turnover</button>
+        <button class="details-metric-btn active" data-metric="prod" onclick="switchDetailsMetric('prod',this)">Production (Kgs)</button>
+        <button class="details-metric-btn" data-metric="sales" onclick="switchDetailsMetric('sales',this)">Sales (Kgs)</button>
+        <button class="details-metric-btn" data-metric="turn" onclick="switchDetailsMetric('turn',this)">Turnover (Lakhs)</button>
       </div>
     </div>
 
@@ -2668,17 +2668,17 @@ function renderDetailsTable(){
 
   head.innerHTML=`
     <tr>
-      <th rowspan="2" class="th-plant" style="text-align:left;min-width:60px">Plant</th>
-      <th colspan="3" class="th-ondate" style="text-align:center">On Date — ${onLabel}</th>
-      <th colspan="3" class="th-upto"   style="text-align:center">Upto Date — ${upLabel}</th>
+      <th rowspan="2" class="th-plant" style="text-align:left;min-width:60px;font-size:12px"><b>Plant</b></th>
+      <th colspan="3" class="th-ondate" style="text-align:center;font-size:12px"><b>On Date — ${onLabel}</b></th>
+      <th colspan="3" class="th-upto"   style="text-align:center;font-size:12px"><b>Upto Date — ${upLabel}</b></th>
     </tr>
     <tr>
-      <th class="th-ondate" style="text-align:right">Target</th>
-      <th class="th-ondate" style="text-align:right">Actual</th>
-      <th class="th-ondate" style="text-align:right">Gap</th>
-      <th class="th-upto"   style="text-align:right">Target</th>
-      <th class="th-upto"   style="text-align:right">Actual</th>
-      <th class="th-upto"   style="text-align:right">Gap</th>
+      <th class="th-ondate" style="text-align:right"><b>Target</b></th>
+      <th class="th-ondate" style="text-align:right"><b>Actual</b></th>
+      <th class="th-ondate" style="text-align:right"><b>Gap</b></th>
+      <th class="th-upto"   style="text-align:right"><b>Target</b></th>
+      <th class="th-upto"   style="text-align:right"><b>Actual</b></th>
+      <th class="th-upto"   style="text-align:right"><b>Gap</b></th>
     </tr>`;
 
   const fmtGap=(v,better)=>{
