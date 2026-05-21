@@ -446,6 +446,32 @@ to{opacity:1;transform:scale(1)}}
 
 .quick-btn.qbtn-nodata{opacity:0.38;cursor:default;border-style:dashed;pointer-events:none;}
 
+/* ── DETAILS SUMMARY TABLE ── */
+.details-view-btn{background:var(--warm);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:11px;font-weight:600;color:var(--sub);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s}
+.details-view-btn:hover{background:var(--border)}
+.details-view-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.details-metric-btn{background:var(--warm);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:600;color:var(--sub);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s}
+.details-metric-btn:hover{background:var(--border)}
+.details-metric-btn[data-metric="prod"].active{background:#ede9fe;color:#5b21b6;border-color:#a78bfa}
+.details-metric-btn[data-metric="sales"].active{background:#d1fae5;color:#065f46;border-color:#6ee7b7}
+.details-metric-btn[data-metric="turn"].active{background:#fef9c3;color:#92400e;border-color:#fcd34d}
+.details-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.details-tbl thead th{padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;border-bottom:2px solid var(--border)}
+.details-tbl thead .th-ondate{background:#eef2ff;color:#3730a3}
+.details-tbl thead .th-upto{background:#f0fdf4;color:#14532d}
+.details-tbl thead .th-plant{background:var(--warm);color:var(--ink)}
+.details-tbl tbody td{padding:7px 12px;border-bottom:1px solid var(--border);white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:11.5px}
+.details-tbl tbody tr:hover{background:var(--warm)}
+.details-tbl tbody tr.total-row{font-weight:700;background:var(--warm);border-top:2px solid var(--border)}
+.details-tbl tbody tr.total-row td{font-size:12px}
+.dtbl-plant{font-weight:700;color:var(--ink);font-family:'DM Sans',sans-serif}
+.dtbl-tgt{color:var(--sub)}
+.dtbl-act-ok{color:#14532d;font-weight:600}
+.dtbl-act-bad{color:#991b1b;font-weight:600}
+.dtbl-gap-ok{color:#14532d}
+.dtbl-gap-bad{color:#991b1b}
+.dtbl-gap-zero{color:var(--muted)}
+
 .axis-ctrl-panel{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:none}
 .axis-ctrl-panel.open{display:block}
 .axis-ctrl-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -514,6 +540,54 @@ to{opacity:1;transform:scale(1)}}
     <div class="section-title">Executive Summary</div>
     <div class="section-tag" id="ovTag">Period Actuals</div>
   </div>
+
+  <!-- ── DETAILS: On-date & Upto-date Summary ───────────── -->
+  <div id="detailsSection" style="display:none;margin-bottom:28px">
+    <div class="section-head" style="margin-bottom:12px">
+      <div class="section-title" style="font-size:14px">Plant-wise Performance Summary</div>
+      <div class="section-tag" id="detailsDateTag">—</div>
+    </div>
+
+    <!-- Toggle buttons -->
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <button class="details-view-btn active" onclick="switchDetailsView('table',this)">📋 Table View</button>
+      <button class="details-view-btn" onclick="switchDetailsView('chart',this)">📊 Chart View</button>
+      <div style="flex:1"></div>
+      <div style="display:flex;gap:6px">
+        <button class="details-metric-btn active" data-metric="prod" onclick="switchDetailsMetric('prod',this)">Production</button>
+        <button class="details-metric-btn" data-metric="sales" onclick="switchDetailsMetric('sales',this)">Sales</button>
+        <button class="details-metric-btn" data-metric="turn" onclick="switchDetailsMetric('turn',this)">Turnover</button>
+      </div>
+    </div>
+
+    <!-- TABLE VIEW -->
+    <div id="detailsTableView">
+      <div style="overflow-x:auto">
+        <table id="detailsTable" class="details-tbl">
+          <thead id="detailsTableHead"></thead>
+          <tbody id="detailsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CHART VIEW -->
+    <div id="detailsChartView" style="display:none">
+      <div class="chart-grid" style="grid-template-columns:1fr 1fr;gap:16px">
+        <div class="chart-card">
+          <div class="chart-title" id="detailsChartOnTitle">On-date Performance</div>
+          <div class="chart-sub">Target vs Actual for the date</div>
+          <canvas id="chDetailsOnDate" height="220"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title" id="detailsChartUpTitle">Upto-date Performance</div>
+          <div class="chart-sub">Cumulative target vs actual</div>
+          <canvas id="chDetailsUptoDate" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ── end Details Section ──────────────────────────────── -->
+
   <div class="kpi-grid" id="kpiOverview" style="grid-template-columns:repeat(auto-fit,minmax(185px,max-content));align-items:start"></div>
 
   <!-- Plant-wise Attainment KPI Cards (one card per metric, bar chart inside) -->
@@ -1044,6 +1118,7 @@ function processData(rows){
 function renderAll(){
   updateHeader();
   renderOverview();
+  renderDetails();
   buildDayFilter();renderDaywise();
   renderProduction();
   renderSales();
@@ -2520,6 +2595,161 @@ document.getElementById('csvInput').addEventListener('change',function(){
   fr.readAsText(this.files[0]);
   this.value='';
 });
+
+// ══════════════════════════════════════════════════════
+// DETAILS SECTION — derived from G (no separate CSV needed)
+// ══════════════════════════════════════════════════════
+let detailsMetric = 'prod';  // 'prod' | 'sales' | 'turn'
+let detailsView   = 'table'; // 'table' | 'chart'
+
+const DETAILS_META = {
+  prod:  { label:'Production (kgs)',   unit:'kgs', fmt:v=>fmt(v,0), tgtF:'pack_target',     actF:'pack_actual',     lowerBetter:false },
+  sales: { label:'Sales (kgs)',         unit:'kgs', fmt:v=>fmt(v,0), tgtF:'sales_target',    actF:'sales_actual',    lowerBetter:false },
+  turn:  { label:'Turnover (₹ Lakhs)', unit:'₹L',  fmt:v=>fmt(v,2), tgtF:'turnover_target', actF:'turnover_actual', lowerBetter:false },
+};
+
+// Derive on-date + upto-date data from G for all plants
+function buildDetailsData(){
+  const{plants,dates,lk}=G;
+  if(!plants||!dates||!lk||dates.length===0) return null;
+
+  const lastDate = dates[dates.length-1]; // most recent date = "on date"
+  // Format last date as DD.MM.YYYY for label
+  const[dd,mm,yy]=lastDate.split('-');
+  const onLabel  = `${dd}.${mm}.${yy}`;
+  const upLabel  = `01 – ${dd}`;
+
+  const meta = DETAILS_META[detailsMetric];
+  const rows = plants.map(p=>{
+    const onRow = lk[p]&&lk[p][lastDate] ? lk[p][lastDate] : {};
+    const onT   = onRow[meta.tgtF]||0;
+    const onA   = onRow[meta.actF]||0;
+    const upT   = sum(dates.map(d=>lk[p]&&lk[p][d]?lk[p][d][meta.tgtF]||0:0));
+    const upA   = sum(dates.map(d=>lk[p]&&lk[p][d]?lk[p][d][meta.actF]||0:0));
+    return { plant:p, onT, onA, onG:onA-onT, upT, upA, upG:upA-upT };
+  });
+
+  // Overall totals row
+  const total = {
+    plant:'Overall',
+    onT: sum(rows.map(r=>r.onT)), onA: sum(rows.map(r=>r.onA)),
+    upT: sum(rows.map(r=>r.upT)), upA: sum(rows.map(r=>r.upA)),
+  };
+  total.onG = total.onA - total.onT;
+  total.upG = total.upA - total.upT;
+
+  return { rows, total, onLabel, upLabel, meta };
+}
+
+function renderDetails(){
+  if(!G.plants||!G.dates||G.dates.length===0){
+    document.getElementById('detailsSection').style.display='none';
+    return;
+  }
+  document.getElementById('detailsSection').style.display='block';
+
+  const d = buildDetailsData();
+  if(!d){ document.getElementById('detailsSection').style.display='none'; return; }
+
+  document.getElementById('detailsDateTag').textContent =
+    `On date: ${d.onLabel}  ·  Upto date: ${d.upLabel}`;
+
+  renderDetailsTable();
+  if(detailsView==='chart') renderDetailsCharts();
+}
+
+function renderDetailsTable(){
+  const d = buildDetailsData();
+  if(!d) return;
+  const { rows, total, onLabel, upLabel, meta } = d;
+
+  const head = document.getElementById('detailsTableHead');
+  const body = document.getElementById('detailsTableBody');
+
+  head.innerHTML=`
+    <tr>
+      <th rowspan="2" class="th-plant" style="text-align:left;min-width:60px">Plant</th>
+      <th colspan="3" class="th-ondate" style="text-align:center">On Date — ${onLabel}</th>
+      <th colspan="3" class="th-upto"   style="text-align:center">Upto Date — ${upLabel}</th>
+    </tr>
+    <tr>
+      <th class="th-ondate" style="text-align:right">Target</th>
+      <th class="th-ondate" style="text-align:right">Actual</th>
+      <th class="th-ondate" style="text-align:right">Gap</th>
+      <th class="th-upto"   style="text-align:right">Target</th>
+      <th class="th-upto"   style="text-align:right">Actual</th>
+      <th class="th-upto"   style="text-align:right">Gap</th>
+    </tr>`;
+
+  const fmtGap=(v,better)=>{
+    const ok = better ? v<=0 : v>=0;
+    const cls = v===0 ? 'dtbl-gap-zero' : ok ? 'dtbl-gap-ok' : 'dtbl-gap-bad';
+    return `<span class="${cls}">${v>0?'+':''}${meta.fmt(v)}</span>`;
+  };
+
+  const buildRow=(r,isTotal)=>`<tr class="${isTotal?'total-row':''}">
+    <td class="dtbl-plant">${r.plant}</td>
+    <td class="dtbl-tgt"  style="text-align:right">${meta.fmt(r.onT)}</td>
+    <td class="${r.onA>=r.onT?'dtbl-act-ok':'dtbl-act-bad'}" style="text-align:right">${meta.fmt(r.onA)}</td>
+    <td style="text-align:right">${fmtGap(r.onG,meta.lowerBetter)}</td>
+    <td class="dtbl-tgt"  style="text-align:right">${meta.fmt(r.upT)}</td>
+    <td class="${r.upA>=r.upT?'dtbl-act-ok':'dtbl-act-bad'}" style="text-align:right">${meta.fmt(r.upA)}</td>
+    <td style="text-align:right">${fmtGap(r.upG,meta.lowerBetter)}</td>
+  </tr>`;
+
+  body.innerHTML = rows.map(r=>buildRow(r,false)).join('') + buildRow(total,true);
+}
+
+function renderDetailsCharts(){
+  const d = buildDetailsData();
+  if(!d) return;
+  const { rows, onLabel, upLabel, meta } = d;
+
+  document.getElementById('detailsChartOnTitle').textContent  = `On-date — ${onLabel}`;
+  document.getElementById('detailsChartUpTitle').textContent  = `Upto-date — ${upLabel}`;
+
+  const labels = rows.map(r=>r.plant);
+  const onTgt  = rows.map(r=>r.onT);
+  const onAct  = rows.map(r=>r.onA);
+  const upTgt  = rows.map(r=>r.upT);
+  const upAct  = rows.map(r=>r.upA);
+
+  const actBgOn = onAct.map((a,i)=>a>=onTgt[i]?'rgba(21,128,61,0.85)':'rgba(185,28,28,0.85)');
+  const actBgUp = upAct.map((a,i)=>a>=upTgt[i]?'rgba(21,128,61,0.85)':'rgba(185,28,28,0.85)');
+  const tgtBg   = 'rgba(0,0,255,0.75)';
+
+  const yFmt = v => {
+    if(detailsMetric==='turn') return '₹'+v.toFixed(1)+'L';
+    return v>=1000 ? (v/1000).toFixed(1)+'k' : String(Math.round(v));
+  };
+
+  mk('chDetailsOnDate','bar',{labels,datasets:[
+    {label:'Target',data:onTgt,backgroundColor:tgtBg,borderRadius:4},
+    {label:'Actual',data:onAct,backgroundColor:actBgOn,borderRadius:4},
+  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:yFmt}}}});
+
+  mk('chDetailsUptoDate','bar',{labels,datasets:[
+    {label:'Target',data:upTgt,backgroundColor:tgtBg,borderRadius:4},
+    {label:'Actual',data:upAct,backgroundColor:actBgUp,borderRadius:4},
+  ]},{scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:yFmt}}}});
+}
+
+function switchDetailsView(view, btn){
+  detailsView=view;
+  document.querySelectorAll('.details-view-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('detailsTableView').style.display = view==='table' ? '' : 'none';
+  document.getElementById('detailsChartView').style.display = view==='chart' ? '' : 'none';
+  if(view==='chart') renderDetailsCharts();
+}
+
+function switchDetailsMetric(metric, btn){
+  detailsMetric=metric;
+  document.querySelectorAll('.details-metric-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDetailsTable();
+  if(detailsView==='chart') renderDetailsCharts();
+}
 
 // On page load: try fetching data.csv from the same folder first,
 // fall back to embedded DEFAULT_CSV if not found or running offline.
