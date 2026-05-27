@@ -384,15 +384,23 @@ daily,P-7,25-05-2026,12789,12347,12789,12544,26240,4800,48.3072,9.6,130,119,24,2
 daily,P-9,25-05-2026,10740,10590,10740,10568.88,21168,8845.2,79.28928,34,459,468,150,122,0.119322,0.117855,
 daily,P-10,25-05-2026,4735,4765,4735,4752.32,12398.4,7106.4,46.35792,27.09,223,221,60,58,0.114742,0.113711,
 daily,P-11,25-05-2026,5179,5179,5179,5125.68,9072,11793.6,33.38496,45.05,217,224.5,63,55,0.103763,0.106639,
-remarks,P-4,,,,,,,,,,,,,,,,"Speed OE-1 83000/80000, OE-4,5 93000/90000, OE-6 85000/80000, . OE-4,5 TM 6.50/7.00,"
-remarks,P-5,,,,,,,,,,,,,,,,"OE-1,2,3 TM 7.50/7.80"
+daily,P-4,26-05-2026,2894,2615,2894,2640,3600,3216,8.352,7.9,54,52,3,2,0.125,0.129999,
+daily,P-5,26-05-2026,3742,3468,3742,3648,0,4368,0,10.88,59,54,11,11,0.12,0.120394,
+daily,P-6,26-05-2026,6559,6469,6559,6445,4233.6,0,15.960672,0,287,273.5,91,77,0.105523,0.10801,
+daily,P-7,26-05-2026,12789,12610,12789,12352,0,24000,0,46.74,130,126,24,22,0.106263,0.101409,
+daily,P-9,26-05-2026,10740,10560,10740,10508,6048,0,22.49856,0,459,463,150,125,0.119322,0.117846,
+daily,P-10,26-05-2026,4735,4761,4735,4763,0,1330.56,0,5.76,223,221,60,52.5,0.114742,0.113036,
+daily,P-11,26-05-2026,5179,5184,5179,5236,6501.6,0,24.311448,0,217,217.5,63,55,0.103763,0.104389,
+remarks,P-4,,,,,,,,,,,,,,,,"Speed OE-1 83000/80000, OE-4,5 93000/90000, OE-6 85000/80000, . OE-4,5 TM 6.50/7.00, . OE-3 rotor belt cut-185 mins, 134 Maximum fault-100 mins"
+remarks,P-5,,,,,,,,,,,,,,,,"OE-1,2,3 TM 7.50/7.80,  OE-2 full clg - 390 mins idle"
+remarks,P-6,,,,,,,,,,,,,,,,"Spg  - 8 Jockey pulley service - 403 Mins idle, Hand shortage"
 remarks,P-7,,,,,,,,,,,,,,,,"20sK Speed 95000/93000, 16sK 95000/91000,"
 remarks,P-9,,,,,,,,,,,,,,,,"61sCC Su Speed 22500/22000, & Hand shortage"
-sales_remarks,P-6,,,,,,,,,,,,,,,,"60sC - 153 Bags & 68sC - 100 Bags ( Bhiwandi Festival Holiday)"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 165 Bags & 20sOE - 100 Bags"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 160 Bags & 61sC - 90 Bags ( Bhiwandi Festival Holiday)"
-sales_remarks,P-10,,,,,,,,,,,,,,,,"61sCC - 70 Bags Stock"
-turnover_remarks,P-6,,,,,,,,,,,,,,,,"60sC - 153 Bags & 68sC - 100 Bags ( Bhiwandi Festival Holiday)"
-turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 165 Bags & 20sOE - 100 Bags"
-turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 160 Bags & 61sC - 90 Bags ( Bhiwandi Festival Holiday)"
-turnover_remarks,P-10,,,,,,,,,,,,,,,,"61sCC - 70 Bags Stock"
+sales_remarks,P-6,,,,,,,,,,,,,,,,60sC - 220 Bags & 68sC - 135 Bags ( Bhiwandi Festival Holiday)
+sales_remarks,P-9,,,,,,,,,,,,,,,,60sC - 240 Bags & 61sC - 120 Bags ( Bhiwandi Festival Holiday)
+sales_remarks,P-10,,,,,,,,,,,,,,,,61sCC - 70 Bags Stock
+sales_remarks,P-11,,,,,,,,,,,,,,,,62sCC - 100 Bags Stock
+turnover_remarks,P-6,,,,,,,,,,,,,,,,60sC - 220 Bags & 68sC - 135 Bags ( Bhiwandi Festival Holiday)
+turnover_remarks,P-9,,,,,,,,,,,,,,,,60sC - 240 Bags & 61sC - 120 Bags ( Bhiwandi Festival Holiday)
+turnover_remarks,P-10,,,,,,,,,,,,,,,,61sCC - 70 Bags Stock
+turnover_remarks,P-11,,,,,,,,,,,,,,,,62sCC - 100 Bags Stock
