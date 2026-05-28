@@ -391,16 +391,21 @@ daily,P-7,26-05-2026,12789,12610,12789,12352,0,24000,0,46.74,130,126,24,22,0.106
 daily,P-9,26-05-2026,10740,10560,10740,10508,6048,0,22.49856,0,459,463,150,125,0.119322,0.117846,
 daily,P-10,26-05-2026,4735,4761,4735,4763,0,1330.56,0,5.76,223,221,60,52.5,0.114742,0.113036,
 daily,P-11,26-05-2026,5179,5184,5179,5236,6501.6,0,24.311448,0,217,217.5,63,55,0.103763,0.104389,
-remarks,P-4,,,,,,,,,,,,,,,,"Speed OE-1 83000/80000, OE-4,5 93000/90000, OE-6 85000/80000, . OE-4,5 TM 6.50/7.00, . OE-3 rotor belt cut-185 mins, 134 Maximum fault-100 mins"
-remarks,P-5,,,,,,,,,,,,,,,,"OE-1,2,3 TM 7.50/7.80,  OE-2 full clg - 390 mins idle"
-remarks,P-6,,,,,,,,,,,,,,,,"Spg  - 8 Jockey pulley service - 403 Mins idle, Hand shortage"
-remarks,P-7,,,,,,,,,,,,,,,,"20sK Speed 95000/93000, 16sK 95000/91000,"
+daily,P-4,27-05-2026,2894,2619,2894,2256,4800,2064,11.136,5.11,54,49,3,2,0.125,0.129206,
+daily,P-5,27-05-2026,3742,3479,3742,3600,6000,17880.98,13.86,15.77,59,50,11,10,0.12,0.122067,
+daily,P-6,27-05-2026,6559,6520.75,6559,6516,8359,9350,32.254422,39.36,287,278,91,61,0.105523,0.107661,
+daily,P-7,27-05-2026,12789,12326,12789,12608,25600,2688,47.104,4.32,130,113,24,20,0.106263,0.115593,
+daily,P-9,27-05-2026,10740,10575,10740,10553.76,16632,28426,62.33976,115.87,459,460,150,126,0.119322,0.118434,
+daily,P-10,27-05-2026,4735,4765,4735,4762.8,3629,0,13.716864,0,223,216,60,43,0.114742,0.112342,
+daily,P-11,27-05-2026,5179,5132,5179,5125.68,4234,12398.4,15.579648,51.64,217,213.5,63,39,0.103763,0.098507,
+remarks,P-4,,,,,,,,,,,,,,,,"Speed OE-1 83000/80000, OE-4,5 93000/90000, OE-6 85000/80000, . OE-4,5 TM 6.50/7.00,"
+remarks,P-7,,,,,,,,,,,,,,,,"20sK Speed 95000/93000, 16sK 95000/91000, OE :4 cleaning work 270 mins idle"
 remarks,P-9,,,,,,,,,,,,,,,,"61sCC Su Speed 22500/22000, & Hand shortage"
-sales_remarks,P-6,,,,,,,,,,,,,,,,60sC - 220 Bags & 68sC - 135 Bags ( Bhiwandi Festival Holiday)
-sales_remarks,P-9,,,,,,,,,,,,,,,,60sC - 240 Bags & 61sC - 120 Bags ( Bhiwandi Festival Holiday)
-sales_remarks,P-10,,,,,,,,,,,,,,,,61sCC - 70 Bags Stock
-sales_remarks,P-11,,,,,,,,,,,,,,,,62sCC - 100 Bags Stock
-turnover_remarks,P-6,,,,,,,,,,,,,,,,60sC - 220 Bags & 68sC - 135 Bags ( Bhiwandi Festival Holiday)
-turnover_remarks,P-9,,,,,,,,,,,,,,,,60sC - 240 Bags & 61sC - 120 Bags ( Bhiwandi Festival Holiday)
-turnover_remarks,P-10,,,,,,,,,,,,,,,,61sCC - 70 Bags Stock
+remarks,P-11,,,,,,,,,,,,,,,,Spg mc : 1 Top Variator service work - 81 mins
+sales_remarks,P-4,,,,,,,,,,,,,,,,Breakage High 30sOE - 73 Bags Stock
+sales_remarks,P-7,,,,,,,,,,,,,,,,16sOE  - 125 Bags & 20sOE - 95 Bags Stock
+sales_remarks,P-10,,,,,,,,,,,,,,,,62sCC - 100 Bags Stock & 60sC - 125 Bags
+turnover_remarks,P-4,,,,,,,,,,,,,,,,Breakage High 30sOE - 73 Bags Stock
+turnover_remarks,P-7,,,,,,,,,,,,,,,,16sOE  - 125 Bags & 20sOE - 95 Bags Stock
+turnover_remarks,P-10,,,,,,,,,,,,,,,,62sCC - 100 Bags Stock & 60sC - 125 Bags
 turnover_remarks,P-11,,,,,,,,,,,,,,,,62sCC - 100 Bags Stock
