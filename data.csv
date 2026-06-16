@@ -524,19 +524,26 @@ daily,P-7,14-06-2026,12406,12633,12406,12160,0,0,0,0,130,124,24,9,0.106263,0.107
 daily,P-9,14-06-2026,10721,10730,10721,10720.08,0,0,0,0,459,462,150,67,0.119322,0.116878,
 daily,P-10,14-06-2026,4793,4732,4793,4732.56,0,0,0,0,223,219,60,12,0.114742,0.110305,
 daily,P-11,14-06-2026,5185,5190,5185,5186.16,0,0,0,0,217,212,63,16,0.103763,0.102612,
-remarks,P-9,,,,,,,,,,,,,,,,"Hand shortage"
+daily,P-4,15-06-2026,2694,2824,2694,2848,6000,5520,14.1,13.24,54,47,3,2,0.125,0.120883,
+daily,P-5,15-06-2026,3594,3609,3594,3564,9600,8424,21.816,19.44,59,58,11,11,0.12,0.125667,
+daily,P-6,15-06-2026,6559,6560.98,6559,6565.52,7836,0,42.4408,0,287,289,88,77,0.105523,0.105233,
+daily,P-7,15-06-2026,11974,12111,11974,12608,26240,20480,48.832,36.25,130,123,24,21,0.106263,0.107458,
+daily,P-9,15-06-2026,10721,10708,10721,10704.96,14096,4536,57.87,17.14,459,459,150,126,0.119322,0.118216,
+daily,P-10,15-06-2026,4793,4753,4793,4732.56,6048,12020.4,28.2,47.97,223,220,60,53,0.114742,0.11285,
+daily,P-11,15-06-2026,5185,5095,5185,5080.32,7560,4536,30.18,17.24,217,216,63,51,0.103763,0.100769,
+remarks,P-9,,,,,,,,,,,,,,,,"Spg  33 Ringrail gear box Problem 5.00 hrs idle"
 remarks,P-10,,,,,,,,,,,,,,,,"Hand shortage"
 sales_remarks,P-4,,,,,,,,,,,,,,,,"30sOE - 100 Bags Breakage High"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 120 Bags Stock"
-sales_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 524 Bags & 60sC - 142 Bags"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 200 Bags & 20sOE - 120 Bags"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 1000 Bags Stock"
-sales_remarks,P-10,,,,,,,,,,,,,,,,"62sCC - 80 Box & 61sCC - 93 Bags"
-sales_remarks,P-11,,,,,,,,,,,,,,,,"61sC -  530 Bags Stock"
+sales_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 65 Bags Stock"
+sales_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 560 Bags & 60sC - 210 Bags"
+sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 60 Bags & 20sOE - 60 Bags"
+sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 1050 Bags Stock"
+sales_remarks,P-10,,,,,,,,,,,,,,,,"61sCC - 93 Bags"
+sales_remarks,P-11,,,,,,,,,,,,,,,,"61sC -  600 Bags Stock"
 turnover_remarks,P-4,,,,,,,,,,,,,,,,"30sOE - 100 Bags Breakage High"
-turnover_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 120 Bags Stock"
-turnover_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 524 Bags & 60sC - 142 Bags"
-turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 200 Bags & 20sOE - 120 Bags"
-turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 1000 Bags Stock"
-turnover_remarks,P-10,,,,,,,,,,,,,,,,"62sCC - 80 Box & 61sCC - 93 Bags"
-turnover_remarks,P-11,,,,,,,,,,,,,,,,"61sC -  530 Bags Stock"
+turnover_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 65 Bags Stock"
+turnover_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 560 Bags & 60sC - 210 Bags"
+turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 60 Bags & 20sOE - 60 Bags"
+turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 1050 Bags Stock"
+turnover_remarks,P-10,,,,,,,,,,,,,,,,"61sCC - 93 Bags"
+turnover_remarks,P-11,,,,,,,,,,,,,,,,"61sC -  600 Bags Stock"
