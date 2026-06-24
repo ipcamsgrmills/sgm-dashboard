@@ -580,20 +580,27 @@ daily,P-7,22-06-2026,12520,10864,12520,6656,25600,8000,47.36,14.48,130,126,24,25
 daily,P-9,22-06-2026,10758,10659,10758,10614.24,26006.4,0,102.640608,0,459,474,150,138,0.119322,0.118272,
 daily,P-10,22-06-2026,4844,4714,4844,4717.44,12700.8,6350.4,51.07536,25.03,223,216,60,55,0.114742,0.113184,
 daily,P-11,22-06-2026,5185,5093,5185,5034.96,12096,28728,48.2328,108.81,217,216,63,57.5,0.103763,0.099501,
-remarks,P-6,,,,,,,,,,,,,,,,"Spg mc no - 20 Bottom Apron change - 377 Minits idle.                                                                                    60sC G5/1 (1-11)  TM 4.35 / 4.44"
-remarks,P-7,,,,,,,,,,,,,,,,"OE : 1 to 4 machine stopped. I, II & III shift"
-remarks,P-9,,,,,,,,,,,,,,,,"M.no9 front rool bearing change = 395 mts                                                                                                                                       61sCC Suessen 22,23,24,26,27 TM 4.00 / 4.10"
-remarks,P-10,,,,,,,,,,,,,,,,"Fr no - 4 suction pipe change 335 mins idle                                                                                                          Fr no - 10 Electrical & Maintenance Break down - 2  hrs idle,                                                                      Fr no  - 3 Speed 21000 / 20000"
-remarks,P-11,,,,,,,,,,,,,,,,"Spg mc no 18 Arresar conversion work slow speed running work"
+daily,P-4,23-06-2026,2694,2840,2694,2880,2400,8400,5.64,19.56,54,52,3,2,0,0,
+daily,P-5,23-06-2026,3520,3484,3520,3444,3200,5520,7.104,12.7,59,63,11,11.5,0,0,
+daily,P-6,23-06-2026,6652,6588.32,6652,6511,6048,7423,23.5872,27.69,287,285.5,88,80,0,0,
+daily,P-7,23-06-2026,12520,12514,12520,10880,7680,18360,14.592,32.58,130,125,24,24,0,0,
+daily,P-9,23-06-2026,10758,10702,10758,10659.6,14515.2,21168,43.5872,81.5,459,475,150,149,0,0,
+daily,P-10,23-06-2026,4844,4724,4844,4732.56,4082.4,12700.8,16,51.04,223,214,60,58,0,0,
+daily,P-11,23-06-2026,5185,4991,5185,5034.96,6048,7106.4,24,27.04,217,230,63,61,0,0,
+remarks,P-5,,,,,,,,,,,,,,,,"OE : 1 LHS side cheese Adose problem and passi struck up fault 1.30 hrs idle"
+remarks,P-6,,,,,,,,,,,,,,,,"Spg  - 42,43  Bottom Apron change - 158 Minits idle.                                                                                60sC G5/1 (1-9)  TM 4.35 / 4.44"
+remarks,P-9,,,,,,,,,,,,,,,,"61sCC Suessen 22,23,24,26,27 TM 4.00 / 4.10"
+remarks,P-10,,,,,,,,,,,,,,,,"Fr  no - 10 Main motor change in 247 mins                                                                                                            Fr no  - 3 Speed 21000 / 20000"
+remarks,P-11,,,,,,,,,,,,,,,,"SPG M/c.17 Ariser Convertion work"
 sales_remarks,P-4,,,,,,,,,,,,,,,,"30sOE - 100 Bags Breakage High"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 125 Bags  & 30sOE - 115 Bags"
-sales_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 220 Bags Stock"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 250 Bags  Stock"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 830 Bags Stock & 6145 - 250 Bags & 6109 - 140 Bags"
-sales_remarks,P-10,,,,,,,,,,,,,,,,"62sCC - 160 Box Stock"
+sales_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 150 Bags  & 30sOE - 100 Bags"
+sales_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 250 Bags Stock"
+sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 160 Bags  Stock"
+sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 830 Bags Stock & 6109 - 140 Bags"
+sales_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 35 Box Stock"
 turnover_remarks,P-4,,,,,,,,,,,,,,,,"30sOE - 100 Bags Breakage High"
-turnover_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 125 Bags  & 30sOE - 115 Bags"
-turnover_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 220 Bags Stock"
-turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 250 Bags  Stock"
-turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 830 Bags Stock & 6145 - 250 Bags & 6109 - 140 Bags"
-turnover_remarks,P-10,,,,,,,,,,,,,,,,"62sCC - 160 Box Stock"
+turnover_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 150 Bags  & 30sOE - 100 Bags"
+turnover_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 250 Bags Stock"
+turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 160 Bags  Stock"
+turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 830 Bags Stock & 6109 - 140 Bags"
+turnover_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 35 Box Stock"
