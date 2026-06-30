@@ -622,16 +622,26 @@ daily,P-7,28-06-2026,12520,12552,12520,12544,17920,7360,33.024,13.57,130,126,24,
 daily,P-9,28-06-2026,10758,10802,10758,10810.8,8467.2,9525.6,32.913216,36.02,459,469,150,58,0.119322,0.117929,
 daily,P-10,28-06-2026,4844,4755,4844,4823.28,4536,9525.6,18.15192,38.84,223,237,60,26,0.114742,0.117301,
 daily,P-11,28-06-2026,5185,5056,5185,5004.72,4536,7711.2,18,29.4,217,224,63,30,0.103763,0.101523,
-remarks,P-6,,,,,,,,,,,,,,,,"60sC G5/1 (1-7)  TM 4.35 / 4.44"
+daily,P-4,29-06-2026,2572,2614,2694,3168,4080,7392,9.588,17.29,54,52,3,2,0.125,0.130287,
+daily,P-5,29-06-2026,3594,3635,3594,3672,8320,6432,18.8736,14.99,59,54.5,11,12,0.12,0.12081,
+daily,P-6,29-06-2026,6652,6696.67,6652,6700,14572,16772,57.9308,64.32,287,283.5,88,75,0.105523,0.106016,
+daily,P-7,29-06-2026,12520,12564,12520,12608,23040,25920,42.752,46.65,130,126,24,23,0.106263,0.107377,
+daily,P-9,29-06-2026,10758,10700,10758,10810.8,21168,22302,83.28096,85.32,459,459,150,134,0.119322,0.117989,
+daily,P-10,29-06-2026,4844,4757,4844,4626.72,15120,6577.2,60.51024,26.16,223,222,60,57,0.114742,0.111488,
+daily,P-11,29-06-2026,5185,4824,5185,4762.8,4536,0,17.9172,0,217,217,63,64,0.103763,0.105709,
 remarks,P-10,,,,,,,,,,,,,,,,"Spg-3 Speed 21000 / 20000"
-remarks,P-11,,,,,,,,,,,,,,,,"SPG M/c.17 Slow Speed running"
+remarks,P-11,,,,,,,,,,,,,,,,"Spg -16 Ariser Convertion work,                                                                                                                           Spg - 17 Ariser Convertion work complete Slow speed running"
 sales_remarks,P-4,,,,,,,,,,,,,,,,"30sOE - 100 Bags Breakage High"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 150 Bags  & 30sOE - 125 Bags"
-sales_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 340 Bags Stock"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 325 Bags  Stock"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 465 Bags Stock & 6109 - 140 Bags"
+sales_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 220 Bags  & 30sOE - 115 Bags"
+sales_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 200 Bags Stock"
+sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 190 Bags  Stock"
+sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 635 Bags Stock"
+sales_remarks,P-10,,,,,,,,,,,,,,,,"60sC - 65 Bags Stock  & 61sCC - 50 Box"
+sales_remarks,P-11,,,,,,,,,,,,,,,,"6125 - 150 Bags Stock"
 turnover_remarks,P-4,,,,,,,,,,,,,,,,"30sOE - 100 Bags Breakage High"
-turnover_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 150 Bags  & 30sOE - 125 Bags"
-turnover_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 340 Bags Stock"
-turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 325 Bags  Stock"
-turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 465 Bags Stock & 6109 - 140 Bags"
+turnover_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 220 Bags  & 30sOE - 115 Bags"
+turnover_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 200 Bags Stock"
+turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 190 Bags  Stock"
+turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 635 Bags Stock"
+turnover_remarks,P-10,,,,,,,,,,,,,,,,"60sC - 65 Bags Stock  & 61sCC - 50 Box"
+turnover_remarks,P-11,,,,,,,,,,,,,,,,"6125 - 150 Bags Stock"
