@@ -685,16 +685,27 @@ daily,P-7,07-07-2026,12520,12111,12520,12416,6400,7040,11.78,12.81,130,127,24,24
 daily,P-9,07-07-2026,10891.333333,10915,10891.333333,10977.12,16632,9677,63.87,35.96,459,462,150,138,0.11926,0.116825,
 daily,P-10,07-07-2026,4872,4875,4872,4838.4,0,0,0,0,223,229,60,71,0.112175,0.111475,
 daily,P-11,07-07-2026,5222,5103,5222,5125.68,4536,4536,17.78,17.56,217,229,63,70,0.1043,0.102806,
-remarks,P-5,,,,,,,,,,,,,,,,"OE  : 6 Cleaning work 5.20 Hrs idle"
-remarks,P-7,,,,,,,,,,,,,,,,"OE : 5 RHS  (1 to 415) rotor changing work 3.30 Hrs idle,                                                                                      OE:5 RHS New rotor change speed reduced 93000 to 85000"
-remarks,P-11,,,,,,,,,,,,,,,,"Spg - 16,17 Ariser Convertion work complete Slow speed running"
+daily,P-4,08-07-2026,2788,2837,2788,3024,2400,2640,5.64,6.12,54,51,3,3,0.125,0.122056,
+daily,P-5,08-07-2026,3594,3547,3594,3324,8800,3360,19.88,7.8,59,55,11,13,0.12,0.121288,
+daily,P-6,08-07-2026,6752,6751.63,6752,6772,12096,2419.2,45.9648,9.1,287,288,91,84,0.105458,0.106672,
+daily,P-7,08-07-2026,12520,12232,12520,12160,19840,6784,35.296,12.64,130,123,24,23,0.106258,0.109914,
+daily,P-9,08-07-2026,10891.333333,10902,10891.333333,10901.52,6048,8043.84,23.70816,30.29,459,459,150,144,0.11926,0.118202,
+daily,P-10,08-07-2026,4872,4859,4872,4823.28,6048,5896.8,23.79888,22.96,223,220,60,68,0.112175,0.115235,
+daily,P-11,08-07-2026,5222,5118,5222,5110.56,6048,3628.8,23.16384,13.86,217,226,63,68,0.1043,0.100996,
+remarks,P-5,,,,,,,,,,,,,,,,"OE  : 7 Cleaning work - 4.40 Hrs idle"
+remarks,P-7,,,,,,,,,,,,,,,,"OE  : 3 Cleaning work 1.25 Hrs idle"
+remarks,P-11,,,,,,,,,,,,,,,,"Fr 16 Ariser Compact slow speed running"
 sales_remarks,P-4,,,,,,,,,,,,,,,,"30s OE High Breakage 100 Bags Stock"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 300 Bags  Stock"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 80 Bags Stock"
+sales_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 350 Bags  Stock"
+sales_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 50 Bags & 61sCC - 40 Box"
+sales_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 169Bags Stock"
 sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 275 Bags Stock"
-sales_remarks,P-11,,,,,,,,,,,,,,,,"Producion Shortage & 62sCC - 65 Box Stock"
+sales_remarks,P-10,,,,,,,,,,,,,,,,"Producion Shortage & 62sCC - 85 Box Stock"
+sales_remarks,P-11,,,,,,,,,,,,,,,,"Producion Shortage & 62sCC - 100 Box Stock"
 turnover_remarks,P-4,,,,,,,,,,,,,,,,"30s OE High Breakage 100 Bags Stock"
-turnover_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 300 Bags  Stock"
-turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 80 Bags Stock"
+turnover_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 350 Bags  Stock"
+turnover_remarks,P-6,,,,,,,,,,,,,,,,"68sC - 50 Bags & 61sCC - 40 Box"
+turnover_remarks,P-7,,,,,,,,,,,,,,,,"16sOE - 169Bags Stock"
 turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 275 Bags Stock"
-turnover_remarks,P-11,,,,,,,,,,,,,,,,"Producion Shortage & 62sCC - 65 Box Stock"
+turnover_remarks,P-10,,,,,,,,,,,,,,,,"Producion Shortage & 62sCC - 85 Box Stock"
+turnover_remarks,P-11,,,,,,,,,,,,,,,,"Producion Shortage & 62sCC - 100 Box Stock"
