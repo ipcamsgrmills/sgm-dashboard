@@ -769,17 +769,26 @@ daily,P-7,19-07-2026,12520,12683,12520,12736,0,0,0,0,130,126,24,7,0.106258,0.105
 daily,P-9,19-07-2026,10891.333333,11020,10891.333333,10977.12,0,0,0,0,459,464,150,84,0.11926,0.116661,
 daily,P-10,19-07-2026,4878,4880,4878,4883.76,0,0,0,0,223,222,60,23,0.112175,0.115822,
 daily,P-11,19-07-2026,5222,5324,5222,5276.88,0,0,0,0,217,220,63,20,0.1043,0.101734,
-remarks,P-5,,,,,,,,,,,,,,,,"OE - 2 Cleaning work - 5 Hrs idle"
-remarks,P-7,,,,,,,,,,,,,,,,"OE : 9 Cleaning work time & piecing work time 285 minits idle"
-remarks,P-10,,,,,,,,,,,,,,,,"Spg fr no 3   cots change & gear. End new bearing & new shaft change work 323 minits"
+daily,P-4,20-07-2026,2788,2523,2788,2784,7200,8160,16.92,19.07,54,48,3,6,0.125,0.129112,
+daily,P-5,20-07-2026,3377,3148,3377,3276,6200,8304,14.1,19.33,59,50,11,10,0.12,0.130428,
+daily,P-6,20-07-2026,6752,6694.48,6752,6696,8248,15190,31.56,58.31,287,280,91,84,0.105458,0.104869,
+daily,P-7,20-07-2026,12520,11859,12520,12736,26240,8000,47.072,14.88,130,130,24,22,0.106258,0.106769,
+daily,P-9,20-07-2026,10891.333333,10713,10891.333333,10750.32,6048,15724.8,23.40576,59.97,459,462,150,146,0.11926,0.11713,
+daily,P-10,20-07-2026,4878,4665,4878,4747.68,12096,8164.8,47.59776,31.96,223,227,60,65,0.112175,0.112766,
+daily,P-11,20-07-2026,5222,4809,5222,4702.32,6048,7257.6,23.16384,27.65,217,225,63,71,0.1043,0.105773,
+remarks,P-4,,,,,,,,,,,,,,,,"Power cut"
+remarks,P-5,,,,,,,,,,,,,,,,"'"
+remarks,P-6,,,,,,,,,,,,,,,,"'"
+remarks,P-9,,,,,,,,,,,,,,,,"Power cut"
+remarks,P-10,,,,,,,,,,,,,,,,"'"
+remarks,P-11,,,,,,,,,,,,,,,,"'"
 sales_remarks,P-4,,,,,,,,,,,,,,,,"30s OE High Breakage 100 Bags Stock"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 440 Bags  Stock"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"16S OE - 240 Bags Stock"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 275 Bags Stock"
-sales_remarks,P-10,,,,,,,,,,,,,,,,"62sCC - 98 Box Stock"
-sales_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 112 Box Stock"
+sales_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 246 Bags  Stock"
+sales_remarks,P-7,,,,,,,,,,,,,,,,"16S OE - 265 Bags Stock"
+sales_remarks,P-10,,,,,,,,,,,,,,,,"62sCC - 115 Box Stock"
+sales_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 211 Box Stock"
 turnover_remarks,P-4,,,,,,,,,,,,,,,,"30s OE High Breakage 100 Bags Stock"
-turnover_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 237 Bags  Stock"
-turnover_remarks,P-7,,,,,,,,,,,,,,,,"16S OE - 180 Bags Stock"
-turnover_remarks,P-10,,,,,,,,,,,,,,,,"62sCC - 130 Box Stock"
-turnover_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 182 Box Stock"
+turnover_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 246 Bags  Stock"
+turnover_remarks,P-7,,,,,,,,,,,,,,,,"16S OE - 265 Bags Stock"
+turnover_remarks,P-10,,,,,,,,,,,,,,,,"62sCC - 115 Box Stock"
+turnover_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 211 Box Stock"
