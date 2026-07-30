@@ -832,18 +832,21 @@ daily,P-7,28-07-2026,12520,12656,12520,12800,0,16640,0,30.28,130,125,24,20,0.106
 daily,P-9,28-07-2026,10891.333333,10905,10891.333333,10901.52,16632,5745.6,63.86688,22.33,459,473,150,148,0.11926,0.116457,
 daily,P-10,28-07-2026,4878,4382,4878,4933.76,15876,11642.4,61.89372,46.66,223,234,60,63,0.112175,0.111472,
 daily,P-11,28-07-2026,5222,5229,5222,5261.76,4536,8164.8,17.78112,32.5,217,233,63,64,0.1043,0.10438,
-remarks,P-5,,,,,,,,,,,,,,,,"Oe machine no : 2 Technology waste take time machine off problem total idle time : ( 80 mins)"
+daily,P-4,29-07-2026,2788,2932,2788,2832,2400,3360,5.64,8.33,54,48,3,4,0.125,0.114677,
+daily,P-5,29-07-2026,3377,3469,3377,3792,5680,7800,12.8744,17.91,59,44,11,9,0.12,0.123716,
+daily,P-6,29-07-2026,6865,6886.63,6865,6911.56,8633.6,9374.4,33.24768,36,287,282,91,78,0.105458,0.104537,
+daily,P-7,29-07-2026,12520,12620,12520,12736,24960,3200,44.544,6.14,130,118,24,16,0.106258,0.103503,
+daily,P-9,29-07-2026,10891.333333,10905,10891.333333,10916.64,15120,13910.4,58.968,54.06,459,463,150,140,0.11926,0.116644,
+daily,P-10,29-07-2026,4878,4884,4878,4384.8,0,1814.4,0,6.97,223,224,60,58,0.112175,0.112009,
+daily,P-11,29-07-2026,5222,5276,5222,5367.6,6048,12292.96,23.16384,48.21,217,220,63,58,0.1043,0.102914,
+remarks,P-10,,,,,,,,,,,,,,,,"28.07.2026 - Blow Room flexi fire 1 to 21 machines 70 mints idle"
 sales_remarks,P-4,,,,,,,,,,,,,,,,"30s OE High Breakage 100 Bags Stock"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 300 Bags  Stock"
-sales_remarks,P-6,,,,,,,,,,,,,,,,"60sC - 150 Bags Stock"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"16S OE - 170 Bags Stock"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 120 Bags Stock"
-sales_remarks,P-10,,,,,,,,,,,,,,,,"61sC - 45 Box Stock"
-sales_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 145 Box Stock"
+sales_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 250 Bags  Stock"
+sales_remarks,P-7,,,,,,,,,,,,,,,,"16S OE - 246 Bags Stock"
+sales_remarks,P-9,,,,,,,,,,,,,,,,"54sC - 81 Bags Stock"
+sales_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 98 Box Stock"
 turnover_remarks,P-4,,,,,,,,,,,,,,,,"30s OE High Breakage 100 Bags Stock"
-turnover_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 300 Bags  Stock"
-turnover_remarks,P-6,,,,,,,,,,,,,,,,"60sC - 150 Bags Stock"
-turnover_remarks,P-7,,,,,,,,,,,,,,,,"16S OE - 170 Bags Stock"
-turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 120 Bags Stock"
-turnover_remarks,P-10,,,,,,,,,,,,,,,,"61sC - 45 Box Stock"
-turnover_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 145 Box Stock"
+turnover_remarks,P-5,,,,,,,,,,,,,,,,"26s OE - 250 Bags  Stock"
+turnover_remarks,P-7,,,,,,,,,,,,,,,,"16S OE - 246 Bags Stock"
+turnover_remarks,P-9,,,,,,,,,,,,,,,,"54sC - 81 Bags Stock"
+turnover_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 98 Box Stock"
