@@ -937,17 +937,25 @@ daily,P-7,12-08-2026,12520,12667,12520,12672,6400,0,12.288,0,130,122,24,19,0.106
 daily,P-9,12-08-2026,11026,11002,11026,11037.6,13608,13154.6,54.25056,52.23,469,461,150,133,0.11926,0.115254,
 daily,P-10,12-08-2026,4884,4593,4884,4566.24,12700.8,7938,51.7104,32.9,223,220,73,52,0.112175,0.112226,
 daily,P-11,12-08-2026,5361,5366,5361,5261.76,6048,12474,24.07104,52.08,217,218,82,62,0.1043,0.104596,
-remarks,P-6,,,,,,,,,,,,,,,,"S?? 11 spindle oil change work - 236 mints idle"
-remarks,P-10,,,,,,,,,,,,,,,,"F. No 13 -  720CC angle conversion 24 hrs idle"
+daily,P-4,13-08-2026,2975,2517,2975,2976,2880,4080,6.912,9.84,54,40,3,5,0.125,0.129659,
+daily,P-5,13-08-2026,3377,3406,3377,3362,2640,6288,6.2832,14.87,59,53,11,11,0.12,0.123538,
+daily,P-6,13-08-2026,6876,6857,6876,6856.56,12372,0,50.2428,0,296,283,91,80,0.105458,0.10339,
+daily,P-7,13-08-2026,12231,12030,12231,12672,6400,11520,12.288,22.35,130,119,24,20,0.106258,0.105636,
+daily,P-9,13-08-2026,11026,11032,11026,11037.6,0,7257.6,0,29.18,469,471,150,139,0.11926,0.1161,
+daily,P-10,13-08-2026,4884,4700,4884,4691.84,0,1360.8,0,5.58,223,216,73,52,0.112175,0.110888,
+daily,P-11,13-08-2026,5361,5172,5361,5292,0,9374.4,0,36.94,217,221,82,62,0.1043,0.106226,
+remarks,P-6,,,,,,,,,,,,,,,,"Spg mc no - 6 jackey pulley service work - 387 Minits idle."
+remarks,P-10,,,,,,,,,,,,,,,,"Spg mc no : 13 Average speed 14500 running"
+remarks,P-11,,,,,,,,,,,,,,,,"SPG M/c.15 Ariser conversion work"
 sales_remarks,P-4,,,,,,,,,,,,,,,,"30s OE - High Breakage 100 Bags Stock"
-sales_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 110 Bags Stock"
-sales_remarks,P-7,,,,,,,,,,,,,,,,"20sOE - 280 Bags Stock"
-sales_remarks,P-9,,,,,,,,,,,,,,,,"61sCC - 114 Box Stock"
-sales_remarks,P-10,,,,,,,,,,,,,,,,"60sC - 35 Box Stock"
+sales_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 142 Bags Stock"
+sales_remarks,P-7,,,,,,,,,,,,,,,,"20sOE - 210 Bags Stock"
+sales_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 81 Box Stock"
+sales_remarks,P-10,,,,,,,,,,,,,,,,"60sC - 65 Box Stock"
 sales_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 225 Box Stock"
 turnover_remarks,P-4,,,,,,,,,,,,,,,,"30s OE - High Breakage 100 Bags Stock"
-turnover_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 110 Bags Stock"
-turnover_remarks,P-7,,,,,,,,,,,,,,,,"20sOE - 280 Bags Stock"
-turnover_remarks,P-9,,,,,,,,,,,,,,,,"61sCC - 114 Box Stock"
-turnover_remarks,P-10,,,,,,,,,,,,,,,,"60sC - 35 Box Stock"
+turnover_remarks,P-5,,,,,,,,,,,,,,,,"26sOE - 142 Bags Stock"
+turnover_remarks,P-7,,,,,,,,,,,,,,,,"20sOE - 210 Bags Stock"
+turnover_remarks,P-9,,,,,,,,,,,,,,,,"60sC - 81 Box Stock"
+turnover_remarks,P-10,,,,,,,,,,,,,,,,"60sC - 65 Box Stock"
 turnover_remarks,P-11,,,,,,,,,,,,,,,,"62sCC - 225 Box Stock"
