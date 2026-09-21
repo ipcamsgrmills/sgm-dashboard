@@ -2849,20 +2849,25 @@ document.getElementById('csvInput').addEventListener('change',function(){
 // ══════════════════════════════════════════════════════
 // COTTON STOCK TABLE
 // ══════════════════════════════════════════════════════
-// CSV header mapping:
-//   cs_variety          = Variety name
-//   cs_date             = As-on date
-//   cs_stock_mill       = Stock at Mill (bales)
-//   cs_transit          = In Transit (bales)
-//   cs_despatch_pending = Despatch Pending (bales)
-//   cs_total_stock      = Total Stock (bales) — recalculated below
-//   cs_days_stock       = Days of Stock
-//
-// NOTE: The previous version used the fields one position to the right,
-// causing the Cotton Stock Position values to appear under the wrong
-// headings. This version maps by the actual CSV header names.
+// Column mapping (verified from data.csv):
+//   cs_stock_mill (col 19) = Variety name
+//   cs_transit    (col 20) = As-on date
+//   cs_despatch_pending (21) = Stock at Mill (bales)
+//   cs_total_stock      (22) = In Transit (bales)
+//   cs_days_stock       (23) = Despatch Pending (bales)
+//   remarks             (24) = Total Stock (bales)
+//   col 25 (unnamed)        = Days of Stock
 
 function parseCottonStock(allRows){
+  // CSV column mapping (verified against current data.csv):
+  //   cs_variety        (col 18) = Variety name (Indian Cotton / Import Cotton)
+  //   cs_date           (col 19) = As-on date
+  //   cs_stock_mill     (col 20) = Stock at Mill (bales)
+  //   cs_transit        (col 21) = In Transit (bales)
+  //   cs_despatch_pending (col 22) = Despatch Pending (bales)
+  //   cs_total_stock    (col 23) = Total Stock from CSV (we recalculate)
+  //   cs_days_stock     (col 24) = Days of Stock
+  // Total Stock = Stock at Mill + In Transit + Despatch Pending (calculated)
   return allRows
     .filter(r=>r.section==='cotton_stock')
     .map(r=>({
@@ -2871,9 +2876,10 @@ function parseCottonStock(allRows){
       stockAtMill:     parseFloat(r.cs_stock_mill)||0,
       inTransit:       parseFloat(r.cs_transit)||0,
       despatchPending: parseFloat(r.cs_despatch_pending)||0,
-      daysStock:       parseFloat(r.cs_days_stock)||0
+      daysStock:       parseFloat(r.cs_days_stock)||0,
     }));
 }
+
 function renderCottonStock(rows){
   const sec=document.getElementById('cottonStockSection');
   if(!rows||rows.length===0){sec.style.display='none';return;}
@@ -2947,32 +2953,44 @@ function buildDetailsData(){
   const{plants,dates,lk}=G;
   if(!plants||!dates||!lk||dates.length===0) return null;
 
-  const lastDate = dates[dates.length-1]; // most recent date = "on date"
-  // Format last date as DD.MM.YYYY for label
+  const lastDate = dates[dates.length-1];
   const[dd,mm,yy]=lastDate.split('-');
   const onLabel  = `${dd}.${mm}.${yy}`;
-  const upLabel  = `01 – ${dd}`;
+  const upLabel  = `01 \u2013 ${dd}`;
 
   const meta = DETAILS_META[detailsMetric];
-  const rows = plants.map(p=>{
+
+  const makeRow=(p)=>{
     const onRow = lk[p]&&lk[p][lastDate] ? lk[p][lastDate] : {};
     const onT   = onRow[meta.tgtF]||0;
     const onA   = onRow[meta.actF]||0;
     const upT   = sum(dates.map(d=>lk[p]&&lk[p][d]?lk[p][d][meta.tgtF]||0:0));
     const upA   = sum(dates.map(d=>lk[p]&&lk[p][d]?lk[p][d][meta.actF]||0:0));
     return { plant:p, onT, onA, onG:onA-onT, upT, upA, upG:upA-upT };
-  });
-
-  // Overall totals row
-  const total = {
-    plant:'Overall',
-    onT: sum(rows.map(r=>r.onT)), onA: sum(rows.map(r=>r.onA)),
-    upT: sum(rows.map(r=>r.upT)), upA: sum(rows.map(r=>r.upA)),
   };
-  total.onG = total.onA - total.onT;
-  total.upG = total.upA - total.upT;
 
-  return { rows, total, onLabel, upLabel, meta };
+  const makeSubtotal=(label, subset)=>{
+    const r={ plant:label, onT:sum(subset.map(r=>r.onT)), onA:sum(subset.map(r=>r.onA)),
+              upT:sum(subset.map(r=>r.upT)), upA:sum(subset.map(r=>r.upA)) };
+    r.onG=r.onA-r.onT; r.upG=r.upA-r.upT;
+    return r;
+  };
+
+  // Split plant rows by company
+  const sgmPlantList = plants.filter(p=>SGM_PLANTS.includes(p));
+  const saiPlantList = plants.filter(p=>SAI_PLANTS.includes(p));
+  const otherList    = plants.filter(p=>!SGM_PLANTS.includes(p)&&!SAI_PLANTS.includes(p));
+
+  const sgmRows   = sgmPlantList.map(makeRow);
+  const saiRows   = saiPlantList.map(makeRow);
+  const otherRows = otherList.map(makeRow);
+  const allRows   = plants.map(makeRow);
+
+  const sgmSub  = sgmRows.length   ? makeSubtotal('SGM Sub-Total',   sgmRows)   : null;
+  const saiSub  = saiRows.length   ? makeSubtotal('SAI Sub-Total',   saiRows)   : null;
+  const overall = makeSubtotal('Grand Total', allRows);
+
+  return { sgmRows, saiRows, otherRows, sgmSub, saiSub, overall, onLabel, upLabel, meta };
 }
 
 function renderDetails(){
@@ -2995,16 +3013,16 @@ function renderDetails(){
 function renderDetailsTable(){
   const d = buildDetailsData();
   if(!d) return;
-  const { rows, total, onLabel, upLabel, meta } = d;
+  const { sgmRows, saiRows, otherRows, sgmSub, saiSub, overall, onLabel, upLabel, meta } = d;
 
   const head = document.getElementById('detailsTableHead');
   const body = document.getElementById('detailsTableBody');
 
   head.innerHTML=`
     <tr>
-      <th rowspan="2" class="th-plant" style="text-align:left;min-width:60px;font-size:12px"><b>Plant</b></th>
-      <th colspan="3" class="th-ondate" style="text-align:center;font-size:12px"><b>On Date — ${onLabel}</b></th>
-      <th colspan="3" class="th-upto"   style="text-align:center;font-size:12px"><b>Upto Date — ${upLabel}</b></th>
+      <th rowspan="2" class="th-plant" style="text-align:left;min-width:80px;font-size:12px"><b>Plant</b></th>
+      <th colspan="3" class="th-ondate" style="text-align:center;font-size:12px"><b>On Date \u2014 ${onLabel}</b></th>
+      <th colspan="3" class="th-upto"   style="text-align:center;font-size:12px"><b>Upto Date \u2014 ${upLabel}</b></th>
     </tr>
     <tr>
       <th class="th-ondate" style="text-align:right"><b>Target</b></th>
@@ -3021,32 +3039,77 @@ function renderDetailsTable(){
     return `<span class="${cls}">${v>0?'+':''}${meta.fmt(v)}</span>`;
   };
 
-  const buildRow=(r,isTotal)=>`<tr class="${isTotal?'total-row':''}">
-    <td class="dtbl-plant">${r.plant}</td>
-    <td class="dtbl-tgt"  style="text-align:right">${meta.fmt(r.onT)}</td>
-    <td class="${r.onA>=r.onT?'dtbl-act-ok':'dtbl-act-bad'}" style="text-align:right">${meta.fmt(r.onA)}</td>
-    <td style="text-align:right">${fmtGap(r.onG,meta.lowerBetter)}</td>
-    <td class="dtbl-tgt"  style="text-align:right">${meta.fmt(r.upT)}</td>
-    <td class="${r.upA>=r.upT?'dtbl-act-ok':'dtbl-act-bad'}" style="text-align:right">${meta.fmt(r.upA)}</td>
-    <td style="text-align:right">${fmtGap(r.upG,meta.lowerBetter)}</td>
-  </tr>`;
+  const buildRow=(r,type='plant')=>{
+    const isSubtotal = type==='subtotal';
+    const isGrand    = type==='grand';
+    const trStyle = isSubtotal
+      ? 'background:#f0f4ff;font-weight:700;border-top:2px solid #c7d2fe;border-bottom:2px solid #c7d2fe'
+      : isGrand
+      ? 'background:var(--warm);font-weight:700;border-top:3px solid var(--border)'
+      : '';
+    const plantStyle = isSubtotal
+      ? 'color:#3730a3;font-style:italic'
+      : isGrand
+      ? 'color:var(--ink)'
+      : '';
+    return `<tr style="${trStyle}">
+      <td class="dtbl-plant" style="${plantStyle}">${r.plant}</td>
+      <td class="dtbl-tgt"  style="text-align:right">${meta.fmt(r.onT)}</td>
+      <td class="${r.onA>=r.onT?'dtbl-act-ok':'dtbl-act-bad'}" style="text-align:right">${meta.fmt(r.onA)}</td>
+      <td style="text-align:right">${fmtGap(r.onG,meta.lowerBetter)}</td>
+      <td class="dtbl-tgt"  style="text-align:right">${meta.fmt(r.upT)}</td>
+      <td class="${r.upA>=r.upT?'dtbl-act-ok':'dtbl-act-bad'}" style="text-align:right">${meta.fmt(r.upA)}</td>
+      <td style="text-align:right">${fmtGap(r.upG,meta.lowerBetter)}</td>
+    </tr>`;
+  };
 
-  body.innerHTML = rows.map(r=>buildRow(r,false)).join('') + buildRow(total,true);
+  // Group separator row
+  const groupSep=(label,color)=>
+    `<tr><td colspan="7" style="padding:4px 12px;font-size:10px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:${color};background:#f8f8f8;border-bottom:1px solid var(--border)">${label}</td></tr>`;
+
+  let html='';
+
+  // SGM section
+  if(sgmRows.length){
+    html+=groupSep('SGM \u2014 Govindaraja Mills','#1e3a8a');
+    html+=sgmRows.map(r=>buildRow(r,'plant')).join('');
+    if(sgmSub) html+=buildRow(sgmSub,'subtotal');
+  }
+
+  // SAI section
+  if(saiRows.length){
+    html+=groupSep('SAI Traders','#065f46');
+    html+=saiRows.map(r=>buildRow(r,'plant')).join('');
+    if(saiSub) html+=buildRow(saiSub,'subtotal');
+  }
+
+  // Other plants (if any)
+  if(otherRows.length){
+    html+=groupSep('Other Plants','#374151');
+    html+=otherRows.map(r=>buildRow(r,'plant')).join('');
+  }
+
+  // Grand Total
+  html+=buildRow(overall,'grand');
+
+  body.innerHTML=html;
 }
 
 function renderDetailsCharts(){
   const d = buildDetailsData();
   if(!d) return;
-  const { rows, onLabel, upLabel, meta } = d;
+  const { sgmRows, saiRows, otherRows, sgmSub, saiSub, overall, onLabel, upLabel, meta } = d;
 
-  document.getElementById('detailsChartOnTitle').textContent  = `On-date — ${onLabel}`;
-  document.getElementById('detailsChartUpTitle').textContent  = `Upto-date — ${upLabel}`;
+  document.getElementById('detailsChartOnTitle').textContent  = `On-date \u2014 ${onLabel}`;
+  document.getElementById('detailsChartUpTitle').textContent  = `Upto-date \u2014 ${upLabel}`;
 
-  const labels = rows.map(r=>r.plant);
-  const onTgt  = rows.map(r=>r.onT);
-  const onAct  = rows.map(r=>r.onA);
-  const upTgt  = rows.map(r=>r.upT);
-  const upAct  = rows.map(r=>r.upA);
+  // Chart shows all individual plants
+  const allPlantRows = [...sgmRows, ...saiRows, ...otherRows];
+  const labels = allPlantRows.map(r=>r.plant);
+  const onTgt  = allPlantRows.map(r=>r.onT);
+  const onAct  = allPlantRows.map(r=>r.onA);
+  const upTgt  = allPlantRows.map(r=>r.upT);
+  const upAct  = allPlantRows.map(r=>r.upA);
 
   const actBgOn = onAct.map((a,i)=>a>=onTgt[i]?'rgba(21,128,61,0.85)':'rgba(185,28,28,0.85)');
   const actBgUp = upAct.map((a,i)=>a>=upTgt[i]?'rgba(21,128,61,0.85)':'rgba(185,28,28,0.85)');
