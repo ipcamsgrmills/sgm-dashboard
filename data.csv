@@ -1269,13 +1269,21 @@ daily,P-10,21-09-2026,4480,4480,4480,4469.52,223.001,225,73.001,62,0.111841,0.10
 daily,P-11,21-09-2026,5461,5462,5461,5532.68,217.001,231.5,82.001,74,0.106918,0.103732,15876,11854.08,67.83588,50.71,,,,,,,
 daily,SAI-A,21-09-2026,4098,4087,4098,4032,57,59,6,6,0.114,0.1125,13600,8064,30.94,17.93,,,,,,,
 daily,SAI-B,21-09-2026,950,959,950,950,100,108,20,24,0.112,0.086063,3000,3000,14.79,14.79,,,,,,,
-remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE : 2 170 GF8 trip stop problem  Machine is Automatic 1 Hr idle | Sales: 30sOE High Breakage 100 Bags Stock | Turnover: 30sOE High Breakage 100 Bags Stock"
+daily,P-5,22-09-2026,3412,3468,3412,3424,59.001,51.5,11.001,9,0.12,0.122685,0,9200,0,22.07,,,,,,,
+daily,P-6,22-09-2026,6911,6932.03,6911,6922.52,296,293,91,84,0.105366,0.105496,0,6048,0,25.89,,,,,,,
+daily,P-7,22-09-2026,12260,12461,12260,12096,130,130,24.001,22,0.106237,0.104758,6400,22464,12.61,44.11,,,,,,,
+daily,P-9,22-09-2026,11335,11342,11335,11340,469.001,475,150.001,144,0.118898,0.11484,0,7711.2,0,33.54,,,,,,,
+daily,P-10,22-09-2026,4480,4481,4480,4524.12,223.001,226,73.001,65,0.111841,0.112507,4536,0,19.73,0,,,,,,,
+daily,P-11,22-09-2026,5461,5466,5461,5493.2,217.001,231.5,82.001,70,0.106918,0.102776,0,6577.2,0,28.58,,,,,,,
+daily,SAI-A,22-09-2026,4098,4119,4098,3856,57,62.5,6,7,0.114,0.1167,0,1440,0,3.6,,,,,,,
+daily,SAI-B,22-09-2026,950,967,950,900,100,116,20,24,0.112,0.078486,0,0,0,0,,,,,,,
+remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: 16sK Speed Target - 93000, Actual - 90000 | Sales: 30sOE High Breakage 100 Bags Stock | Turnover: 30sOE High Breakage 100 Bags Stock"
 remarks,SAI-B,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 80sC - 215 Bags | Turnover: 80sC - 215 Bags"
-remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE  : 2 Cleaning work 2 Hrs idle | Sales: 30sOE  - 235 Bags Stock | Turnover: 30sOE  - 235 Bags Stock"
-remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 62sCC - 58 Box Stock | Turnover: 62sCC - 58 Box Stock"
-remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 20sOE - 140 Bags & 16sOE - 100 Bgs | Turnover: 20sOE - 140 Bags & 16sOE - 100 Bgs"
+remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 30sOE  - 140 Bags Stock | Turnover: 30sOE  - 140 Bags Stock"
+remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 62sCC - 60 Box Stock | Turnover: 62sCC - 60 Box Stock"
+remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE  : 7 Cleaning work  5.10 Hrs idle | Sales: - | Turnover: -"
 remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
-remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: RF 1- Avg Speed 19200 RPM Running. | Sales: - | Turnover: -"
-remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 62sCC - 100 Box Stock | Turnover: 62sCC - 100 Box Stock"
-cotton_stock,,22.09.2026,,,,,,,,,,,,,,,Indian . Cotton,22.09.2026,2014,445,300,2759,17.573248,
-cotton_stock,,22.09.2026,,,,,,,,,,,,,,,Import . Cotton,22.09.2026,1702,0,2886,4588,60.368421,
+remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 61sCC - 72 Box Stock | Turnover: 61sCC - 72 Box Stock"
+remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
+cotton_stock,,23.09.2026,,,,,,,,,,,,,,,Indian . Cotton,23.09.2026,1838,445,300,2583,16.452229,
+cotton_stock,,23.09.2026,,,,,,,,,,,,,,,Import . Cotton,23.09.2026,1629,0,2886,4515,59.407895,
