@@ -1325,13 +1325,21 @@ daily,P-10,28-09-2026,4480,4342,4480,4514.48,223.001,226.5,73.001,69,0.111841,0.
 daily,P-11,28-09-2026,5461,5468,5461,5458.32,217.001,230.5,82.001,77,0.106918,0.102864,9072,12247.2,38.37456,52.8,,,,,,,
 daily,SAI-A,28-09-2026,4098,3870,4098,3824,57,49,6,7,0.114,0.117,11680,4320,27,10.8,,,,,,,
 daily,SAI-B,28-09-2026,1004,1017,1004,1050,100,131,20,26,0.112,0.092755,7000,7000,34.31,34.31,,,,,,,
-remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE : 6 Cleaning work 6.15 Hrs idle,  OE -  4 Automatic off  1.05 Hrs idle | Sales: 30sOE High Breakage 100 Bags Stock | Turnover: 30sOE High Breakage 100 Bags Stock"
+daily,P-5,29-09-2026,3412,3464,3412,3440,59,47,11.001,11,0.12,0.124271,0,4000,0,9.39,,,,,,,
+daily,P-6,29-09-2026,6911,6989.31,6911,6967,296,286,91,84,0.105366,0.104427,4536,10206,19.78,43.44,,,,,,,
+daily,P-7,29-09-2026,12260,12413,12260,12416,130,122,24.001,23,0.106237,0.103145,6400,15360,12.61,28.89,,,,,,,
+daily,P-9,29-09-2026,11335,11324,11335,11279.52,469.001,471,150.001,132,0.118898,0.117396,0,2116.8,0,9.17,,,,,,,
+daily,P-10,29-09-2026,4480,4307,4480,4344,223.001,218,73.001,65,0.111841,0.11,0,4687.2,0,20.26,,,,,,,
+daily,P-11,29-09-2026,5461,5479,5461,5553.68,217.001,231,82.001,76,0.106918,0.103209,0,7015.68,0,30.43,,,,,,,
+daily,SAI-A,29-09-2026,4098,3695,4098,3264,57,54,6,7,0.114,0.1206,0,4384,0,9.77,,,,,,,
+daily,SAI-B,29-09-2026,1004,993,1004,1000,100,122,20,25,0.112,0.096031,0,0,0,0,,,,,,,
+remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE: 5 Opening roll changing work 6.15 Hrs idle | Sales: 30sOE High Breakage 100 Bags Stock | Turnover: 30sOE High Breakage 100 Bags Stock"
 remarks,SAI-B,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 80sC - 215 Bags | Turnover: 80sC - 215 Bags"
 remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 30sOE  - 140 Bags Stock | Turnover: 30sOE  - 140 Bags Stock"
-remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 61sCC - 75 Bags Stock | Turnover: 61sCC - 75 Bags Stock"
-remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 16sOE - 210 Bags Stock | Turnover: 16sOE - 210 Bags Stock"
-remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Spg - 19 Toparm service  work 382 min | Sales: 62sCC - 100 Box Stock | Turnover: 62sCC - 100 Box Stock"
-remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 68sC - 150 Bags Stock | Turnover: 68sC - 150 Bags Stock"
+remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
+remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 16sOE - 80 Bags Stock | Turnover: 16sOE - 80 Bags Stock"
+remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Rfno :- 18Toparm pressure setting work 400 min | Sales: 62sCC - 170 Box Stock | Turnover: 62sCC - 170 Box Stock"
+remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Spg -  11  -  720 conversion  work 24 Hrs idle | Sales: 68sC - 200 Bags Stock | Turnover: 68sC - 200 Bags Stock"
 remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
-cotton_stock,,29.09.2026,,,,,,,,,,,,,,,Indian . Cotton,29.09.2026,1457,0,600,2057,13.101911,
-cotton_stock,,29.09.2026,,,,,,,,,,,,,,,Import . Cotton,29.09.2026,1403,0,2664,4067,53.513158,
+cotton_stock,,30.09.2026,,,,,,,,,,,,,,,Indian . Cotton,30.09.2026,1312,300,300,1912,12.178344,
+cotton_stock,,30.09.2026,,,,,,,,,,,,,,,Import . Cotton,30.09.2026,1330,0,2664,3994,52.552632,
