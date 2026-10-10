@@ -1405,13 +1405,21 @@ daily,P-10,08-10-2026,4288,4289,4288,4296,223.001,223,73,55,0.111946,0.108674,15
 daily,P-11,08-10-2026,5535,5402,5535,5402.48,217.001,233,82,69,0.1075,0.104338,0,0,0,0,,,,,,,
 daily,SAI-A,08-10-2026,4615,4557,4615,4544,80,73,6,5,0.11351,0.108746,0,6800,0,15.8,,,,,,,
 daily,SAI-B,08-10-2026,1115,1040,1115,1100,120,133,49,29,0.113983,0.100633,0,0,0,0,,,,,,,
-remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Eff low 97 % | Sales: 30sOE High Breakage 100 Bags Stock | Turnover: 30sOE High Breakage 100 Bags Stock"
-remarks,SAI-B,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Power cut : 70 minutes idle | Sales: 80sC - 215 Bags | Turnover: 80sC - 215 Bags"
+daily,P-5,09-10-2026,3423,3458,3423,3328,59.001,56,11,8,0.125,0.117806,0,2400,0,5.68,,,,,,,
+daily,P-6,09-10-2026,6938,7048.18,6938,7017.4,296.001,296,91,83,0.105353,0.102319,9072,4838.4,37.8756,20.51,,,,,,,
+daily,P-7,09-10-2026,12260,12398,12260,11840,130.001,135,24,23,0.106237,0.101823,15360,15360,28.4032,28.92,,,,,,,
+daily,P-9,09-10-2026,11352,11318,11352,11309.76,478,465,150,137,0.116126,0.113758,15422.4,20563.2,63.253008,86.1,,,,,,,
+daily,P-10,09-10-2026,4288,4289,4288,4304.32,223.001,216,73,63,0.111946,0.108718,4233.6,4976.4,17.738784,21.73,,,,,,,
+daily,P-11,09-10-2026,5535,5299,5535,5322.24,217.001,233,82,76,0.1075,0.103414,12247.2,12474,51.152472,53.2,,,,,,,
+daily,SAI-A,09-10-2026,4615,4501,4615,4480,80,69.5,6,5,0.11351,0.1086,8000,4320,17.952,9.7,,,,,,,
+daily,SAI-B,09-10-2026,1115,1089,1115,1000,120,135,49,27,0.113983,0.090323,5000,8750,24.15,41.85,,,,,,,
+remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE : 3 LHS side passi struck up problem spl no : ( 103 to 320 ) ??? machine is manual stopped 2.45 Hrs idle | Sales: 30sOE High Breakage 100 Bags Stock | Turnover: 30sOE High Breakage 100 Bags Stock"
+remarks,SAI-B,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 80sC - 215 Bags | Turnover: 80sC - 215 Bags"
 remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE -  5 Cleaning work 6.15 Hrs idle | Sales: 30sOE  - 330 Bags Stock | Turnover: 30sOE  - 330 Bags Stock"
 remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 61sCC - 45 Bags Stock | Turnover: 61sCC - 45 Bags Stock"
-remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 16sOE - 140 Bags Stock | Turnover: 16sOE - 140 Bags Stock"
-remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
-remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 61sCC - 55 Bags Stock | Turnover: 61sCC - 55 Bags Stock"
-remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Spg - 12 Arisser coversion work 24.00 Hrs idle | Sales: 62sCC - 120 Bags Stock | Turnover: 62sCC - 120 Bags Stock"
-cotton_stock,,09.10.2026,,,,,,,,,,,,,,,Indian . Cotton,09.10.2026,1657,0,300,1957,13.046667,
-cotton_stock,,09.10.2026,,,,,,,,,,,,,,,Import . Cotton,09.10.2026,1080,0,4440,5520,69,
+remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE - 3 Cleaning  work 5.00 Hrs idle | Sales: - | Turnover: -"
+remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Spg - 5 Ring centering work - 6.20 Hrs idle | Sales: - | Turnover: -"
+remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
+remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Spg - 12 Arisser coversion work 24.00 Hrs idle | Sales: - | Turnover: -"
+cotton_stock,,10.10.2026,,,,,,,,,,,,,,,Indian . Cotton,10.10.2026,1657,0,300,1957,13.046667,
+cotton_stock,,10.10.2026,,,,,,,,,,,,,,,Import . Cotton,10.10.2026,1080,0,4440,5520,69,
