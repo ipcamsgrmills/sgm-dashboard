@@ -1429,13 +1429,21 @@ daily,P-10,11-10-2026,4288,4306,4288,4454.68,223.001,213,73,46,0.111946,0.107743
 daily,P-11,11-10-2026,5535,5472,5535,5443.2,217.001,242,82,45.5,0.1075,0.103387,0,0,0,0,,,,,,,
 daily,SAI-A,11-10-2026,4524,4541,4524,4400,80,68,6,4,0.11351,0.1123,0,0,0,0,,,,,,,
 daily,SAI-B,11-10-2026,1115,1143,1115,1100,120,121,49,27,0.113983,0.085983,0,0,0,0,,,,,,,
-remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE -  3  199 stop Rotors fault  - 3.07 Hrs idle | Sales: 30sOE High Breakage 100 Bags Stock | Turnover: 30sOE High Breakage 100 Bags Stock"
+daily,P-5,12-10-2026,3423,3378,3423,3408,59.001,48.5,11,10,0.125,0.119957,4800,0,11.28,0,,,,,,,
+daily,P-6,12-10-2026,6938,6945.1,6938,6977.52,296.001,294,91,85,0.105353,0.103607,14077,14213,60.57,59.94,,,,,,,
+daily,P-7,12-10-2026,12260,11777,12260,12416,130.001,131,24,22,0.106237,0.10605,15360,15360,28.63,28.26,,,,,,,
+daily,P-9,12-10-2026,11352,11347,11352,11355.12,478,489,150,138,0.116126,0.113379,34776,17842,143.66,72.81,,,,,,,
+daily,P-10,12-10-2026,4288,4290,4288,4344.2,223.001,214,73,64,0.111946,0.107167,6048,13991,25.34,61.03,,,,,,,
+daily,P-11,12-10-2026,5535,5345,5535,5352.48,217.001,244.5,82,77,0.1075,0.102954,12852,4536,53.7,19.64,,,,,,,
+daily,SAI-A,12-10-2026,4524,4327,4524,4528,80,73,6,6,0.11351,0.1152,8000,9120,17.95,20.25,,,,,,,
+daily,SAI-B,12-10-2026,1115,1174,1115,1150,120,140,49,27,0.113983,0.083933,0,4000,0,19.62,,,,,,,
+remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 30sOE High Breakage 100 Bags Stock | Turnover: 30sOE High Breakage 100 Bags Stock"
 remarks,SAI-B,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 80sC - 215 Bags | Turnover: 80sC - 215 Bags"
-remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE -  6 RHS Takeup roll belt damaged 50 mins idle | Sales: 30sOE  - 330 Bags Stock | Turnover: 30sOE  - 330 Bags Stock"
+remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE : 6 Cleaning work - 5.00 Hrs idle | Sales: 30sOE  - 330 Bags Stock | Turnover: 30sOE  - 330 Bags Stock"
 remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 61sCC - 45 Bags Stock | Turnover: 61sCC - 45 Bags Stock"
-remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
-remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
+remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 16sOE - 45 Bga Stock | Turnover: 16sOE - 45 Bga Stock"
+remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 62sCC - 100 Box Stock | Turnover: 62sCC - 100 Box Stock"
 remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
-remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Spg - 12 Arisser coversion work 24.00 Hrs idle | Sales: - | Turnover: -"
-cotton_stock,,12.10.2026,,,,,,,,,,,,,,,Indian . Cotton,12.10.2026,1232,770,0,2002,14.940299,
-cotton_stock,,12.10.2026,,,,,,,,,,,,,,,Import . Cotton,12.10.2026,830,0,4440,5270,58.555556,
+remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: SPG M/c.12 Ariser Convertion Slow Speed running | Sales: 62sCC - 140 Box Stock | Turnover: 62sCC - 140 Box Stock"
+cotton_stock,,13.10.2026,,,,,,,,,,,,,,,Indian . Cotton,13.10.2026,1680,170,0,1850,13.80597,
+cotton_stock,,13.10.2026,,,,,,,,,,,,,,,Import . Cotton,13.10.2026,629,222,4329,5180,56.304348,
