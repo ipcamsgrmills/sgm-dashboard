@@ -1549,13 +1549,21 @@ daily,P-10,26-10-2026,4288,4236,4288,4305.84,223.001,217,73,65,0.111946,0.106243
 daily,P-11,26-10-2026,5597,5343,5597,5292,217.001,229.5,82,74,0.1075,0.103091,14364,4455.6,60.0642,17.06,,,,,,,
 daily,SAI-A,26-10-2026,5569,5021,5569,5568,80,75,6,6,0.11351,0.1053,17600,10688,37.248,24.14,,,,,,,
 daily,SAI-B,26-10-2026,1115,997,1115,1100,120,142,49,27,0.113983,0.102553,0,3750,0,18.3,,,,,,,
-remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE - 7 -16/1 K Speed Plan 90000 Running - 85000 | Sales: 30sOE  - 150 Bags Stock | Turnover: 30sOE  - 150 Bags Stock"
-remarks,SAI-B,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
-remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 30sOE  - 410 Bags Stock | Turnover: 30sOE  - 410 Bags Stock"
-remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 61sCC - 48 Bags Stock | Turnover: 61sCC - 48 Bags Stock"
-remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Sales: - | Turnover: -"
-remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 62s CC - 105 Box Stock & 61sC - 100 Bags | Turnover: 62s CC - 105 Box Stock & 61sC - 100 Bags"
-remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 60sC - 45 Bags  Stock | Turnover: 60sC - 45 Bags  Stock"
-remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Spg mc no 11 Ariser conversion work slow speed 15000 | Sales: 62s CC - 90 Box Stock | Turnover: 62s CC - 90 Box Stock"
-cotton_stock,,27.10.2026,,,,,,,,,,,,,,,Indian . Cotton,27.10.2026,2874,150,0,3024,22.4,
-cotton_stock,,27.10.2026,,,,,,,,,,,,,,,Import . Cotton,27.10.2026,390,333,4354,5077,56.411111,
+daily,P-5,27-10-2026,3523,2361,3523,2656,59.001,61.5,11,9,0.125,0.144645,0,6720,0,15.9,,,,,,,
+daily,P-6,27-10-2026,6938,6874.67,6938,6871.68,296.001,303,91,89,0.105353,0.104629,4536,7533.6,19.00584,32.45,,,,,,,
+daily,P-7,27-10-2026,12260,11357,12260,10048,130.001,128,24,24,0.106237,0.105342,0,15360,0,29.29,,,,,,,
+daily,P-9,27-10-2026,11126,11085,11126,11113.2,478,479,150,140,0.116126,0.11533,15120,19353.6,63.3528,81.31,,,,,,,
+daily,P-10,27-10-2026,4288,4110,4288,4129.88,223.001,219,73,69,0.111946,0.109309,0,4371.6,0,18.71,,,,,,,
+daily,P-11,27-10-2026,5597,5350,5597,5276.88,217.001,230,82,76,0.1075,0.103691,0,5216.4,0,22.33,,,,,,,
+daily,SAI-A,27-10-2026,5569,4714,5569,4576,80,75,6,7,0.11351,0.1167,0,0,0,0,,,,,,,
+daily,SAI-B,27-10-2026,1115,985.2,1115,1000,120,150,49,28,0.113983,0.098,0,0,0,0,,,,,,,
+remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Power cut 2 Time | Sales: 30sOE  - 150 Bags Stock | Turnover: 30sOE  - 150 Bags Stock"
+remarks,SAI-B,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: ' | Sales: - | Turnover: -"
+remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Power cut 2 Time | Sales: 30sOE  - 410 Bags Stock | Turnover: 30sOE  - 410 Bags Stock"
+remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: ' | Sales: 61sCC - 48 Bags Stock | Turnover: 61sCC - 48 Bags Stock"
+remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: ' | Sales: - | Turnover: -"
+remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: ' | Sales: 62s CC - 105 Box Stock & 61sC - 100 Bags | Turnover: 62s CC - 105 Box Stock & 61sC - 100 Bags"
+remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: ' | Sales: 60sC - 45 Bags  Stock | Turnover: 60sC - 45 Bags  Stock"
+remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: ' | Sales: 62s CC - 90 Box Stock | Turnover: 62s CC - 90 Box Stock"
+cotton_stock,,28.10.2026,,,,,,,,,,,,,,,Indian . Cotton,28.10.2026,2874,150,0,3024,22.4,
+cotton_stock,,28.10.2026,,,,,,,,,,,,,,,Import . Cotton,28.10.2026,390,333,4354,5077,56.411111,
