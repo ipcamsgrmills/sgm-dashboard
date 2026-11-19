@@ -1725,13 +1725,21 @@ daily,P-10,17-11-2026,4326,4258,4326,4245.36,223.001,208,73.001,59,0.110654,0.10
 daily,P-11,17-11-2026,5679,5448,5679,5292,217.001,221,82.001,60,0.105115,0.105991,0,6441.12,0,28.08,,,,,,,
 daily,SAI-A,17-11-2026,5656,5606,5656,5440,80,68.5,6.001,7,0.11349,0.101397,0,2400,0,5.69,,,,,,,
 daily,SAI-B,17-11-2026,1505,1509,1505,1330.76,160,142,46,23,0.112772,0.096198,0,742,0,3.71,,,,,,,
+daily,P-5,18-11-2026,4003,3890,4003,3984,59.001,56,11.001,12,0.117919,0.118253,11200,6176,25.264,13.98,,,,,,,
+daily,P-6,18-11-2026,6971,6925.4,6971,6917,296.001,294,91,77,0.105337,0.104613,6048,10364.8,25.704,45.73,,,,,,,
+daily,P-7,18-11-2026,12782,12570,12782,12544,130.001,132,24.001,23,0.106237,0.102378,30720,20800,56.9856,38.75,,,,,,,
+daily,P-9,18-11-2026,11191,11205,11191,11234.16,469,454,150.001,129,0.115477,0.116599,21394.8,7257.6,91.549332,31.03,,,,,,,
+daily,P-10,18-11-2026,4326,4326,4326,4300.36,223.001,208,73.001,57,0.110654,0.110991,5500,7836,25.52,34.24,,,,,,,
+daily,P-11,18-11-2026,5679,5395,5679,5352.48,217.001,223,82.001,69,0.105115,0.104223,13608,1814.4,58.15152,7.77,,,,,,,
+daily,SAI-A,18-11-2026,5656,5644,5656,5728,80,81.5,6.001,6,0.11349,0.1089,11200,7920,24.144,16.64,,,,,,,
+daily,SAI-B,18-11-2026,1680,1690,1680,1556.24,160,154,46,34,0.112772,0.084412,0,11143.2,0,50.2,,,,,,,
 remarks,SAI-A,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE - 3 108_error trip fault vacuum pump Machine Automatic off 2.30 Hrs idle | Sales: 16sOE - 230 Bags Stock | Turnover: 16sOE - 230 Bags Stock"
 remarks,SAI-B,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: 16.11.26 Power  cut 1 Hrs idle | Sales: 68sC - 60 Bags & 60sC - 75 Bags | Turnover: 68sC - 22 Bags & 60sC - 34 Bags"
-remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 21sOE - 117 Bags | Turnover: 21sOE - 117 Bags"
-remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Fno - 9 s?? ????? work - 411 mints idle | Sales: - | Turnover: -"
-remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE - 9 Cleaning work  4.30 Hrs idle | Sales: 20sOE - 300 Bags & 16sOE - 585 Bags Stock | Turnover: 20sOE - 300 Bags & 16sOE - 585 Bags Stock"
+remarks,P-5,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE-  3 Cleaning work 5.15 Hrs  idle | Sales: 21sOE - 117 Bags | Turnover: 21sOE - 117 Bags"
+remarks,P-6,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Fno - 8 Top arm pressure checking  work - 350 mints idle | Sales: - | Turnover: -"
+remarks,P-7,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: OE - 8 Cleaning work 7.10 Hrs idle | Sales: 20sOE - 300 Bags & 16sOE - 585 Bags Stock | Turnover: 20sOE - 300 Bags & 16sOE - 585 Bags Stock"
 remarks,P-9,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 62sCC - 60 Box Stock | Turnover: 62sCC - 60 Box Stock"
-remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: RF 18   Electrical fault in 36 minits. RF- 8    Electrical fault in   21 minits. | Sales: 68sC - 40 Bags & 60sC - 60 Bags | Turnover: 68sC - 40 Bags & 60sC - 60 Bags"
+remarks,P-10,,,,,,,,,,,,,,,,,,,,,,,,"Sales: 68sC - 40 Bags & 60sC - 60 Bags | Turnover: 68sC - 40 Bags & 60sC - 60 Bags"
 remarks,P-11,,,,,,,,,,,,,,,,,,,,,,,,"Prodn: Spg -  6 compat LMW conversion work solw speed running | Sales: 62sCC - 155 Box Stock | Turnover: 62sCC - 155 Box Stock"
-cotton_stock,,18.11.2026,,,,,,,,,,,,,,,Indian . Cotton,18.11.2026,3829,650,150,4629,23.984456,
-cotton_stock,,18.11.2026,,,,,,,,,,,,,,,Import . Cotton,18.11.2026,936,130,2664,3730,79.361702,
+cotton_stock,,19.11.2026,,,,,,,,,,,,,,,Indian . Cotton,19.11.2026,3840,625,1050,5515,26.38756,
+cotton_stock,,19.11.2026,,,,,,,,,,,,,,,Import . Cotton,19.11.2026,919,0,2664,3583,87.390244,
